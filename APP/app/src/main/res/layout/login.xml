@@ -15,9 +15,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center"
         android:layout_above="@id/card_view"
+        android:gravity="center"
+        android:orientation="vertical"
         android:padding="28dp">
 
         <ImageView
@@ -27,10 +27,10 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
             android:fontFamily="sans-serif-medium"
+            android:textColor="@color/white"
             android:textSize="32sp"
-            android:textColor="@color/white"/>
+            android:textStyle="bold" />
 
 
     </LinearLayout>
@@ -122,6 +122,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:text="Login"
+                app:backgroundTint="@color/my_primary"
                 app:cornerRadius="32dp"/>
 
             <View
