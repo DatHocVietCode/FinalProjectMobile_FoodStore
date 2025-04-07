@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <com.google.android.material.bottomappbar.BottomAppBar
-        android:id="@+id/ms_bottomNavigation"
+        android:id="@+id/bottomNavigation"
         android:layout_width="match_parent"
         android:layout_height="64dp"
         android:layout_gravity="bottom"
@@ -22,7 +22,7 @@
             android:orientation="horizontal">
 
             <LinearLayout
-                android:id="@+id/ms_bottomNavigation_btnHome"
+                android:id="@+id/bottomNavigation_btnHome"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.2"
@@ -37,7 +37,7 @@
                     app:srcCompat="@drawable/home" />
 
                 <TextView
-                    android:id="@+id/ms_bottomNavigation_tvHome"
+                    android:id="@+id/bottomNavigation_tvHome"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Home"
@@ -48,7 +48,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/ms_bottomNavigation_btnMyOrders"
+                android:id="@+id/bottomNavigation_btnMyOrders"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.2"
@@ -62,7 +62,7 @@
                     app:srcCompat="@drawable/my_order" />
 
                 <TextView
-                    android:id="@+id/ms_bottomNavigation_tvOrder"
+                    android:id="@+id/bottomNavigation_tvOrder"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="My Orders"
@@ -73,7 +73,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/ms_bottomNavigation_btnSeat"
+                android:id="@+id/bottomNavigation_btnSeat"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.2"
@@ -89,7 +89,7 @@
                     app:srcCompat="@drawable/seat" />
 
                 <TextView
-                    android:id="@+id/ms_bottomNavigation_tvSeats"
+                    android:id="@+id/bottomNavigation_tvSeats"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Seats"

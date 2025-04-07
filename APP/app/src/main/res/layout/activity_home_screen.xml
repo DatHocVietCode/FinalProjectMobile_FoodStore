@@ -307,12 +307,12 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 
-    <include
+    <FrameLayout
+        android:id="@+id/fragment_bottomNavigation_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/my_bottom_navigation"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        layout="@layout/fragment_bottom_navigation"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_alignParentBottom="true"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.app_foodstore.Adapter.CategoryAdapter;
+import com.example.app_foodstore.Fragment.Fragment_BottomNavigation;
 import com.example.app_foodstore.Model.CategoryModel;
 import com.example.app_foodstore.R;
 import com.google.android.material.bottomappbar.BottomAppBar;
@@ -24,11 +25,21 @@ public class HomeScreenActivity extends AppCompatActivity {
     TextView tv_notify;
     RecyclerView category_rv;
     NestedScrollView nestedScrollView;
-    BottomAppBar bottomNavigationView;
+    Fragment_BottomNavigation bottomNavigationFragment;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
+        if (savedInstanceState == null) {
+            bottomNavigationFragment = new Fragment_BottomNavigation();
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_bottomNavigation_container, bottomNavigationFragment)
+                    .commit();
+        } else {
+            bottomNavigationFragment = (Fragment_BottomNavigation) getSupportFragmentManager()
+                    .findFragmentById(R.id.fragment_bottomNavigation_container);
+        }
+
         SetUp();
 
     }
@@ -58,7 +69,7 @@ public class HomeScreenActivity extends AppCompatActivity {
         category_rv.setLayoutManager(layoutManager);
         category_rv.setAdapter(categoryAdapter);
 
-        bottomNavigationView = findViewById(R.id.ms_bottomNavigation);
+
         LinearLayout ln_viewSeeAll;
         ln_viewSeeAll = findViewById(R.id.ms_seeAllCate);
         nestedScrollView = findViewById(R.id.ms_nestedScrollView);
@@ -67,17 +78,10 @@ public class HomeScreenActivity extends AppCompatActivity {
             int previousScrollY = 0;
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
                 if (scrollY > previousScrollY) {
-                    // Cuộn xuống -> ẩn BottomNavigationView
-                    bottomNavigationView.animate()
-                            .translationY(bottomNavigationView.getHeight())
-                            .setDuration(100)  // Thời gian hiệu ứng ẩn
-                            .start();
+                    bottomNavigationFragment.hideBottomNavigation();
                 } else if (scrollY < previousScrollY) {
                     // Cuộn lên -> hiển thị BottomNavigationView
-                    bottomNavigationView.animate()
-                            .translationY(0)
-                            .setDuration(100)  // Thời gian hiệu ứng hiện
-                            .start();
+                    bottomNavigationFragment.showBottomNavigation();
                 }
                 previousScrollY = scrollY;
             }
