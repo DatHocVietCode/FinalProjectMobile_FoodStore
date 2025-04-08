@@ -45,7 +45,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
                     <ImageButton
-                        android:id="@+id/ms_header_btn_cart"
+                        android:id="@+id/ss_header_btn_cart"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
                         android:contentDescription="TODO"
@@ -68,8 +68,8 @@
                         android:text="4"
                         android:textColor="@android:color/white"
                         android:textSize="12sp"
-                        app:layout_constraintBottom_toTopOf="@id/ms_header_btn_cart"
-                        app:layout_constraintStart_toEndOf="@id/ms_header_btn_cart"
+                        app:layout_constraintBottom_toTopOf="@id/ss_header_btn_cart"
+                        app:layout_constraintStart_toEndOf="@id/ss_header_btn_cart"
                         android:layout_marginStart="-20dp"
                         android:layout_marginBottom="-20dp"
                         android:fontFamily="@font/sen"/>
@@ -103,7 +103,6 @@
                     android:id="@+id/ss_rc_recent_keyword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-
                 />
             </LinearLayout>
             <LinearLayout
