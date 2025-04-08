@@ -10,12 +10,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.app_foodstore.Adapter.PopularFoodAdapter_rc;
 import com.example.app_foodstore.Adapter.SearchKeywordAdapter;
 import com.example.app_foodstore.Fragment.Fragment_BottomNavigation;
 import com.example.app_foodstore.Fragment.Fragment_SearchBar;
+import com.example.app_foodstore.Indicator.DotPagerIndicatorDecoration;
 import com.example.app_foodstore.Model.FoodModel;
 import com.example.app_foodstore.Model.SearchKeywordModel;
 import com.example.app_foodstore.R;
@@ -95,11 +97,17 @@ public class SearchActivity extends AppCompatActivity {
         foods.add(new FoodModel("Cate 2", "Món ăn 2",1));
         foods.add(new FoodModel("Cate 3", "Món ăn 3",1));
         foods.add(new FoodModel("Cate 4", "Món ăn 4",1));
+        foods.add(new FoodModel("Cate 5", "Món ăn 5",1));
+        foods.add(new FoodModel("Cate 6", "Món ăn 6",1));
+        foods.add(new FoodModel("Cate 7", "Món ăn 7",1));
+        foods.add(new FoodModel("Cate 8", "Món ăn 8",1));
 
         gv_adapter = new PopularFoodAdapter_rc(this, foods);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this,
+                2, GridLayoutManager.HORIZONTAL, false);
         rc_popularFood.setLayoutManager(gridLayoutManager);
         rc_popularFood.setAdapter(gv_adapter);
+        rc_popularFood.addItemDecoration(new DotPagerIndicatorDecoration(this,4, RecyclerView.HORIZONTAL));
 
         nestedScrollView = findViewById(R.id.ss_nestedScrollView);
         nestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
