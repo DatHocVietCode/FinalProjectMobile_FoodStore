@@ -15,7 +15,7 @@
         android:orientation="vertical"
         android:padding="12dp">
         <ImageView
-            android:id="@+id/img_food_bestseller"
+            android:id="@+id/fragment_food_display1_img_food"
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:contentDescription="FoodImage"
@@ -24,7 +24,7 @@
             android:background="@drawable/rectangle_corner_radius"
             android:clipToOutline="true"/>
         <TextView
-            android:id="@+id/tv_foodName"
+            android:id="@+id/fragment_food_display1_tv_foodName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="20sp"
@@ -32,7 +32,7 @@
             android:text="Food Name"
             android:layout_marginTop="8dp"/>
         <TextView
-            android:id="@+id/tv_categoryName"
+            android:id="@+id/fragment_food_display1_tv_categoryName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Category Name"
@@ -52,7 +52,7 @@
                 android:src="@drawable/i_star"
                 android:layout_gravity="bottom"/>
             <TextView
-                android:id="@+id/tv_rating"
+                android:id="@+id/fragment_food_display1_tv_rating"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="4.7"
@@ -70,7 +70,7 @@
                 android:layout_gravity="bottom"
                 />
             <TextView
-                android:id="@+id/tv_delivery"
+                android:id="@+id/fragment_food_display1_tv_delivery"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Free"
@@ -88,7 +88,7 @@
                 android:layout_gravity="bottom"
                 />
             <TextView
-                android:id="@+id/tv_time"
+                android:id="@+id/fragment_food_display1_tv_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="20 min"

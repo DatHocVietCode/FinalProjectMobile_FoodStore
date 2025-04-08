@@ -7,11 +7,12 @@
     android:layout_height="match_parent"
     android:background="#FFFFFF">
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/ss_nestedScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
             <LinearLayout
                 android:id="@+id/ss_ln_header"
                 android:layout_width="match_parent"
@@ -81,6 +82,78 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/ss_ln_header"/>
+            <LinearLayout
+                android:id="@+id/ss_ln_recentKeywords"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/ss_fragment_searchBar_container"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:orientation="vertical"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginTop="12dp">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Recent Keyword"
+                    android:fontFamily="@font/sen"
+                    android:textSize="16dp"/>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/ss_rc_recent_keyword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/ss_ln_suggestedFood"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ss_ln_recentKeywords"
+                android:orientation="vertical"
+                android:layout_marginTop="12dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Suggested Foods"
+                    android:fontFamily="@font/sen"
+                    android:textSize="16dp"/>
+                <!-- Sau này sẽ thay thành fragment và recycler view, vì giờ chưa có food model lười viết -->
+                <include layout="@layout/fragment_food_display2"/>
+                <include layout="@layout/fragment_food_display2"/>
+                <include layout="@layout/fragment_food_display2"/>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/ss_ln_popularFood"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ss_ln_suggestedFood"
+                android:orientation="vertical"
+                android:layout_marginTop="12dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Popular Foods"
+                    android:fontFamily="@font/sen"
+                    android:textSize="16dp"/>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/ss_rv_popularFoods"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:padding="12dp"
+                    android:clipToPadding="false"
+                />
+            </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
     <FrameLayout
@@ -91,4 +164,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_alignParentBottom="true"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
