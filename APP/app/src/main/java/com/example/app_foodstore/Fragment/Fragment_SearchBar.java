@@ -21,6 +21,7 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 
 import com.example.app_foodstore.Activity.SearchActivity;
+import com.example.app_foodstore.Activity.SearchResultActivity;
 import com.example.app_foodstore.R;
 
 public class Fragment_SearchBar extends Fragment {
@@ -72,6 +73,17 @@ public class Fragment_SearchBar extends Fragment {
 
                 String text = searchEditText.getText().toString();
                 Toast.makeText(getContext(), "Bạn nhập: " + text, Toast.LENGTH_SHORT).show();
+                if (!text.isEmpty())
+                {
+                    Toast.makeText(getContext(), "Start Search result activity: " + text, Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getActivity(), SearchResultActivity.class);
+                    intent.putExtra("keyword", text);
+                    startActivity(intent);
+                }
+                else
+                {
+                    Toast.makeText(getContext(), "Vui lòng nhập từ khóa", Toast.LENGTH_SHORT).show();
+                }
                 return true; // đã xử lý sự kiện
             }
             return false;

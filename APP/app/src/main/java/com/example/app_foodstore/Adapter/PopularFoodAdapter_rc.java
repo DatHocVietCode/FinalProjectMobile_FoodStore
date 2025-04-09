@@ -1,14 +1,19 @@
 package com.example.app_foodstore.Adapter;
 
+import static androidx.core.content.ContextCompat.startActivity;
+
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.view.menu.MenuView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.app_foodstore.Activity.FoodDetailActivity;
 import com.example.app_foodstore.Model.FoodModel;
 import com.example.app_foodstore.R;
 
@@ -50,6 +55,12 @@ public class PopularFoodAdapter_rc extends RecyclerView.Adapter<PopularFoodAdapt
         FoodModel food = listFood.get(position);
         holder.tv_name.setText(food.getName());
         holder.tv_cate.setText(food.getCategoryName());
+
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(context, FoodDetailActivity.class);
+            intent.putExtra("idFood", food.getId());
+            context.startActivity(intent);
+        });
     }
 
     @Override

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
+    <LinearLayout
+        android:id="@+id/foodDetail_ln_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:gravity="start"
+        >
+        <ImageButton
+            android:id="@+id/foodDetail_ln_header_btn_back"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:padding="12dp"
+            android:src="@drawable/arrow_back"
+            android:scaleType="fitCenter"
+            android:background="@drawable/circle_bg_ecf0f4"
+            android:layout_marginEnd="8dp"
+            android:layout_gravity="center"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Food Details"
+            android:fontFamily="@font/sen"
+            android:gravity="center"
+            android:textSize="16sp"/>
+    </LinearLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/foodDetail_container_viewpager2"
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        app:layout_constraintTop_toBottomOf="@+id/foodDetail_ln_header"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginTop="12dp">
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/foodDetail_viewpager2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:background="@drawable/rectangle_corner_radius"
+            android:backgroundTint="#FFFFFF"
+            android:clipToOutline="true"
+            android:layout_marginTop="12dp"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <me.relex.circleindicator.CircleIndicator3
+        android:id="@+id/foodDetail_circle_indicator3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:ci_drawable="@drawable/dot_indicator"
+        app:ci_gravity="center"
+        app:layout_constraintTop_toBottomOf="@id/foodDetail_container_viewpager2"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/foodDetail_ln_name_favorite"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintTop_toBottomOf="@id/foodDetail_circle_indicator3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp">
+        <TextView
+            android:id="@+id/foodDetail_tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:maxWidth="250dp"
+            android:text="Food Name"
+            android:fontFamily="@font/sen"
+            android:gravity="center"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+        <ImageButton
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/favorite_inactive"
+            app:layout_constraintEnd_toEndOf="@id/foodDetail_ln_name_favorite"
+            app:layout_constraintBottom_toBottomOf="@id/foodDetail_ln_name_favorite"
+            app:layout_constraintTop_toTopOf="@id/foodDetail_ln_name_favorite"
+            android:elevation="4dp"
+
+            android:clipToOutline="true"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

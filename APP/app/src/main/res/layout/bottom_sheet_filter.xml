@@ -1,0 +1,30 @@
+<!-- res/layout/bottom_sheet_filter.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:background="#FFFFFF">
+
+    <TextView
+        android:id="@+id/option_default"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Mặc định"
+        android:paddingVertical="12dp" />
+
+    <TextView
+        android:id="@+id/option_price_low_high"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Giá: Thấp đến Cao"
+        android:paddingVertical="12dp" />
+
+    <TextView
+        android:id="@+id/option_price_high_low"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Giá: Cao đến Thấp"
+        android:paddingVertical="12dp" />
+
+</LinearLayout>

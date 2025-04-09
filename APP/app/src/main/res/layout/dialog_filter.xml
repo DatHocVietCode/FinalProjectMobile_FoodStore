@@ -1,0 +1,121 @@
+<!-- res/layout/dialog_filter.xml -->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/dialog_bg"
+    android:padding="24dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Lọc theo tên -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sắp xếp theo TÊN"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp"
+            android:fontFamily="@font/sen"/>
+
+        <RadioGroup
+            android:id="@+id/radioGroupName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <RadioButton
+                android:id="@+id/radioNameDefault"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mặc định"
+                android:checked="true"
+                app:buttonTint="#FF7622"
+                android:fontFamily="@font/sen"/>
+            <RadioButton
+                android:id="@+id/radioNameAZ"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tên: A → Z"
+                app:buttonTint="#FF7622"
+                android:fontFamily="@font/sen"/>
+            <RadioButton
+                android:id="@+id/radioNameZA"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tên: Z → A"
+                app:buttonTint="#FF7622"
+                android:fontFamily="@font/sen"/>
+        </RadioGroup>
+
+        <!-- Lọc theo giá -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sắp xếp theo GIÁ"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
+            android:fontFamily="@font/sen"/>
+
+        <RadioGroup
+            android:id="@+id/radioGroupPrice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+            <RadioButton
+                android:id="@+id/radioPriceDefault"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mặc định"
+                android:checked="true"
+                app:buttonTint="#FF7622"
+                android:fontFamily="@font/sen"/>
+            <RadioButton
+                android:id="@+id/radioPriceLowHigh"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Giá: Thấp → Cao"
+                android:fontFamily="@font/sen"
+                app:buttonTint="#FF7622"/>
+            <RadioButton
+                android:id="@+id/radioPriceHighLow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Giá: Cao → Thấp"
+                android:fontFamily="@font/sen"
+                app:buttonTint="#FF7622"/>
+        </RadioGroup>
+
+        <!-- Nút OK và Cancel -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="end"
+            android:layout_marginTop="24dp">
+
+            <Button
+                android:id="@+id/btnCancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hủy"
+                android:backgroundTint="#ECF0F4"
+                android:fontFamily="@font/sen"
+                android:textColor="#FF7622"
+                android:textStyle="bold"/>
+
+            <Button
+                android:id="@+id/btnOk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="OK"
+                android:layout_marginStart="16dp"
+                android:backgroundTint="#FF7622"
+                android:fontFamily="@font/sen"
+                android:textStyle="bold"/>
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>
