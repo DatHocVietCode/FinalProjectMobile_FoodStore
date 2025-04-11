@@ -1,7 +1,10 @@
 package com.example.app_foodstore.Activity;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.View;
+import android.widget.ImageButton;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.Nullable;
@@ -34,12 +37,17 @@ public class FoodDetailActivity extends AppCompatActivity {
             }
         }
     };
-
+    private ImageButton btn_Favorite;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_food_detail);
+
+        AnhXa();
+    }
+
+    private void AnhXa() {
         viewPager2 = findViewById(R.id.foodDetail_viewpager2);
         circleIndicator3 = findViewById(R.id.foodDetail_circle_indicator3);
         imagesList = getImagesList();
@@ -67,6 +75,22 @@ public class FoodDetailActivity extends AppCompatActivity {
         });
         viewPager2.setPageTransformer(new ZoomOutPageTransformer());
         //viewPager2.setPageTransformer(new DepthPageTransfomer());
+
+        btn_Favorite = findViewById(R.id.foodDetail_btn_favorite);
+        btn_Favorite.setTag("inactive"); // Tùy vào API gọi về
+        btn_Favorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if ("active".equals(btn_Favorite.getTag())) {
+                    btn_Favorite.setBackgroundResource(R.drawable.favorite_inactive);
+                    btn_Favorite.setTag("inactive");
+                } else {
+                    btn_Favorite.setBackgroundResource(R.drawable.favorite_active);
+                    btn_Favorite.setTag("active");
+                }
+            }
+
+        });
     }
 
     @Override

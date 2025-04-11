@@ -65,7 +65,7 @@
         android:id="@+id/foodDetail_circle_indicator3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:ci_drawable="@drawable/dot_indicator"
+        app:ci_drawable="@drawable/dot_indicator_1"
         app:ci_gravity="center"
         app:layout_constraintTop_toBottomOf="@id/foodDetail_container_viewpager2"
         android:layout_marginTop="8dp"
@@ -94,6 +94,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
         <ImageButton
+            android:id="@+id/foodDetail_btn_favorite"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:background="@drawable/favorite_inactive"
@@ -101,7 +102,7 @@
             app:layout_constraintBottom_toBottomOf="@id/foodDetail_ln_name_favorite"
             app:layout_constraintTop_toTopOf="@id/foodDetail_ln_name_favorite"
             android:elevation="4dp"
-
-            android:clipToOutline="true"/>
+            android:clipToOutline="true"
+            />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
