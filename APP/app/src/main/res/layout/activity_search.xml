@@ -120,9 +120,10 @@
                     android:fontFamily="@font/sen"
                     android:textSize="16dp"/>
                 <!-- Sau này sẽ thay thành fragment và recycler view, vì giờ chưa có food model lười viết -->
-                <include layout="@layout/fragment_food_display2"/>
-                <include layout="@layout/fragment_food_display2"/>
-                <include layout="@layout/fragment_food_display2"/>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/ss_rc_suggestedFood"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/ss_ln_popularFood"

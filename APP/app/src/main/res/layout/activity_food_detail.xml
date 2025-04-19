@@ -342,7 +342,18 @@
                         app:layout_constraintTop_toBottomOf="@id/foodDetail_tv_comments"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"/>
-
+                    <Button
+                        android:id="@+id/foodDetail_btn_moreComments"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Xem thêm"
+                        android:fontFamily="@font/sen"
+                        android:layout_marginTop="8dp"
+                        android:backgroundTint="#FF7622"
+                        android:textSize="14sp"
+                        app:layout_constraintTop_toBottomOf="@id/foodDetail_rc_Comments"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"/>
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>

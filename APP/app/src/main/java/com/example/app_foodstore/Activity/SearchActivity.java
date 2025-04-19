@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.app_foodstore.Adapter.PopularFoodAdapter_rc;
 import com.example.app_foodstore.Adapter.SearchKeywordAdapter;
+import com.example.app_foodstore.Adapter.SuggestedFoodAdapter;
 import com.example.app_foodstore.Fragment.Fragment_BottomNavigation;
 import com.example.app_foodstore.Fragment.Fragment_SearchBar;
 import com.example.app_foodstore.Indicator.DotPagerIndicatorDecoration;
@@ -28,8 +29,7 @@ import java.util.List;
 public class SearchActivity extends AppCompatActivity {
     Fragment_BottomNavigation bottomNavigationFragment;
     Fragment_SearchBar searchBarFragment;
-
-    RecyclerView rc_recent_keyword;
+    RecyclerView rc_recent_keyword, rc_suggestedFood;
     List<SearchKeywordModel> recentKeywords;
     RecyclerView rc_popularFood;
     List<FoodModel> foods;
@@ -66,28 +66,24 @@ public class SearchActivity extends AppCompatActivity {
         AnhXa();
     }
     private void AnhXa() {
-        rc_recent_keyword = findViewById(R.id.ss_rc_recent_keyword);
-        recentKeywords = new ArrayList<>();
-        recentKeywords.add(new SearchKeywordModel("Bánh canh"));
-        recentKeywords.add(new SearchKeywordModel("Hủ tiếu"));
-        recentKeywords.add(new SearchKeywordModel("Nước ngọt"));
-        recentKeywords.add(new SearchKeywordModel("Bún chả"));
-        SearchKeywordAdapter rc_adapter = new SearchKeywordAdapter(this, recentKeywords);
-        rc_recent_keyword.setAdapter(rc_adapter);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        rc_recent_keyword.setLayoutManager(layoutManager);
-        rc_adapter.setOnKeywordClickListener(new SearchKeywordAdapter.OnKeywordClickListener() {
-            @Override
-            public void onKeywordClick(String keyword) {
-                // Đặt text từ keyword vào ô tìm kiếm
-                searchBarFragment.getSearchEditText().setText(keyword);
+        setupRcKeyword();
+        setupRcPopularFood();
+        setupRcSuggestedFood();
+    }
 
-                // Đưa con trỏ (cursor) về cuối chữ
-                searchBarFragment.getSearchEditText().setSelection(keyword.length());
-            }
-        });
-        rc_adapter.notifyDataSetChanged();
+    private void setupRcSuggestedFood() {
+        rc_suggestedFood = findViewById(R.id.ss_rc_suggestedFood);
+        List<FoodModel> suggestedFoods = new ArrayList<>();
+        suggestedFoods.add(new FoodModel("Cate 1", "Món ăn 1",1));
+        suggestedFoods.add(new FoodModel("Cate 2", "Món ăn 2",2));
+        suggestedFoods.add(new FoodModel("Cate 3", "Món ăn 3",3));
+        SuggestedFoodAdapter adapter = new SuggestedFoodAdapter(this, suggestedFoods);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        rc_suggestedFood.setLayoutManager(layoutManager);
+        rc_suggestedFood.setAdapter(adapter);
+    }
 
+    private void setupRcPopularFood() {
         rc_popularFood = findViewById(R.id.ss_rv_popularFoods);
         foods = new ArrayList<>();
         foods.add(new FoodModel("Cate 1", "Món ăn 1",1));
@@ -119,5 +115,29 @@ public class SearchActivity extends AppCompatActivity {
                 previousScrollY = scrollY;
             }
         });
+    }
+
+    private void setupRcKeyword() {
+        rc_recent_keyword = findViewById(R.id.ss_rc_recent_keyword);
+        recentKeywords = new ArrayList<>();
+        recentKeywords.add(new SearchKeywordModel("Bánh canh"));
+        recentKeywords.add(new SearchKeywordModel("Hủ tiếu"));
+        recentKeywords.add(new SearchKeywordModel("Nước ngọt"));
+        recentKeywords.add(new SearchKeywordModel("Bún chả"));
+        SearchKeywordAdapter rc_adapter = new SearchKeywordAdapter(this, recentKeywords);
+        rc_recent_keyword.setAdapter(rc_adapter);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        rc_recent_keyword.setLayoutManager(layoutManager);
+        rc_adapter.setOnKeywordClickListener(new SearchKeywordAdapter.OnKeywordClickListener() {
+            @Override
+            public void onKeywordClick(String keyword) {
+                // Đặt text từ keyword vào ô tìm kiếm
+                searchBarFragment.getSearchEditText().setText(keyword);
+
+                // Đưa con trỏ (cursor) về cuối chữ
+                searchBarFragment.getSearchEditText().setSelection(keyword.length());
+            }
+        });
+        rc_adapter.notifyDataSetChanged();
     }
 }

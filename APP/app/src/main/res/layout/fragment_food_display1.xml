@@ -8,7 +8,8 @@
     card_view:cardCornerRadius="12dp"
     card_view:cardElevation="4dp"
     card_view:cardUseCompatPadding="true"
-    android:outlineSpotShadowColor="#B7BBCB">
+    android:outlineSpotShadowColor="#B7BBCB"
+    android:id="@+id/fragment_food_display1_cardView">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

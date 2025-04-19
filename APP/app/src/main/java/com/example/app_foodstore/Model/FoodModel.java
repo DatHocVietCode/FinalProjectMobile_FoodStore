@@ -1,5 +1,7 @@
 package com.example.app_foodstore.Model;
 
+
+// Chưa có avatar nha
 public class FoodModel {
     private int id;
 
