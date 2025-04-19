@@ -4,6 +4,9 @@
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
-
-    <style name="Theme.APP_FoodStore" parent="Base.Theme.APP_FoodStore" />
+    
+    <style name="Theme.APP_FoodStore" parent="Base.Theme.APP_FoodStore" >
+        <item name="android:windowFullscreen">true</item> <!-- Ẩn status bar -->
+        <item name="android:windowIsTranslucent">false</item> <!-- Đảm bảo rằng không trong suốt -->
+    </style>
 </resources>

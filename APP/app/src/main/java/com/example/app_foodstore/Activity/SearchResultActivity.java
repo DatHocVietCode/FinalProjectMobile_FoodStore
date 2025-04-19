@@ -27,7 +27,6 @@ import java.util.List;
 public class SearchResultActivity extends AppCompatActivity {
     RecyclerView ss_result_rc_searchResult;
     List<FoodModel> foods;
-    ImageButton btn_back;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,8 +57,6 @@ public class SearchResultActivity extends AppCompatActivity {
         ss_result_rc_searchResult.setLayoutManager(layoutManager);
         ss_result_rc_searchResult.setAdapter(new SearchResultAdapter_rc(this, foods));
 
-        btn_back = findViewById(R.id.ss_result_header_btn_back);
-        btn_back.setOnClickListener(v -> finish());
 
         ImageButton filterBtn = findViewById(R.id.ss_result_header_btn_filter);
 

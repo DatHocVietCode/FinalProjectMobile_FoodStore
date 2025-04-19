@@ -24,14 +24,11 @@
                 android:layout_marginEnd="24dp"
                 android:gravity="start"
                 >
-                <ImageButton
-                    android:id="@+id/ss_result_header_btn_back"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:padding="12dp"
-                    android:src="@drawable/arrow_back"
-                    android:scaleType="fitCenter"
-                    android:background="@drawable/circle_bg_ecf0f4"
+                <fragment
+                    android:id="@+id/fragment_back_btn"
+                    android:name="com.example.app_foodstore.Fragment.Fragment_btnBack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
                     android:layout_gravity="center"/>
                 <include layout="@layout/fragment_keyword_result"/>

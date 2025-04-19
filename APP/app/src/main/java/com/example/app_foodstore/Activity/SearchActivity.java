@@ -28,7 +28,7 @@ import java.util.List;
 public class SearchActivity extends AppCompatActivity {
     Fragment_BottomNavigation bottomNavigationFragment;
     Fragment_SearchBar searchBarFragment;
-    ImageButton btn_back;
+
     RecyclerView rc_recent_keyword;
     List<SearchKeywordModel> recentKeywords;
     RecyclerView rc_popularFood;
@@ -66,9 +66,6 @@ public class SearchActivity extends AppCompatActivity {
         AnhXa();
     }
     private void AnhXa() {
-        btn_back = findViewById(R.id.ss_header_btn_back);
-        btn_back.setOnClickListener(v -> finish());
-
         rc_recent_keyword = findViewById(R.id.ss_rc_recent_keyword);
         recentKeywords = new ArrayList<>();
         recentKeywords.add(new SearchKeywordModel("Bánh canh"));
