@@ -203,7 +203,9 @@ public class FoodDetailActivity extends AppCompatActivity {
 
         currentLoaded = nextLimit;
         commentAdapter.notifyDataSetChanged();
-
+        Log.d("DEBUG", "BottomCard visibility: " + bottomSheetBehavior.getState());
+        Log.d("DEBUG", "Comment count: " + visibleComments.size());
+        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
         // Ẩn nút nếu đã load hết
         if (currentLoaded >= allComments.size()) {
             btnLoadMore.setVisibility(View.GONE);

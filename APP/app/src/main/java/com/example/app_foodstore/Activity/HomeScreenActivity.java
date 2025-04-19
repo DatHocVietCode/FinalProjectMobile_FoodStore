@@ -1,5 +1,6 @@
 package com.example.app_foodstore.Activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -26,12 +27,15 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class HomeScreenActivity extends AppCompatActivity {
     TextView tv_notify;
     RecyclerView category_rv;
     NestedScrollView nestedScrollView;
     Fragment_BottomNavigation bottomNavigationFragment;
     Fragment_SearchBar searchBarFragment;
+    CircleImageView ms_header_avatar;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,7 +60,20 @@ public class HomeScreenActivity extends AppCompatActivity {
         setupCart();
         setupRcCategory();
         setupScrollView();
+        setupAvartar();
     }
+
+    private void setupAvartar() {
+        ms_header_avatar = findViewById(R.id.ms_header_avatar);
+        ms_header_avatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HomeScreenActivity.this, PersonalInfoActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
     private void setupScrollView() {
         nestedScrollView = findViewById(R.id.ms_nestedScrollView);
 
