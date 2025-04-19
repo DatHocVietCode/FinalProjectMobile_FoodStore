@@ -26,7 +26,10 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.2"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:focusable="true"
+                android:clickable="true"
+                android:foreground="?attr/selectableItemBackground">
 
                 <ImageView
                     android:id="@+id/imvHome"
@@ -52,7 +55,10 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.2"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:focusable="true"
+                android:clickable="true"
+                android:foreground="?attr/selectableItemBackground">
 
                 <ImageView
                     android:layout_width="40dp"
@@ -78,7 +84,10 @@
                 android:layout_height="match_parent"
                 android:layout_weight="0.2"
                 android:orientation="vertical"
-                android:visibility="visible">
+                android:visibility="visible"
+                android:focusable="true"
+                android:clickable="true"
+                android:foreground="?attr/selectableItemBackground">
 
                 <ImageView
                     android:id="@+id/imvCart"
@@ -100,11 +109,14 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/ms_bottomNavigation_btnSupport"
+                android:id="@+id/bottomNavigation_btnSupport"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.2"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:focusable="true"
+                android:clickable="true"
+                android:foreground="?attr/selectableItemBackground">
 
                 <ImageView
                     android:id="@+id/imvSupport"
@@ -126,11 +138,14 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/ms_bottomNavigation_settingBTn"
+                android:id="@+id/bottomNavigation_settingBtn"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.2"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:focusable="true"
+                android:clickable="true"
+                android:foreground="?attr/selectableItemBackground">
 
                 <ImageView
                     android:id="@+id/ms_bottomNavigation_imvSettings"

@@ -9,7 +9,10 @@
     card_view:cardElevation="4dp"
     card_view:cardUseCompatPadding="true"
     android:outlineSpotShadowColor="#B7BBCB"
-    android:id="@+id/fragment_food_display1_cardView">
+    android:id="@+id/fragment_food_display1_cardView"
+    android:focusable="true"
+    android:clickable="true"
+    android:foreground="?attr/selectableItemBackground">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

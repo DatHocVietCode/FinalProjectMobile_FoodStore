@@ -6,7 +6,9 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:padding="4dp"
-    >
+    android:focusable="true"
+    android:clickable="true"
+    android:foreground="?attr/selectableItemBackground">
     <!-- Card chứa text -->
     <androidx.cardview.widget.CardView
         android:id="@+id/fragment_food_display4_cardview_bottom"
@@ -77,7 +79,10 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     android:src="@drawable/btn_add"
                     android:background="@drawable/circle_bg_ecf0f4"
-                    android:layout_marginEnd="8dp"/>
+                    android:layout_marginEnd="8dp"
+                    android:focusable="true"
+                    android:clickable="true"
+                    android:foreground="?attr/selectableItemBackground"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>

@@ -28,6 +28,9 @@
         <activity android:name=".Activity.SearchActivity"/>
         <activity android:name=".Activity.SearchResultActivity"/>
         <activity android:name=".Activity.FoodDetailActivity"/>
+        <activity android:name=".Activity.SettingActivity"/>
+        <activity android:name=".Activity.PersonalInfoActivity"/>
+        <activity android:name=".Activity.EditPersonalInfoActivity"/>
     </application>
 
 </manifest>

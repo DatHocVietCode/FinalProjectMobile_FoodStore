@@ -10,5 +10,8 @@
         android:src="@drawable/arrow_back"
         android:scaleType="fitCenter"
         android:background="@drawable/circle_bg_ecf0f4"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center"
+        android:focusable="true"
+        android:clickable="true"
+        android:foreground="?attr/selectableItemBackground"/>
 </FrameLayout>

@@ -6,7 +6,10 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:layout_marginTop="8dp"
-    android:id="@+id/fragment_food_display2_container">
+    android:id="@+id/fragment_food_display2_container"
+    android:focusable="true"
+    android:clickable="true"
+    android:foreground="?attr/selectableItemBackground">
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

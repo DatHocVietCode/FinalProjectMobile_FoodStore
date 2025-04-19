@@ -4,7 +4,9 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:padding="4dp"
-    >
+    android:focusable="true"
+    android:clickable="true"
+    android:foreground="?attr/selectableItemBackground">
     <!-- Card chứa text -->
     <androidx.cardview.widget.CardView
         android:id="@+id/fragment_food_display3_cardview_bottom"
