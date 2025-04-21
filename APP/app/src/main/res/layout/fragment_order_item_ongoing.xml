@@ -9,7 +9,7 @@
     android:layout_marginTop="12dp"
     android:layout_marginBottom="12dp">
     <TextView
-        android:id="@+id/fragment_order_item_tv_categoryName"
+        android:id="@+id/fragment_order_item_ongoing_tv_categoryName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="16sp"
@@ -27,6 +27,7 @@
         android:layout_gravity="center_vertical"
         android:layout_marginTop="8dp">
         <ImageView
+            android:id="@+id/fragment_order_item_ongoing_imgFood"
             android:layout_width="64dp"
             android:layout_height="64dp"
             android:background="@drawable/rectangle_corner_radius"
@@ -39,7 +40,7 @@
             android:layout_weight="1"
             android:layout_marginStart="12dp">
             <TextView
-                android:id="@+id/fragment_order_item_tv_foodName"
+                android:id="@+id/fragment_order_item_ongoing_tv_foodName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
@@ -53,7 +54,7 @@
                 android:layout_marginTop="8dp"
                 android:textStyle="bold"/>
             <TextView
-                android:id="@+id/fragment_order_item_tv_foodID"
+                android:id="@+id/fragment_order_item_ongoing_tv_foodID"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
@@ -71,7 +72,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layout_constraintTop_toBottomOf="@+id/fragment_order_item_tv_foodName"
+                app:layout_constraintTop_toBottomOf="@+id/fragment_order_item_ongoing_tv_foodName"
                 android:gravity="center_vertical"
                 android:layout_marginTop="8dp">
                 <TextView
@@ -87,7 +88,7 @@
                     app:layout_constraintTop_toTopOf="parent"
                     android:textStyle="bold"/>
                 <TextView
-                    android:id="@+id/fragment_order_item_tv_price"
+                    android:id="@+id/fragment_order_item_ongoing_tv_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
@@ -113,7 +114,7 @@
                     android:layout_width="20dp"
                     android:layout_height="match_parent"/>
                 <TextView
-                    android:id="@+id/fragment_order_item_tv_itemCount"
+                    android:id="@+id/fragment_order_item_ongoing_tv_itemCount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
@@ -147,7 +148,7 @@
         android:orientation="horizontal"
         android:layout_marginTop="24dp">
         <Button
-            android:id="@+id/fragment_order_item_btn_track"
+            android:id="@+id/fragment_order_item_ongoing_btn_track"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
@@ -160,7 +161,7 @@
             android:clickable="true"
             android:foreground="?attr/selectableItemBackground"/>
         <Button
-            android:id="@+id/fragment_order_item_btn_cancel"
+            android:id="@+id/fragment_order_item_ongoing_btn_cancel"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"

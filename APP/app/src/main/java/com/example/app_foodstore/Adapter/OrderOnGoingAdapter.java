@@ -10,10 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.app_foodstore.Model.FoodModel;
 import com.example.app_foodstore.R;
-
-import java.util.List;
 
 public class OrderOnGoingAdapter extends RecyclerView.Adapter<OrderOnGoingAdapter.OrderOnGoingViewHolder> {
     Context context;
@@ -26,7 +23,7 @@ public class OrderOnGoingAdapter extends RecyclerView.Adapter<OrderOnGoingAdapte
     @NonNull
     @Override
     public OrderOnGoingAdapter.OrderOnGoingViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_order_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_order_item_ongoing, parent, false);
         return new OrderOnGoingViewHolder(view);
     }
 
@@ -48,7 +45,7 @@ public class OrderOnGoingAdapter extends RecyclerView.Adapter<OrderOnGoingAdapte
         TextView tv_Foodid;
         public OrderOnGoingViewHolder(@NonNull View itemView) {
             super(itemView);
-            tv_Foodid = itemView.findViewById(R.id.fragment_order_item_tv_foodID);
+            tv_Foodid = itemView.findViewById(R.id.fragment_order_item_ongoing_tv_foodID);
         }
     }
 }
