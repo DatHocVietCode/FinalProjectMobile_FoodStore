@@ -16,7 +16,6 @@ import com.example.app_foodstore.Activity.SeatScreenActivity;
 import com.example.app_foodstore.Activity.SettingActivity;
 import com.example.app_foodstore.R;
 import com.google.android.material.bottomappbar.BottomAppBar;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class Fragment_BottomNavigation extends Fragment {
     private View rootView;

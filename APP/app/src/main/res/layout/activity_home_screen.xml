@@ -12,7 +12,9 @@
         android:layout_height="match_parent">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:clipChildren="false"
+            android:clipToPadding="false">
             <LinearLayout
                 android:layout_marginTop="24dp"
                 android:id="@+id/ms_ln_header"
@@ -23,7 +25,9 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginStart="24dp"
                 android:layout_marginEnd="24dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:clipChildren="false"
+                android:clipToPadding="false">
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/ms_header_avatar"
@@ -39,7 +43,9 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical"
                     android:layout_gravity="center"
-                    android:layout_marginStart="12dp">
+                    android:layout_marginStart="12dp"
+                    android:clipChildren="false"
+                    android:clipToPadding="false">
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
@@ -63,7 +69,9 @@
                 </LinearLayout>
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:clipChildren="false"
+                    android:clipToPadding="false">
                     <ImageButton
                         android:id="@+id/ms_header_btn_cart"
                         android:layout_width="40dp"
@@ -75,12 +83,13 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        android:foregroundGravity="center">
+                        android:foregroundGravity="center"
+                        >
                     </ImageButton>
                     <TextView
                         android:id="@+id/ms_header_cart_notify"
-                        android:layout_width="16dp"
-                        android:layout_height="16dp"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
                         android:background="@drawable/circle_bg_ff7622"
                         android:gravity="center"
                         android:visibility="visible"
@@ -90,9 +99,10 @@
                         android:textSize="12sp"
                         app:layout_constraintBottom_toTopOf="@id/ms_header_btn_cart"
                         app:layout_constraintStart_toEndOf="@id/ms_header_btn_cart"
-                        android:layout_marginStart="-20dp"
-                        android:layout_marginBottom="-20dp"
-                        android:fontFamily="@font/sen"/>
+                        android:layout_marginStart="-15dp"
+                        android:layout_marginBottom="-15dp"
+                        android:fontFamily="@font/sen"
+                        />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </LinearLayout>
 
@@ -235,7 +245,7 @@
                         android:textColor="#32343E"
                         android:textSize="20sp"/>
                     <include
-                        android:id="@+id/ms_seeAllBestSeller"
+                        android:id="@+id/ms_seeAllNewFood"
                         layout="@layout/fragment_view_see_all"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
