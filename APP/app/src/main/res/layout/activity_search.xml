@@ -5,14 +5,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF">
+    android:background="#FFFFFF"
+    android:clipChildren="false"
+    android:clipToPadding="false">
     <androidx.core.widget.NestedScrollView
         android:id="@+id/ss_nestedScrollView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:clipChildren="false"
+        android:clipToPadding="false">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:clipChildren="false"
+            android:clipToPadding="false">
             <LinearLayout
                 android:id="@+id/ss_ln_header"
                 android:layout_width="match_parent"
@@ -23,7 +29,9 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginTop="24dp"
                 android:layout_marginStart="24dp"
-                android:layout_marginEnd="24dp">
+                android:layout_marginEnd="24dp"
+                android:clipChildren="false"
+                android:clipToPadding="false">
                 <fragment
                     android:id="@+id/fragment_back_btn"
                     android:name="com.example.app_foodstore.Fragment.Fragment_btnBack"
@@ -40,11 +48,11 @@
                     android:layout_gravity="center"/>
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="wrap_content">
                     <ImageButton
                         android:id="@+id/ss_header_btn_cart"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         android:contentDescription="TODO"
                         android:src="@drawable/cart"
                         android:scaleType="fitCenter"
@@ -67,8 +75,8 @@
                         android:textSize="12sp"
                         app:layout_constraintBottom_toTopOf="@id/ss_header_btn_cart"
                         app:layout_constraintStart_toEndOf="@id/ss_header_btn_cart"
-                        android:layout_marginStart="-20dp"
-                        android:layout_marginBottom="-20dp"
+                        android:layout_marginStart="-15dp"
+                        android:layout_marginBottom="-15dp"
                         android:fontFamily="@font/sen"/>
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </LinearLayout>

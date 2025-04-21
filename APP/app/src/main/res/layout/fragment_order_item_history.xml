@@ -7,10 +7,14 @@
     android:orientation="vertical"
     android:background="#FFFFFF"
     android:layout_marginTop="12dp"
-    android:layout_marginBottom="12dp">
+    android:layout_marginBottom="12dp"
+    android:clipChildren="false"
+    android:clipToPadding="false">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:clipChildren="false"
+        android:clipToPadding="false">
         <TextView
             android:id="@+id/fragment_order_item_history_tv_categoryName"
             android:layout_width="wrap_content"
@@ -60,7 +64,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:layout_marginTop="8dp">
+        android:layout_marginTop="8dp"
+        android:clipChildren="false"
+        android:clipToPadding="false">
         <ImageView
             android:id="@+id/fragment_order_item_history_img_food"
             android:layout_width="64dp"
@@ -73,7 +79,9 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:layout_marginStart="12dp">
+            android:layout_marginStart="12dp"
+            android:clipChildren="false"
+            android:clipToPadding="false">
             <TextView
                 android:id="@+id/fragment_order_item_history_tv_foodName"
                 android:layout_width="wrap_content"
@@ -102,7 +110,8 @@
                 android:textStyle="italic"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginTop="8dp"/>
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="4dp"/>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
