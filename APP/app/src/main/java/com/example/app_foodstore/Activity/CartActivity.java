@@ -48,8 +48,6 @@ public class CartActivity extends AppCompatActivity {
                 tv_done.setVisibility(View.VISIBLE);
                 cartAdapter.setEditMode(true); // bật nút xóa
                 bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-                ImageView img = findViewById(R.id.cart_cardView_bottomSheet_expandbtn);
-                img.setImageResource(R.drawable.expand_up);
             }
         });
         tv_done.setOnClickListener(new View.OnClickListener() {
@@ -59,8 +57,6 @@ public class CartActivity extends AppCompatActivity {
                 tv_done.setVisibility(View.GONE);
                 cartAdapter.setEditMode(false); // tắt nút xóa
                 bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-                ImageView img = findViewById(R.id.cart_cardView_bottomSheet_expandbtn);
-                img.setImageResource(R.drawable.expand_up);
             }
         });
     }
@@ -96,7 +92,7 @@ public class CartActivity extends AppCompatActivity {
                 if (currentState != BottomSheetBehavior.STATE_SETTLING) {
                     if (currentState == BottomSheetBehavior.STATE_EXPANDED) {
                         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-                        toggleButton.setImageResource(R.drawable.expand_up);
+                        //toggleButton.setImageResource(R.drawable.expand_up);
                         bottomSheetBehavior.setHideable(false);
                         int peekDp = 30; // dp bạn muốn
                         float density = getResources().getDisplayMetrics().density;
@@ -104,7 +100,7 @@ public class CartActivity extends AppCompatActivity {
                         bottomSheetBehavior.setPeekHeight(peekPx);
                     } else {
                         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-                        toggleButton.setImageResource(R.drawable.expand_down);
+                        //toggleButton.setImageResource(R.drawable.expand_down);
                     }
                 } else {
                     Log.d("STate", "BottomSheet is settling, cannot change state");

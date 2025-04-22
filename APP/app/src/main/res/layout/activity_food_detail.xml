@@ -381,7 +381,7 @@
                     android:id="@+id/foodDetail_cardView_bottomSheet_expandbtn"
                     android:layout_width="match_parent"
                     android:layout_height="24dp"
-                    android:src="@drawable/expand_down"
+                    android:src="@drawable/bottom_sheet_navigation"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
