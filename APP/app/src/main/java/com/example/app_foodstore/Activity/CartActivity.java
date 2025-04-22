@@ -1,0 +1,123 @@
+package com.example.app_foodstore.Activity;
+
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.app_foodstore.Adapter.ItemCartAdapter;
+import com.example.app_foodstore.R;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
+
+public class CartActivity extends AppCompatActivity {
+    RecyclerView rc_cart;
+    ItemCartAdapter cartAdapter;
+    TextView tv_edit, tv_done;
+    private BottomSheetBehavior<CardView> bottomSheetBehavior;
+    private ImageButton toggleButton;
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_cart);
+
+        AnhXa();
+    }
+
+    private void AnhXa() {
+        setupRcCart();
+        setupBottomCard();
+        setupBtn();
+    }
+
+    private void setupBtn() {
+        tv_edit = findViewById(R.id.cart_tv_edit);
+        tv_done = findViewById(R.id.cart_tv_done);
+
+        tv_edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tv_edit.setVisibility(View.GONE);
+                tv_done.setVisibility(View.VISIBLE);
+                cartAdapter.setEditMode(true); // bật nút xóa
+                bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                ImageView img = findViewById(R.id.cart_cardView_bottomSheet_expandbtn);
+                img.setImageResource(R.drawable.expand_up);
+            }
+        });
+        tv_done.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tv_edit.setVisibility(View.VISIBLE);
+                tv_done.setVisibility(View.GONE);
+                cartAdapter.setEditMode(false); // tắt nút xóa
+                bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                ImageView img = findViewById(R.id.cart_cardView_bottomSheet_expandbtn);
+                img.setImageResource(R.drawable.expand_up);
+            }
+        });
+    }
+
+    private void setupBottomCard() {
+        CardView bottomCard = findViewById(R.id.cart_cardView_bottomSheet);
+        toggleButton = findViewById(R.id.cart_cardView_bottomSheet_expandbtn);
+        // Khởi tạo behavior từ CardView
+        bottomSheetBehavior = BottomSheetBehavior.from(bottomCard);
+        // Trạng thái ban đầu (ẩn hoặc collapsed)
+        bottomCard.post(() -> {
+            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+            bottomSheetBehavior.setHideable(false);
+            int peekDp = 30; // dp bạn muốn
+            float density = getResources().getDisplayMetrics().density;
+            int peekPx = (int) (peekDp * density);
+            bottomSheetBehavior.setPeekHeight(peekPx);
+        });
+
+        Log.d("STate", "Current: " + bottomSheetBehavior.getState());
+        Log.d("STate", "Peek height: " + bottomSheetBehavior.getPeekHeight());
+        Log.d("STate", "Is Hideable: " + bottomSheetBehavior.isHideable());
+
+        // Xử lý toggle khi nhấn nút
+        toggleButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("STate", "onClick: " + bottomSheetBehavior.getState());
+
+                int currentState = bottomSheetBehavior.getState();
+
+                // Kiểm tra xem BottomSheet có đang trong trạng thái Settling không
+                if (currentState != BottomSheetBehavior.STATE_SETTLING) {
+                    if (currentState == BottomSheetBehavior.STATE_EXPANDED) {
+                        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                        toggleButton.setImageResource(R.drawable.expand_up);
+                        bottomSheetBehavior.setHideable(false);
+                        int peekDp = 30; // dp bạn muốn
+                        float density = getResources().getDisplayMetrics().density;
+                        int peekPx = (int) (peekDp * density);
+                        bottomSheetBehavior.setPeekHeight(peekPx);
+                    } else {
+                        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                        toggleButton.setImageResource(R.drawable.expand_down);
+                    }
+                } else {
+                    Log.d("STate", "BottomSheet is settling, cannot change state");
+                }
+            }
+        });
+
+    }
+    private void setupRcCart() {
+        rc_cart = findViewById(R.id.cart_rc_items);
+        cartAdapter = new ItemCartAdapter(this);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        rc_cart.setLayoutManager(linearLayoutManager);
+        rc_cart.setAdapter(cartAdapter);
+    }
+}

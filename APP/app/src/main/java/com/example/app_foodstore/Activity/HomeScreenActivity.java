@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -36,6 +38,7 @@ public class HomeScreenActivity extends AppCompatActivity {
     Fragment_BottomNavigation bottomNavigationFragment;
     Fragment_SearchBar searchBarFragment;
     CircleImageView ms_header_avatar;
+    ImageButton btn_cart;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -117,6 +120,14 @@ public class HomeScreenActivity extends AppCompatActivity {
         {
             tv_notify.setVisibility(View.INVISIBLE);
         }
+        btn_cart = findViewById(R.id.ms_header_btn_cart);
+        btn_cart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HomeScreenActivity.this, CartActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void includeFragments() {
