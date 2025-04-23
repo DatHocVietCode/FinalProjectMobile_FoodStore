@@ -39,6 +39,7 @@
         <activity android:name=".Activity.PersonalInfoActivity"/>
         <activity android:name=".Activity.EditPersonalInfoActivity"/>
         <activity android:name=".Activity.CartActivity"/>
+        <activity android:name=".Activity.PaymentActivity"/>
     </application>
 
 </manifest>

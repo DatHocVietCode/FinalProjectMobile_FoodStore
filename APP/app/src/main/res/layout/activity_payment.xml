@@ -46,7 +46,7 @@
         android:layout_marginTop="12dp"
         android:clipChildren="false"
         android:clipToPadding="false">
-        <FrameLayout
+        <!--<FrameLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
             <LinearLayout
@@ -55,7 +55,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:gravity="center"
-                android:visibility="gone">
+                android:visibility="visible">
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -64,7 +64,7 @@
                     android:src="@drawable/cash_unselected"
                     android:backgroundTint="@null"
                     android:scaleType="centerCrop"
-                    android:padding="4dp" />
+                    />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -77,16 +77,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/payment_cash_selected"
-                android:visibility="visible">
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@drawable/check"
-                    app:layout_constraintStart_toEndOf="@+id/payment_ln_cash_selected"
-                    app:layout_constraintBottom_toTopOf="@+id/payment_ln_cash_selected"
-                    android:layout_marginStart="-40dp"
-                    android:layout_marginBottom="-40dp"
-                    />
+                android:visibility="gone"
+                android:background="#FFFFFF">
+
                 <LinearLayout
                     android:id="@+id/payment_ln_cash_selected"
                     android:layout_width="wrap_content"
@@ -115,8 +108,61 @@
                         android:textSize="16sp"
                         android:layout_marginTop="4dp"/>
                 </LinearLayout>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/check"
+                    app:layout_constraintStart_toEndOf="@+id/payment_ln_cash_selected"
+                    app:layout_constraintBottom_toTopOf="@+id/payment_ln_cash_selected"
+                    android:layout_marginStart="-20dp"
+                    android:layout_marginBottom="-20dp"
+                />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </FrameLayout>
+        </FrameLayout>-->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:id="@+id/payment_cash_container"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:clipToOutline="true"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+                <ImageView
+                    android:id="@+id/payment_cash_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/cash_unselected"
+                    android:scaleType="centerCrop"
+                    android:padding="4dp" />
+
+                <TextView
+                    android:id="@+id/payment_cash_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Cash"
+                    android:fontFamily="@font/sen"
+                    android:textSize="16sp"
+                    android:layout_marginTop="4dp" />
+
+            </LinearLayout>
+            <ImageView
+                android:id="@+id/payment_cash_check"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/check"
+                android:visibility="invisible"
+                app:layout_constraintStart_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="parent"
+                android:layout_marginBottom="-20dp"
+                android:layout_marginStart="-20dp"
+                />
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
