@@ -43,6 +43,12 @@ dependencies {
     implementation(libs.circleimageview)
     implementation(libs.glide)
     implementation(libs.circleindicator)
+    implementation(fileTree(mapOf(
+        "dir" to "D:\\University\\Nam3\\2stSemester\\Mobile\\FinalProject\\zalopay",
+        "include" to listOf("*.aar", "*.jar"),
+        "exclude" to listOf("")
+    )))
+    implementation("com.squareup.okhttp3:okhttp:4.9.3")
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

@@ -39,7 +39,17 @@
         <activity android:name=".Activity.PersonalInfoActivity"/>
         <activity android:name=".Activity.EditPersonalInfoActivity"/>
         <activity android:name=".Activity.CartActivity"/>
-        <activity android:name=".Activity.PaymentActivity"/>
+        <activity android:name=".Activity.PaymentActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="demozpdk" android:host="payment" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

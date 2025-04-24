@@ -1,13 +1,24 @@
 package com.example.app_foodstore.Activity;
 
+import static com.example.app_foodstore.ZaloPay.Constant.AppInfo.APP_ID;
+
+import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -20,10 +31,18 @@ import com.example.app_foodstore.Adapter.VoucherAdapter;
 import com.example.app_foodstore.Model.PaymentInterfaceModel;
 import com.example.app_foodstore.Model.VoucherModel;
 import com.example.app_foodstore.R;
+import com.example.app_foodstore.ZaloPay.Api.CreateOrder;
+
+import org.json.JSONObject;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+
+import vn.zalopay.sdk.Environment;
+import vn.zalopay.sdk.ZaloPayError;
+import vn.zalopay.sdk.ZaloPaySDK;
+import vn.zalopay.sdk.listeners.PayOrderListener;
 
 public class PaymentActivity extends AppCompatActivity {
     boolean selected = true; // hoặc false tùy trạng thái
@@ -34,19 +53,120 @@ public class PaymentActivity extends AppCompatActivity {
     ImageView checkImage;
     RecyclerView rc_methods;
     PaymentMethodAdapter paymentMethodAdapter;
+    Button btn_pay;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment);
-
+        ZaloPaySDK.init(APP_ID, Environment.SANDBOX);
+        StrictMode.ThreadPolicy policy = new
+                StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
         AnhXa();
     }
+    //Cần bắt sự kiện OnNewIntent vì ZaloPay App sẽ gọi deeplink về app của Merchant
+    @Override
+    public void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        ZaloPaySDK.getInstance().onResult(intent);
+    }
 
+    //Implement interface PayOrderListener để nhận kết quả thanh toán
+    private static class MyZaloPayListener implements PayOrderListener {
+        @Override
+        public void onPaymentSucceeded(final String transactionId, final String transToken, final String appTransID) {
+            //Handle Success
+        }
+
+        @Override
+        public void onPaymentCanceled(String zpTransToken, String appTransID) {
+            //Handle User Canceled
+        }
+
+        @Override
+        public void onPaymentError(ZaloPayError zaloPayError, String zpTransToken, String appTransID) {
+            //Redirect to Zalo/ZaloPay Store when zaloPayError == ZaloPayError.PAYMENT_APP_NOT_FOUND
+            //Handle Error
+        }
+    }
     private void AnhXa() {
         //setupPayment(); Sample cũ khi còn dùng linear layout
         setupVoucher();
         setupViewPager();
         setupRecyclerViewMethod();
+        setupbtnPay();
+    }
+
+    private void setupbtnPay() {
+        btn_pay = findViewById(R.id.payment_btn_payAndConfirm);
+        btn_pay.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onClick(View v) {
+                CreateOrder orderApi = new CreateOrder();
+
+                try {
+                    JSONObject data = orderApi.createOrder("100000");
+                    //Log.d("Amount", txtAmount.getText().toString());
+                    String code = data.getString("return_code");
+                    Toast.makeText(getApplicationContext(), "return_code: " + code, Toast.LENGTH_LONG).show();
+                    if (code.equals("1")) {
+                        String token = data.getString("zp_trans_token");
+                        //IsDone();
+                        ZaloPaySDK.getInstance().payOrder(PaymentActivity.this, token, "demozpdk://payment", new PayOrderListener() {
+                            @Override
+                            public void onPaymentSucceeded(final String transactionId, final String transToken, final String appTransID) {
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        new AlertDialog.Builder(PaymentActivity.this)
+                                                .setTitle("Payment Success")
+                                                .setMessage(String.format("TransactionId: %s - TransToken: %s", transactionId, transToken))
+                                                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(DialogInterface dialog, int which) {
+                                                    }
+                                                })
+                                                .setNegativeButton("Cancel", null).show();
+                                    }
+
+                                });
+                                //IsLoading();
+                            }
+
+                            @Override
+                            public void onPaymentCanceled(String zpTransToken, String appTransID) {
+                                new AlertDialog.Builder(PaymentActivity.this)
+                                        .setTitle("User Cancel Payment")
+                                        .setMessage(String.format("zpTransToken: %s \n", zpTransToken))
+                                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                            }
+                                        })
+                                        .setNegativeButton("Cancel", null).show();
+                            }
+
+                            @Override
+                            public void onPaymentError(ZaloPayError zaloPayError, String zpTransToken, String appTransID) {
+                                new AlertDialog.Builder(PaymentActivity.this)
+                                        .setTitle("Payment Fail")
+                                        .setMessage(String.format("ZaloPayErrorCode: %s \nTransToken: %s", zaloPayError.toString(), zpTransToken))
+                                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                            }
+                                        })
+                                        .setNegativeButton("Cancel", null).show();
+                            }
+                        });
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     private void setupRecyclerViewMethod() {
