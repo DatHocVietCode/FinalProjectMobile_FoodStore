@@ -1,0 +1,14 @@
+<TextView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/spinner_item_text"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/spinner_dropdown_bg"
+    android:clipToOutline="true"
+    app:backgroundTint="@null"
+    android:textColor="#32343E"
+    android:padding="12dp"
+    android:textSize="14sp"
+    android:fontFamily="@font/sen"
+    android:foreground="?android:attr/selectableItemBackground"/>

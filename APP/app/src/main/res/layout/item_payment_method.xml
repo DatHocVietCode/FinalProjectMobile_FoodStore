@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/payment_method_container"
+    android:layout_marginEnd="16dp"
+    android:clipChildren="false"
+    android:clipToPadding="false">
+    <LinearLayout
+        android:id="@+id/payment_cash_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:clipToOutline="true"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:clipChildren="false"
+        android:clipToPadding="false">
+        <ImageView
+            android:id="@+id/payment_cash_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/cash_unselected"
+            android:scaleType="centerCrop"
+            android:padding="4dp" />
+
+        <TextView
+            android:id="@+id/payment_cash_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cash"
+            android:fontFamily="@font/sen"
+            android:textSize="16sp"
+            android:layout_marginTop="4dp" />
+
+    </LinearLayout>
+    <ImageView
+        android:id="@+id/payment_cash_check"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/check"
+        android:visibility="invisible"
+        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="parent"
+        android:layout_marginBottom="-20dp"
+        android:layout_marginStart="-20dp"
+        />
+</androidx.constraintlayout.widget.ConstraintLayout>

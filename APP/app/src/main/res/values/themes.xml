@@ -9,4 +9,7 @@
         <item name="android:windowFullscreen">true</item> <!-- Ẩn status bar -->
         <item name="android:windowIsTranslucent">false</item> <!-- Đảm bảo rằng không trong suốt -->
     </style>
+    <style name="CustomSpinnerStyle" parent="Widget.AppCompat.Spinner">
+        <item name="android:popupBackground">@drawable/spinner_dropdown_bg</item>
+    </style>
 </resources>

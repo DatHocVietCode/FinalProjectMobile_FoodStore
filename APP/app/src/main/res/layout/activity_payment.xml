@@ -34,7 +34,8 @@
             android:gravity="center"
             android:textSize="16sp"/>
     </LinearLayout>
-    <LinearLayout
+    <!--<LinearLayout
+        android:id="@+id/payment_ln_methods"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -46,7 +47,7 @@
         android:layout_marginTop="12dp"
         android:clipChildren="false"
         android:clipToPadding="false">
-        <!--<FrameLayout
+        &lt;!&ndash;<FrameLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
             <LinearLayout
@@ -119,7 +120,7 @@
                 />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </FrameLayout>-->
+        </FrameLayout>&ndash;&gt;
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
@@ -164,5 +165,139 @@
                 android:layout_marginStart="-20dp"
                 />
         </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>-->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/payment_rc_methods"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/payment_ln_header"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginTop="12dp"
+        android:clipChildren="false"
+        android:clipToPadding="false"/>
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/payment_viewpager2"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/payment_rc_methods"
+        android:layout_marginTop="12dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:padding="12dp"/>
+    <LinearLayout
+        android:id="@+id/payment_ln_voucher"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/rectangle_corner_radius"
+        android:backgroundTint="#FFFFFF"
+        app:layout_constraintTop_toBottomOf="@+id/payment_viewpager2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:padding="12dp"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:layout_marginStart="8dp"
+            android:text="Vouchers:"
+            android:fontFamily="@font/sen"
+            android:textStyle="bold"
+            android:textColor="#32343E"/>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rectangle_corner_radius"
+            android:backgroundTint="#F3F5F6"
+            android:padding="8dp"
+            android:layout_marginTop="4dp">
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/spinnerVouchers"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/CustomSpinnerStyle"
+                android:focusable="true"
+                android:clickable="true"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
     </LinearLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="12dp">
+        <LinearLayout
+            android:id="@+id/cart_ln_price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="24dp"
+            android:orientation="horizontal"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="24dp"
+            android:gravity="center_vertical"
+            app:layout_constraintTop_toTopOf="parent">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:text="TOTAL: "
+                android:fontFamily="@font/sen"
+                android:textSize="12sp"
+                android:textColor="#A0A5BA"
+                android:layout_marginStart="12dp"/>
+            <TextView
+                android:id="@+id/payment_tv_total_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:text="$1000"
+                android:fontFamily="@font/sen"
+                android:textSize="24sp"
+                android:textColor="#181C2E"
+                android:textStyle="bold"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="8dp"/>
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+        </LinearLayout>
+        <Button
+            android:id="@+id/payment_btn_payAndConfirm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="PAY &amp; CONFIRM"
+            android:fontFamily="@font/sen"
+            android:textColor="@color/white"
+            android:textSize="24dp"
+            android:textStyle="bold"
+            android:padding="12dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/rectangle_corner_radius_ff7622"
+            app:backgroundTint="@null"
+            android:clipToOutline="true"
+            app:layout_constraintTop_toBottomOf="@+id/cart_ln_price"
+            android:focusable="true"
+            android:clickable="true"
+            android:foreground="?attr/selectableItemBackground"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

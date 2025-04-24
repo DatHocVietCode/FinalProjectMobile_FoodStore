@@ -205,7 +205,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     android:text="$1000"
                     android:fontFamily="@font/sen"
-                    android:textSize="20sp"
+                    android:textSize="24sp"
                     android:textColor="#181C2E"
                     android:textStyle="bold"
                     android:layout_marginStart="12dp"
