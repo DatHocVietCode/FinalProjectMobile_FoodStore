@@ -104,6 +104,8 @@ public class PaymentActivity extends AppCompatActivity {
             @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View v) {
+                if (viewPager2.getCurrentItem() != 1)
+                    return;
                 CreateOrder orderApi = new CreateOrder();
 
                 try {
@@ -191,7 +193,7 @@ public class PaymentActivity extends AppCompatActivity {
         // Sau này bú từ API
         List<PaymentInterfaceModel> paymentInterfaceModelList = new ArrayList<>();
         paymentInterfaceModelList.add(new PaymentInterfaceModel(R.drawable.cash_selected, R.drawable.cash_unselected, "Cash", true));
-        paymentInterfaceModelList.add(new PaymentInterfaceModel(R.drawable.momo_selected, R.drawable.momo_unselected, "Momo", false));
+        paymentInterfaceModelList.add(new PaymentInterfaceModel(R.drawable.zalopay_selected, R.drawable.zalopay_unselected, "ZaloPay", false));
         paymentInterfaceModelList.add(new PaymentInterfaceModel(R.drawable.vnpay_selected, R.drawable.vnpay_unselected, "VNPay", false));
         paymentInterfaceModelList.add(new PaymentInterfaceModel(R.drawable.visa_selected, R.drawable.visa_unselected, "Visa", false));
         paymentInterfaceModelList.add(new PaymentInterfaceModel(R.drawable.master_card_selected, R.drawable.master_card_unselected, "Master Card", false));
