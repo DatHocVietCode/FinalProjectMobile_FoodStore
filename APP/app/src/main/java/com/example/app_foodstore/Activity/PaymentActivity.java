@@ -11,7 +11,9 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -21,17 +23,22 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatSpinner;
+import androidx.cardview.widget.CardView;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.example.app_foodstore.Adapter.OrderDetailAdapter;
 import com.example.app_foodstore.Adapter.PaymentMethodAdapter;
 import com.example.app_foodstore.Adapter.ViewPagerPaymentMethodAdapter;
 import com.example.app_foodstore.Adapter.VoucherAdapter;
+import com.example.app_foodstore.Model.OrderDetailModel;
 import com.example.app_foodstore.Model.PaymentInterfaceModel;
 import com.example.app_foodstore.Model.VoucherModel;
 import com.example.app_foodstore.R;
 import com.example.app_foodstore.ZaloPay.Api.CreateOrder;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
 import org.json.JSONObject;
 
@@ -54,6 +61,9 @@ public class PaymentActivity extends AppCompatActivity {
     RecyclerView rc_methods;
     PaymentMethodAdapter paymentMethodAdapter;
     Button btn_pay;
+    List<OrderDetailModel> orderDetailModelList;
+    private BottomSheetBehavior<CardView> bottomSheetBehavior;
+    private ImageButton toggleButton;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,6 +105,83 @@ public class PaymentActivity extends AppCompatActivity {
         setupViewPager();
         setupRecyclerViewMethod();
         setupbtnPay();
+        //setupOrderDetail();
+        //setupBottomCard();
+    }
+    private void setupBottomCard() {
+        CardView bottomCard = findViewById(R.id.payment_cardView_bottomSheet);
+        toggleButton = findViewById(R.id.payment_cardView_bottomSheet_expandbtn);
+        // Khởi tạo behavior từ CardView
+        bottomSheetBehavior = BottomSheetBehavior.from(bottomCard);
+        // Trạng thái ban đầu (ẩn hoặc collapsed)
+        bottomCard.post(() -> {
+            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+            bottomSheetBehavior.setHideable(false);
+            int peekDp = 30; // dp bạn muốn
+            float density = getResources().getDisplayMetrics().density;
+            int peekPx = (int) (peekDp * density);
+            bottomSheetBehavior.setPeekHeight(peekPx);
+        });
+
+        Log.d("STate", "Current: " + bottomSheetBehavior.getState());
+        Log.d("STate", "Peek height: " + bottomSheetBehavior.getPeekHeight());
+        Log.d("STate", "Is Hideable: " + bottomSheetBehavior.isHideable());
+
+        // Xử lý toggle khi nhấn nút
+        toggleButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("STate", "onClick: " + bottomSheetBehavior.getState());
+
+                int currentState = bottomSheetBehavior.getState();
+
+                // Kiểm tra xem BottomSheet có đang trong trạng thái Settling không
+                if (currentState != BottomSheetBehavior.STATE_SETTLING) {
+                    if (currentState == BottomSheetBehavior.STATE_EXPANDED) {
+                        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                        //toggleButton.setImageResource(R.drawable.expand_up);
+                        bottomSheetBehavior.setHideable(false);
+                        int peekDp = 30; // dp bạn muốn
+                        float density = getResources().getDisplayMetrics().density;
+                        int peekPx = (int) (peekDp * density);
+                        bottomSheetBehavior.setPeekHeight(peekPx);
+                    } else {
+                        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                        //toggleButton.setImageResource(R.drawable.expand_down);
+                    }
+                } else {
+                    Log.d("STate", "BottomSheet is settling, cannot change state");
+                }
+            }
+        });
+
+    }
+    /*private void setupOrderDetail() {
+        rc_orderDetail = findViewById(R.id.payment_rc_detail);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        rc_orderDetail.setLayoutManager(linearLayoutManager);
+        orderDetailModelList = getOrderDetail();
+        OrderDetailAdapter adapter = new OrderDetailAdapter(this, orderDetailModelList);
+        rc_orderDetail.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+    }*/
+
+    private List<OrderDetailModel> getOrderDetail() {
+        List<OrderDetailModel> orderDetailModelList = new ArrayList<>();
+        orderDetailModelList.add(new OrderDetailModel(1, "FoodNamedasdadasadadasddasdsad", 1));
+        orderDetailModelList.add(new OrderDetailModel(2, "Món ăn B", 2));
+        orderDetailModelList.add(new OrderDetailModel(3, "Món ăn C", 3));
+        orderDetailModelList.add(new OrderDetailModel(1, "Món ăn A", 1));
+        orderDetailModelList.add(new OrderDetailModel(2, "Món ăn B", 2));
+        orderDetailModelList.add(new OrderDetailModel(3, "Món ăn C", 3));
+        orderDetailModelList.add(new OrderDetailModel(1, "Món ăn A", 1));
+        orderDetailModelList.add(new OrderDetailModel(2, "Món ăn B", 2));
+        orderDetailModelList.add(new OrderDetailModel(3, "Món ăn C", 3));
+        orderDetailModelList.add(new OrderDetailModel(1, "Món ăn A", 1));
+        orderDetailModelList.add(new OrderDetailModel(2, "Món ăn B", 2));
+        orderDetailModelList.add(new OrderDetailModel(3, "Món ăn C", 3));
+
+        return orderDetailModelList;
     }
 
     private void setupbtnPay() {
@@ -205,16 +292,19 @@ public class PaymentActivity extends AppCompatActivity {
         viewPager2 = findViewById(R.id.payment_viewpager2);
         ViewPagerPaymentMethodAdapter adapter = new ViewPagerPaymentMethodAdapter(getSupportFragmentManager(), getLifecycle());
         viewPager2.setAdapter(adapter);
+
         viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+
             @Override
             public void onPageSelected(int position) {
                 if (paymentMethodAdapter != null) {
                     paymentMethodAdapter.setCheckedPosition(position);
                 }
+                //bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
             }
         });
-
     }
+
 
     private void setupVoucher() {
         spinnerVouchers = findViewById(R.id.spinnerVouchers);

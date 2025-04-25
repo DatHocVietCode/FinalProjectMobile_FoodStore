@@ -20,4 +20,9 @@ public class Fragment_payment_paypal extends Fragment {
         binding = FragmentPaymentPaypalBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
+    @Override
+    public void onResume() {
+        super.onResume();
+        binding.getRoot().requestLayout();
+    }
 }

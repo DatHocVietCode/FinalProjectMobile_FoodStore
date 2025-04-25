@@ -25,7 +25,7 @@ public class Fragment_payment_cash extends Fragment {
         binding = FragmentPaymentCashBinding.inflate(inflater, container, false);
 
         // Xử lý sự kiện khi người dùng chọn một phương thức thanh toán
-        binding.paymentCashRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+        /*binding.paymentCashRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if (checkedId == R.id.payment_cash_on_delivery) {
@@ -40,7 +40,12 @@ public class Fragment_payment_cash extends Fragment {
                     // Trường hợp mặc định (nếu có)
                 }
             }
-        });
+        });*/
         return binding.getRoot();
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        binding.getRoot().requestLayout();
     }
 }

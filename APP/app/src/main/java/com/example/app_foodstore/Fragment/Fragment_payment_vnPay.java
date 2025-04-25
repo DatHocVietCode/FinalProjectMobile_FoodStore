@@ -20,4 +20,9 @@ public class Fragment_payment_vnPay extends Fragment {
         binding = FragmentPaymentVnpayBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
+    @Override
+    public void onResume() {
+        super.onResume();
+        binding.getRoot().requestLayout();
+    }
 }

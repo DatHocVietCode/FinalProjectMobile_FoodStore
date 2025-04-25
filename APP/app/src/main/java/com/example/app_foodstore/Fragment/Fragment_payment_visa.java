@@ -20,4 +20,9 @@ public class Fragment_payment_visa extends Fragment {
         binding = FragmentPaymentVisaBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
+    @Override
+    public void onResume() {
+        super.onResume();
+        binding.getRoot().requestLayout();
+    }
 }

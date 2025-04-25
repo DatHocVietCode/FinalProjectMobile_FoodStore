@@ -5,18 +5,30 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#FFFFFF">
-
+    <TextView
+        android:id="@+id/payment_cash_tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Payment by Cash"
+        android:textSize="24sp"
+        android:fontFamily="@font/sen"
+        android:textStyle="bold|italic"
+        android:textColor="#FF7622"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
     <TextView
         android:id="@+id/payment_cash_tv_chooseType"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/payment_cash_tv_title"
         app:layout_constraintStart_toStartOf="parent"
         android:text="Choose Type:"
         android:fontFamily="@font/sen"
         android:textSize="16sp"
         android:textStyle="bold"
-        android:textColor="#32343E"/>
+        android:textColor="#32343E"
+        android:layout_marginTop="12dp"
+        android:layout_marginStart="4dp"/>
     <RadioGroup
         android:id="@+id/payment_cash_radioGroup"
         android:layout_width="match_parent"
@@ -35,12 +47,12 @@
             android:checked="true"
             app:buttonTint="#FF7622"
             android:fontFamily="@font/sen"/>
-        <RadioButton
+       <!-- <RadioButton
             android:id="@+id/payment_cash_on_restaurant"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Pay at Restaurant"
             app:buttonTint="#FF7622"
-            android:fontFamily="@font/sen"/>
+            android:fontFamily="@font/sen"/>-->
     </RadioGroup>
 </androidx.constraintlayout.widget.ConstraintLayout>
