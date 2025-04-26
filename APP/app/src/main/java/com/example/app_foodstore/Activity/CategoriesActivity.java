@@ -1,6 +1,8 @@
 package com.example.app_foodstore.Activity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ListView;
 
 import androidx.annotation.Nullable;
@@ -52,7 +54,15 @@ public class CategoriesActivity extends AppCompatActivity {
         categories.add(new CategoryModel(9,"Category 9", "https://picsum.photos/200/300"));
         categories.add(new CategoryModel(10,"Category 10", "https://picsum.photos/200/300"));
 
-        adapter = new CategoryListViewAdapter(this, categories);
+        adapter = new CategoryListViewAdapter(this, categories, new CategoryListViewAdapter.OnCategoryClickListener() {
+            @Override
+            public void onCategoryClick(CategoryModel category) {
+                Intent intent = new Intent(CategoriesActivity.this, MenuActivity.class);
+                intent.putExtra("categoryId", category.getId());
+                startActivity(intent);
+                Log.d("logdd", "onCategoryClick: " + category.getId());
+            }
+        });
         lv_categories.setAdapter(adapter);
 
     }

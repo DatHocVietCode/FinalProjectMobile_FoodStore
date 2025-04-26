@@ -52,6 +52,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".Activity.CategoriesActivity"/>
+        <activity android:name=".Activity.MenuActivity"/>
     </application>
 
 </manifest>
