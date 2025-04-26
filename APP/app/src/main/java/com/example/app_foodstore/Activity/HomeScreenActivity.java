@@ -68,6 +68,20 @@ public class HomeScreenActivity extends AppCompatActivity {
         setupRcCategory();
         setupScrollView();
         setupAvartar();
+        setupSeeAll();
+    }
+
+    private void setupSeeAll() {
+        View seeAllCate = findViewById(R.id.ms_seeAllCate);
+        TextView tv_seeAllCate = seeAllCate.findViewById(R.id.tv_seeAll);
+        tv_seeAllCate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HomeScreenActivity.this, CategoriesActivity.class);
+                startActivity(intent);
+
+            }
+        });
     }
 
     private void setupAvartar() {

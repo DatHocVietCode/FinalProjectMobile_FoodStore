@@ -6,12 +6,15 @@
     android:gravity="center">
 
     <TextView
-        android:id="@+id/ms_tv_AllCategories"
+        android:id="@+id/tv_seeAll"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:text="See All"
         android:fontFamily="@font/sen"
-        android:gravity="center" />
+        android:gravity="center"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground"/>
 
     <ImageView
         android:layout_width="20dp"
