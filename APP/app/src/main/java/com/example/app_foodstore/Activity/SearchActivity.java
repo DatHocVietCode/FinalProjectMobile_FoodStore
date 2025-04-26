@@ -1,6 +1,8 @@
 package com.example.app_foodstore.Activity;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -8,6 +10,8 @@ import android.widget.LinearLayout;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.widget.NestedScrollView;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.PagerSnapHelper;
@@ -18,6 +22,7 @@ import com.example.app_foodstore.Adapter.SearchKeywordAdapter;
 import com.example.app_foodstore.Adapter.SuggestedFoodAdapter;
 import com.example.app_foodstore.Fragment.Fragment_BottomNavigation;
 import com.example.app_foodstore.Fragment.Fragment_SearchBar;
+import com.example.app_foodstore.Fragment.Fragment_btn_cart;
 import com.example.app_foodstore.Indicator.DotPagerIndicatorDecoration;
 import com.example.app_foodstore.Model.FoodModel;
 import com.example.app_foodstore.Model.SearchKeywordModel;
@@ -69,6 +74,22 @@ public class SearchActivity extends AppCompatActivity {
         setupRcKeyword();
         setupRcPopularFood();
         setupRcSuggestedFood();
+        setupBtnCart();
+
+    }
+
+    private void setupBtnCart() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        Fragment_btn_cart btn_cart = new Fragment_btn_cart();
+        transaction.replace(R.id.ss_fragment_container_btn_cart, btn_cart);
+        transaction.commit();
+        int cart_count = 3; // Lấy số sản phẩm trong giỏ hàng từ api
+        if (btn_cart != null) {
+            new Handler(Looper.getMainLooper()).post(() -> {
+                btn_cart.updateCartNotify(cart_count);
+            });
+        }
     }
 
     private void setupRcSuggestedFood() {

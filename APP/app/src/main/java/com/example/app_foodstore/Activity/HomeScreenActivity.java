@@ -2,6 +2,8 @@ package com.example.app_foodstore.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -14,15 +16,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SearchView;
 import androidx.core.widget.NestedScrollView;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.app_foodstore.Adapter.CategoryAdapter;
 import com.example.app_foodstore.Fragment.Fragment_BottomNavigation;
 import com.example.app_foodstore.Fragment.Fragment_SearchBar;
+import com.example.app_foodstore.Fragment.Fragment_btn_cart;
 import com.example.app_foodstore.Fragment.Fragment_foodDisplay1;
 import com.example.app_foodstore.Model.CategoryModel;
 import com.example.app_foodstore.R;
+import com.example.app_foodstore.databinding.FragmentBtnCartBinding;
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -32,13 +38,11 @@ import java.util.List;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class HomeScreenActivity extends AppCompatActivity {
-    TextView tv_notify;
     RecyclerView category_rv;
     NestedScrollView nestedScrollView;
     Fragment_BottomNavigation bottomNavigationFragment;
     Fragment_SearchBar searchBarFragment;
     CircleImageView ms_header_avatar;
-    ImageButton btn_cart;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -109,25 +113,17 @@ public class HomeScreenActivity extends AppCompatActivity {
     }
 
     private void setupCart() {
-        tv_notify = findViewById(R.id.ms_header_cart_notify);
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        Fragment_btn_cart btn_cart = new Fragment_btn_cart();
+        transaction.replace(R.id.ms_fragment_container_btn_cart, btn_cart);
+        transaction.commit();
         int cart_count = 3; // Lấy số sản phẩm trong giỏ hàng từ api
-        if (cart_count > 0)
-        {
-            tv_notify.setVisibility(View.VISIBLE);
-            tv_notify.setText("4");
+        if (btn_cart != null) {
+            new Handler(Looper.getMainLooper()).post(() -> {
+                btn_cart.updateCartNotify(cart_count);
+            });
         }
-        else
-        {
-            tv_notify.setVisibility(View.INVISIBLE);
-        }
-        btn_cart = findViewById(R.id.ms_header_btn_cart);
-        btn_cart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(HomeScreenActivity.this, CartActivity.class);
-                startActivity(intent);
-            }
-        });
     }
 
     private void includeFragments() {

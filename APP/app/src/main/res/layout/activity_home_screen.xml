@@ -72,39 +72,15 @@
                     android:layout_height="match_parent"
                     android:clipChildren="false"
                     android:clipToPadding="false">
-                    <ImageButton
-                        android:id="@+id/ms_header_btn_cart"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:contentDescription="TODO"
-                        android:src="@drawable/cart"
-                        android:scaleType="fitCenter"
-                        android:background="#FFFFFF"
+                    <androidx.fragment.app.FragmentContainerView
+                        android:id="@+id/ms_fragment_container_btn_cart"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        android:foregroundGravity="center"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:foreground="?attr/selectableItemBackground">
-                    </ImageButton>
-                    <TextView
-                        android:id="@+id/ms_header_cart_notify"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:background="@drawable/circle_bg_ff7622"
-                        android:gravity="center"
-                        android:visibility="visible"
-                        android:textStyle="bold"
-                        android:text="4"
-                        android:textColor="@android:color/white"
-                        android:textSize="12sp"
-                        app:layout_constraintBottom_toTopOf="@id/ms_header_btn_cart"
-                        app:layout_constraintStart_toEndOf="@id/ms_header_btn_cart"
-                        android:layout_marginStart="-15dp"
-                        android:layout_marginBottom="-15dp"
-                        android:fontFamily="@font/sen"
-                        />
+                        android:clipChildren="false"
+                        android:clipToPadding="false"/>
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </LinearLayout>
 
