@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    <ImageButton
+        android:id="@+id/btn_filter"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:contentDescription="TODO"
+        android:src="@drawable/filter"
+        android:padding="100dp"
+        android:background="@drawable/circle_bg_ecf0f4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:foregroundGravity="center"
+        android:clipToOutline="true">
+    </ImageButton>
+</androidx.constraintlayout.widget.ConstraintLayout>

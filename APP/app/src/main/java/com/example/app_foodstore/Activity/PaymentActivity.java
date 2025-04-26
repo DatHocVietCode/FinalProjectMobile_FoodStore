@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -24,15 +23,13 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.cardview.widget.CardView;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
-import com.example.app_foodstore.Adapter.OrderDetailAdapter;
 import com.example.app_foodstore.Adapter.PaymentMethodAdapter;
 import com.example.app_foodstore.Adapter.ViewPagerPaymentMethodAdapter;
-import com.example.app_foodstore.Adapter.VoucherAdapter;
+import com.example.app_foodstore.Adapter.VoucherSpinnerAdapter;
 import com.example.app_foodstore.Model.OrderDetailModel;
 import com.example.app_foodstore.Model.PaymentInterfaceModel;
 import com.example.app_foodstore.Model.VoucherModel;
@@ -314,7 +311,7 @@ public class PaymentActivity extends AppCompatActivity {
         voucherList.add(new VoucherModel("Voucher B"));
         voucherList.add(new VoucherModel("Voucher C"));
 
-        VoucherAdapter adapter = new VoucherAdapter(this, voucherList, new VoucherAdapter.OnVoucherSelectedListener() {
+        VoucherSpinnerAdapter adapter = new VoucherSpinnerAdapter(this, voucherList, new VoucherSpinnerAdapter.OnVoucherSelectedListener() {
             @Override
             public void onVoucherSelected(VoucherModel voucher, int position) {
                 spinnerVouchers.post(() -> spinnerVouchers.setSelection(position));

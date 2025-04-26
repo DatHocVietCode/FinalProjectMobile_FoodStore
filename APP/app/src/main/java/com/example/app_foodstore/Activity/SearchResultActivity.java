@@ -2,31 +2,38 @@ package com.example.app_foodstore.Activity;
 
 import android.app.Dialog;
 import android.os.Bundle;
-import android.os.PersistableBundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatSpinner;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.app_foodstore.Adapter.CategorySpinnerAdapter;
 import com.example.app_foodstore.Adapter.SearchResultAdapter_rc;
+import com.example.app_foodstore.Fragment.Fragment_btn_cart;
+import com.example.app_foodstore.Fragment.Fragment_btn_filter;
+import com.example.app_foodstore.Model.CategoryModel;
 import com.example.app_foodstore.Model.FoodModel;
 import com.example.app_foodstore.R;
-import com.google.android.material.bottomsheet.BottomSheetDialog;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
 public class SearchResultActivity extends AppCompatActivity {
     RecyclerView ss_result_rc_searchResult;
     List<FoodModel> foods;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,38 +55,15 @@ public class SearchResultActivity extends AppCompatActivity {
     }
 
     private void setupBtnFilter() {
-        ImageButton filterBtn = findViewById(R.id.ss_result_header_btn_filter);
+        /*ImageButton filterBtn = findViewById(R.id.ss_result_header_btn_filter);
         filterBtn.setOnClickListener(v -> {
-            Dialog dialog = new Dialog(SearchResultActivity.this);
-            dialog.setContentView(R.layout.dialog_filter);
-            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
 
-            RadioGroup radioGroupName = dialog.findViewById(R.id.radioGroupName);
-            RadioGroup radioGroupPrice = dialog.findViewById(R.id.radioGroupPrice);
-            Button btnOk = dialog.findViewById(R.id.btnOk);
-            Button btnCancel = dialog.findViewById(R.id.btnCancel);
-
-            btnOk.setOnClickListener(view -> {
-                // Tên
-                int nameId = radioGroupName.getCheckedRadioButtonId();
-                String nameSort = "Tên: Mặc định";
-                if (nameId == R.id.radioNameAZ) nameSort = "Tên: A → Z";
-                else if (nameId == R.id.radioNameZA) nameSort = "Tên: Z → A";
-
-                // Giá
-                int priceId = radioGroupPrice.getCheckedRadioButtonId();
-                String priceSort = "Giá: Mặc định";
-                if (priceId == R.id.radioPriceLowHigh) priceSort = "Giá: Thấp → Cao";
-                else if (priceId == R.id.radioPriceHighLow) priceSort = "Giá: Cao → Thấp";
-
-                Toast.makeText(SearchResultActivity.this,
-                        nameSort + "\n" + priceSort, Toast.LENGTH_SHORT).show();
-
-                dialog.dismiss();
-            });
-            btnCancel.setOnClickListener(view -> dialog.dismiss());
-            dialog.show();
-        });
+        });*/
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        Fragment_btn_filter btn_filter = new Fragment_btn_filter();
+        transaction.replace(R.id.ss_result_fragmentContainer_btnFilter, btn_filter);
+        transaction.commit();
     }
 
     private void setupRcSearchResult() {

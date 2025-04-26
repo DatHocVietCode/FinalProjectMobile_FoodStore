@@ -1,7 +1,6 @@
 package com.example.app_foodstore.Adapter;
 
 import android.content.Context;
-import android.hardware.lights.LightsManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,23 +9,23 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
+import com.example.app_foodstore.Model.CategoryModel;
 import com.example.app_foodstore.Model.VoucherModel;
 import com.example.app_foodstore.R;
 
 import java.util.List;
 
-public class VoucherAdapter extends ArrayAdapter<VoucherModel> {
+public class CategorySpinnerAdapter extends ArrayAdapter<CategoryModel> {
     Context context;
-    List<VoucherModel> voucherList;
-    private OnVoucherSelectedListener listener;
-    public interface OnVoucherSelectedListener {
-        void onVoucherSelected(VoucherModel voucher, int position);
+    List<CategoryModel> categoryList;
+    private CategorySpinnerAdapter.OnCategorySelectedListener listener;
+    public interface OnCategorySelectedListener {
+        void OnCategorySelectedListener(CategoryModel categoryModel, int position);
     }
-
-    public VoucherAdapter(@NonNull Context context, List<VoucherModel> voucherList, OnVoucherSelectedListener listener) {
-        super(context, 0, voucherList);
+    public CategorySpinnerAdapter(@NonNull Context context, List<CategoryModel> categoryList, CategorySpinnerAdapter.OnCategorySelectedListener listener) {
+        super(context, 0, categoryList);
         this.context = context;
-        this.voucherList = voucherList;
+        this.categoryList = categoryList;
         this.listener = listener;
     }
     @Override
@@ -36,9 +35,9 @@ public class VoucherAdapter extends ArrayAdapter<VoucherModel> {
             convertView = LayoutInflater.from(context).inflate(R.layout.spinner_voucher_item, parent, false);
         }
 
-        VoucherModel voucher = getItem(position);
+        CategoryModel categoryModel = getItem(position);
         TextView textView = convertView.findViewById(R.id.spinner_item_text);
-        textView.setText(voucher.getVoucherName());
+        textView.setText(categoryModel.getName());
 
         return convertView;
     }
@@ -49,15 +48,16 @@ public class VoucherAdapter extends ArrayAdapter<VoucherModel> {
             convertView = LayoutInflater.from(context).inflate(R.layout.spinner_voucher_item, parent, false);
         }
 
-        VoucherModel voucher = getItem(position);
+        CategoryModel categoryModel = getItem(position);
         TextView textView = convertView.findViewById(R.id.spinner_item_text);
-        textView.setText(voucher.getVoucherName());
+        textView.setText(categoryModel.getName());
         // Gắn sự kiện click
         convertView.setOnClickListener(v -> {
             if (listener != null) {
-                listener.onVoucherSelected(voucher, position);
+                listener.OnCategorySelectedListener(categoryModel, position);
             }
         });
         return convertView;
     }
+
 }

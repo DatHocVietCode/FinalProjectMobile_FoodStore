@@ -35,20 +35,15 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
-                    <ImageButton
-                        android:id="@+id/ss_result_header_btn_filter"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:contentDescription="TODO"
-                        android:src="@drawable/filter"
-                        android:padding="100dp"
-                        android:background="@drawable/circle_bg_ecf0f4"
+                    <androidx.fragment.app.FragmentContainerView
+                        android:id="@+id/ss_result_fragmentContainer_btnFilter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
                         android:foregroundGravity="center"
-                        android:clipToOutline="true">
-                    </ImageButton>
+                        android:clipToOutline="true"/>
                     <ImageButton
                         android:id="@+id/ss_result_header_btn_search"
                         android:layout_width="48dp"
@@ -58,7 +53,7 @@
                         android:clipToOutline="true"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/ss_result_header_btn_filter"
+                        app:layout_constraintEnd_toStartOf="@+id/ss_result_fragmentContainer_btnFilter"
                         android:layout_marginEnd="8dp"
                         />
                 </androidx.constraintlayout.widget.ConstraintLayout>

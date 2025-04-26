@@ -1,6 +1,8 @@
 package com.example.app_foodstore.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Handler;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -12,6 +14,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.app_foodstore.Activity.FoodDetailActivity;
 import com.example.app_foodstore.Model.FoodModel;
 import com.example.app_foodstore.R;
 
@@ -70,6 +73,8 @@ public class SearchResultAdapter_rc extends RecyclerView.Adapter<SearchResultAda
                 @Override
                 public void onClick(View view) {
                     Toast.makeText(view.getContext(), "Click on food: " + food.getName(), Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(view.getContext(), FoodDetailActivity.class);
+                    view.getContext().startActivity(intent);
                 }
             });
         }
