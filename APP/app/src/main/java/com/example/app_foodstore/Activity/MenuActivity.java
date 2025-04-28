@@ -30,6 +30,15 @@ public class MenuActivity extends AppCompatActivity {
         binding = ActivityMenuBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         AnhXa();
+
+        int targetTab = getIntent().getIntExtra("target_tab", 0); // 0 là mặc định nếu không truyền
+        binding.menuScreenViewpager.setCurrentItem(targetTab, false);
+
+        // Đồng bộ luôn TabLayout:
+        TabLayout.Tab tab = binding.menuScreenTabLayout.getTabAt(targetTab);
+        if (tab != null) {
+            tab.select();
+        }
     }
 
     private void AnhXa() {

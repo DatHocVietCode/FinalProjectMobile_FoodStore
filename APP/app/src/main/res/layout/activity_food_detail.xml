@@ -81,7 +81,8 @@
                         android:background="@drawable/rectangle_corner_radius"
                         android:backgroundTint="#FFFFFF"
                         android:clipToOutline="true"
-                        android:layout_marginTop="12dp"/>
+                        android:layout_marginTop="12dp"
+                        />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
                 <me.relex.circleindicator.CircleIndicator3

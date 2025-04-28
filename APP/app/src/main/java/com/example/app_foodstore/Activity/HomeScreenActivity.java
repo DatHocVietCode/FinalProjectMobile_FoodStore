@@ -78,7 +78,26 @@ public class HomeScreenActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(HomeScreenActivity.this, CategoriesActivity.class);
                 startActivity(intent);
+            }
+        });
 
+        LinearLayout ln_seeAllBestSellerFood = findViewById(R.id.ms_seeAllBestSeller);
+        ln_seeAllBestSellerFood.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HomeScreenActivity.this, MenuActivity.class);
+                intent.putExtra("target_tab", 1);
+                startActivity(intent);
+            }
+        });
+
+        LinearLayout ln_seeAllNewFood = findViewById(R.id.ms_seeAllNewFood);
+        ln_seeAllNewFood.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HomeScreenActivity.this, MenuActivity.class);
+                intent.putExtra("target_tab", 2);
+                startActivity(intent);
             }
         });
     }
