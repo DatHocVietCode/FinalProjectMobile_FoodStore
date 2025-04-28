@@ -177,24 +177,13 @@
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent" />
-                    <TextView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:background="@drawable/circle_bg_ff7622"
-                        android:backgroundTint="#FF5722 "
-                        android:gravity="center"
-                        android:visibility="visible"
-                        android:textStyle="bold|italic"
-                        android:text="Best Seller!"
-                        android:textColor="@android:color/white"
-                        android:textSize="12sp"
+                    <include layout="@layout/item_tv_best_seller"
                         app:layout_constraintBottom_toTopOf="@id/ms_bestSellerFood"
                         app:layout_constraintStart_toEndOf="@id/ms_bestSellerFood"
                         android:layout_marginStart="-52dp"
                         android:layout_marginBottom="-52dp"
-                        android:elevation="10dp"
-                        android:fontFamily="@font/sen"
-                        />
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </LinearLayout>
             <LinearLayout
@@ -242,24 +231,13 @@
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent" />
-                    <TextView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:background="@drawable/circle_bg_ff7622"
-                        android:backgroundTint="#4CAF50 "
-                        android:gravity="center"
-                        android:visibility="visible"
-                        android:textStyle="bold|italic"
-                        android:text="New!"
-                        android:textColor="@android:color/white"
-                        android:textSize="12sp"
+                    <include layout="@layout/item_tv_new"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         app:layout_constraintBottom_toTopOf="@id/ms_newFood"
                         app:layout_constraintStart_toEndOf="@id/ms_newFood"
                         android:layout_marginStart="-52dp"
-                        android:layout_marginBottom="-52dp"
-                        android:elevation="10dp"
-                        android:fontFamily="@font/sen"
-                        />
+                        android:layout_marginBottom="-52dp"/>
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
 

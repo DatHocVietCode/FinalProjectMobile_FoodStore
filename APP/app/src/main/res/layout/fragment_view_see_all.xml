@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    android:id="@+id/ln_seeAll"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
     android:orientation="horizontal"
-    android:gravity="center">
+    android:gravity="center"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?attr/selectableItemBackground">
 
     <TextView
         android:id="@+id/tv_seeAll"
@@ -11,10 +16,7 @@
         android:layout_height="match_parent"
         android:text="See All"
         android:fontFamily="@font/sen"
-        android:gravity="center"
-        android:clickable="true"
-        android:focusable="true"
-        android:foreground="?attr/selectableItemBackground"/>
+        android:gravity="center" />
 
     <ImageView
         android:layout_width="20dp"

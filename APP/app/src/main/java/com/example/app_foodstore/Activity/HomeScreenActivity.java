@@ -72,9 +72,8 @@ public class HomeScreenActivity extends AppCompatActivity {
     }
 
     private void setupSeeAll() {
-        View seeAllCate = findViewById(R.id.ms_seeAllCate);
-        TextView tv_seeAllCate = seeAllCate.findViewById(R.id.tv_seeAll);
-        tv_seeAllCate.setOnClickListener(new View.OnClickListener() {
+        LinearLayout ln_seeAllCate = findViewById(R.id.ms_seeAllCate);
+        ln_seeAllCate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(HomeScreenActivity.this, CategoriesActivity.class);
