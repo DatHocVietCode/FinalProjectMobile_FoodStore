@@ -22,13 +22,13 @@ public class ViewPagerFoodTabLayoutAdapter extends FragmentStateAdapter {
         switch (position)
         {
             case 0:
-                return new Fragment_foodDisplay();
+                return new Fragment_foodDisplay(0);
             case 1:
-                return new Fragment_foodDisplay();
+                return new Fragment_foodDisplay(1);
             case 2:
-                return new Fragment_foodDisplay();
+                return new Fragment_foodDisplay(2);
             default:
-                return new Fragment_foodDisplay();
+                return new Fragment_foodDisplay(0);
         }
     }
 

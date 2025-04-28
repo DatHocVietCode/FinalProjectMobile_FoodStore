@@ -23,7 +23,10 @@ import java.util.List;
 
 public class Fragment_foodDisplay extends Fragment {
     FragmentRcFoodDisplayBinding binding;
-    public Fragment_foodDisplay() {}
+    int tabNum;
+    public Fragment_foodDisplay(int tabNum) {
+        this.tabNum = tabNum;
+    }
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -36,7 +39,7 @@ public class Fragment_foodDisplay extends Fragment {
         listFood.add(new FoodModel("Category1", "Food1", 1));
         listFood.add(new FoodModel("Category1", "Food1", 1));
         listFood.add(new FoodModel("Category1", "Food1", 1));
-        FoodTabLayoutAdapter adapter = new FoodTabLayoutAdapter(getContext(), listFood);
+        FoodTabLayoutAdapter adapter = new FoodTabLayoutAdapter(getContext(), listFood, tabNum);
         binding.fragmentFoodDisplayRc.setAdapter(adapter);
         return binding.getRoot();
     }
