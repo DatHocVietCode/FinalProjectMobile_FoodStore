@@ -2,6 +2,7 @@ package com.example.app_foodstore.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -15,7 +16,10 @@ import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.app_foodstore.API.APIClient;
+import com.example.app_foodstore.API.APIService;
 import com.example.app_foodstore.Adapter.CategoryAdapter;
+import com.example.app_foodstore.CategoryResponse;
 import com.example.app_foodstore.Fragment.Fragment_BottomNavigation;
 import com.example.app_foodstore.Fragment.Fragment_SearchBar;
 import com.example.app_foodstore.Fragment.Fragment_foodDisplay1;
@@ -28,6 +32,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class HomeScreenActivity extends AppCompatActivity {
     TextView tv_notify;
@@ -91,19 +98,40 @@ public class HomeScreenActivity extends AppCompatActivity {
         });
     }
 
+
+    // 3. Và sửa lại trong setupRcCategory:
     private void setupRcCategory() {
         category_rv = findViewById(R.id.ms_rv_category);
-        List<CategoryModel> categoryModels = new ArrayList<>();
-        categoryModels.add(new CategoryModel(1, "Pizza", "R.drawable.pizza"));
-        categoryModels.add(new CategoryModel(2, "Pizza1", "R.drawable.pizza"));
-        categoryModels.add(new CategoryModel(3, "Pizza2", "R.drawable.pizza"));
-        categoryModels.add(new CategoryModel(4, "Pizza3", "R.drawable.pizza"));
-        categoryModels.add(new CategoryModel(5, "Pizza4", "R.drawable.pizza"));
-        CategoryAdapter categoryAdapter = new CategoryAdapter(HomeScreenActivity.this,categoryModels);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        category_rv.setLayoutManager(layoutManager);
-        category_rv.setAdapter(categoryAdapter);
+
+        APIService apiService = APIClient.getService();
+        // Note: getAllCategories() now returns Call<CategoryResponse>
+        apiService.getAllCategories().enqueue(new Callback<CategoryResponse>() {
+            @Override
+            public void onResponse(Call<CategoryResponse> call, Response<CategoryResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    List<CategoryModel> categoryModels = response.body().getData();
+                    CategoryAdapter categoryAdapter =
+                            new CategoryAdapter(HomeScreenActivity.this, categoryModels);
+                    RecyclerView.LayoutManager layoutManager =
+                            new LinearLayoutManager(HomeScreenActivity.this,
+                                    LinearLayoutManager.HORIZONTAL,
+                                    false);
+                    category_rv.setLayoutManager(layoutManager);
+                    category_rv.setAdapter(categoryAdapter);
+                    Log.e("API","Successful");
+                } else {
+                    Log.e("API", "Empty or unsuccessful response");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CategoryResponse> call, Throwable t) {
+                Log.e("API", "Network error: " + t.getMessage());
+            }
+        });
     }
+
+
 
     private void setupCart() {
         tv_notify = findViewById(R.id.ms_header_cart_notify);

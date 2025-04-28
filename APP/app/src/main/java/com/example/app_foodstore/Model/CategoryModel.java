@@ -2,6 +2,9 @@ package com.example.app_foodstore.Model;
 
 public class CategoryModel {
     private int id;
+    private String name;
+
+    private String image;
 
     public int getId() {
         return id;
@@ -35,7 +38,4 @@ public class CategoryModel {
     public void setImage(String image) {
         this.image = image;
     }
-
-    private String name;
-    private String image;
 }

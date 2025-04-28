@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.app_foodstore.API.APIClient;
 import com.example.app_foodstore.Model.CategoryModel;
 import com.example.app_foodstore.R;
 
@@ -55,8 +56,9 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
     @Override
     public void onBindViewHolder(@NonNull CategoryAdapter.CategoryViewHolder holder, int position) {
         CategoryModel categoryModel = listCate.get(position);
+        String imageUrl = APIClient.IMAGE_BASE_URL + categoryModel.getImage();
         Glide.with(context)
-                .load(categoryModel.getImage())
+                .load(imageUrl)
                 .into(holder.category_image);
         holder.tv_name.setText(categoryModel.getName());
     }
