@@ -7,10 +7,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.app_foodstore.R;
 
-public class SeatScreenActivity extends AppCompatActivity {
+public class ReservateScreenActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_seats_screen);
+        setContentView(R.layout.activity_reservate_screen);
     }
 }

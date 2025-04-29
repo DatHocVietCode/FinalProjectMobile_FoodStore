@@ -12,4 +12,7 @@
     <style name="CustomSpinnerStyle" parent="Widget.AppCompat.Spinner">
         <item name="android:popupBackground">@drawable/spinner_dropdown_bg</item>
     </style>
+    <style name="BottomAppBarOverlay">
+        <item name="colorControlNormal">#FFFFFF</item>
+    </style>
 </resources>

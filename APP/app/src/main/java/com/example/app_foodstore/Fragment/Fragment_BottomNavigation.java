@@ -8,11 +8,11 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
 
 import com.example.app_foodstore.Activity.HomeScreenActivity;
 import com.example.app_foodstore.Activity.OrderScreenActivity;
-import com.example.app_foodstore.Activity.SeatScreenActivity;
 import com.example.app_foodstore.Activity.SettingActivity;
 import com.example.app_foodstore.R;
 import com.google.android.material.bottomappbar.BottomAppBar;
@@ -20,7 +20,7 @@ import com.google.android.material.bottomappbar.BottomAppBar;
 public class Fragment_BottomNavigation extends Fragment {
     private View rootView;
     private BottomAppBar bottomAppBar;
-
+    private CoordinatorLayout coordinatorLayout;
     public Fragment_BottomNavigation() {
     }
 
@@ -45,17 +45,23 @@ public class Fragment_BottomNavigation extends Fragment {
             startActivity(new Intent(getContext(), OrderScreenActivity.class));
         });
 
-        view.findViewById(R.id.bottomNavigation_btnSeat).setOnClickListener(v -> {
-            startActivity(new Intent(getContext(), SeatScreenActivity.class));
-        });
+
         view.findViewById(R.id.bottomNavigation_settingBtn).setOnClickListener(v -> {
             startActivity(new Intent(getContext(), SettingActivity.class));
         });
     }
 
     public void hideBottomNavigation() {
-        if (bottomAppBar != null) {
+        /*if (bottomAppBar != null) {
             bottomAppBar.animate()
+                    .translationY(bottomAppBar.getHeight())
+                    .setDuration(150)
+                    .start();
+        }*/
+        if (rootView != null)
+        {
+
+            rootView.animate()
                     .translationY(bottomAppBar.getHeight())
                     .setDuration(150)
                     .start();
@@ -63,8 +69,16 @@ public class Fragment_BottomNavigation extends Fragment {
     }
 
     public void showBottomNavigation() {
-        if (bottomAppBar != null) {
+       /* if (bottomAppBar != null) {
             bottomAppBar.animate()
+                    .translationY(0)
+                    .setDuration(150)
+                    .start();
+        }*/
+        if (rootView != null)
+        {
+
+            rootView.animate()
                     .translationY(0)
                     .setDuration(150)
                     .start();

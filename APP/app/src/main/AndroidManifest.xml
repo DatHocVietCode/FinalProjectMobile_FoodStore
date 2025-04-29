@@ -31,7 +31,7 @@
         <activity android:name=".Activity.LoginActivity"/>
         <activity android:name=".Activity.HomeScreenActivity"/>
         <activity android:name=".Activity.OrderScreenActivity"/>
-        <activity android:name=".Activity.SeatScreenActivity"/>
+        <activity android:name=".Activity.ReservateScreenActivity"/>
         <activity android:name=".Activity.SearchActivity"/>
         <activity android:name=".Activity.SearchResultActivity"/>
         <activity android:name=".Activity.FoodDetailActivity"/>

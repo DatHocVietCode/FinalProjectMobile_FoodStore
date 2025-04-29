@@ -4,23 +4,26 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:padding="4dp"
+    android:layout_marginBottom="-12dp"
+    android:elevation="16dp"
+    android:backgroundTint="#F6F6F6">
+
     <com.google.android.material.bottomappbar.BottomAppBar
         android:id="@+id/bottomNavigation"
         android:layout_width="match_parent"
         android:layout_height="64dp"
         android:layout_gravity="bottom"
-        android:backgroundTint="#F6F6F6"
-        app:fabCradleMargin="8dp"
-        app:fabCradleRoundedCornerRadius="50dp"
-        app:fabCradleVerticalOffset="6dp"
-        >
+        android:layout_marginBottom="8dp"
+        app:backgroundTint="#F6F6F6"
+        app:fabAlignmentMode="center">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
-
+            android:orientation="horizontal"
+            >
             <LinearLayout
                 android:id="@+id/bottomNavigation_btnHome"
                 android:layout_width="0dp"
@@ -79,29 +82,24 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/bottomNavigation_btnSeat"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.2"
                 android:orientation="vertical"
                 android:visibility="visible"
-                android:focusable="true"
-                android:clickable="true"
-                android:foreground="?attr/selectableItemBackground">
+                >
 
-                <ImageView
+                <Space
                     android:id="@+id/imvCart"
                     android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_height="52dp"
                     android:layout_gravity="center"
-                    android:layout_weight="1"
-                    app:srcCompat="@drawable/seat" />
-
+                    android:layout_weight="1" />
                 <TextView
-                    android:id="@+id/bottomNavigation_tvSeats"
+                    android:id="@+id/bottomNavigation_tvReservate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Seats"
+                    android:text="Reservate"
                     android:textAlignment="center"
                     android:textColor="#676767"
                     android:textSize="12sp"
@@ -166,5 +164,21 @@
                     android:fontFamily="@font/sen"/>
             </LinearLayout>
         </LinearLayout>
+
     </com.google.android.material.bottomappbar.BottomAppBar>
+    <ImageButton
+        android:id="@+id/fabAdd"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_gravity="center|top"
+        android:layout_marginStart="4dp"
+        android:layout_marginBottom="24dp"
+        android:contentDescription="Add"
+        android:src="@drawable/add_ring_light"
+        android:scaleType="centerCrop"
+        android:background="@drawable/circle_bg_ffebe4"
+        android:backgroundTint="#F6F6F6"
+        android:focusable="true"
+        android:clickable="true"
+        android:foreground="@drawable/ripple_circle"/>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
