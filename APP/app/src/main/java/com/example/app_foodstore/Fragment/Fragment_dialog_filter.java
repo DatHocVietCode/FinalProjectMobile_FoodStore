@@ -66,7 +66,6 @@ public class Fragment_dialog_filter extends DialogFragment {
 
             dismiss();
         });
-
         btnCancel.setOnClickListener(view -> dismiss());
 
         return dialog;
