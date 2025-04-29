@@ -8,7 +8,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class APIClient {
     //Thay đổi ip
-    private static final String BASE_URL = "http://196.169.1.12:8080/";
+    private static final String BASE_URL = "http://192.168.100.213:8080/";
 
     public static final String IMAGE_BASE_URL = BASE_URL + "uploads/";
     private static Retrofit retrofit = null;
