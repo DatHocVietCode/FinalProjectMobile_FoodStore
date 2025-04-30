@@ -74,11 +74,11 @@ public class Fragment_dialog_filter extends DialogFragment {
     private void setupSpinner(Dialog dialog) {
         spinner = dialog.findViewById(R.id.spinnerCategory);
         List<CategoryModel> categoryList = new ArrayList<>();
-        categoryList.add(new CategoryModel(0, "All", ""));
-        categoryList.add(new CategoryModel(1, "Category A", ""));
-        categoryList.add(new CategoryModel(2, "Category B", ""));
-        categoryList.add(new CategoryModel(3, "Category C", ""));
-        categoryList.add(new CategoryModel(4, "Category D", ""));
+        categoryList.add(new CategoryModel(0L, "All", ""));
+        categoryList.add(new CategoryModel(1L, "Category A", ""));
+        categoryList.add(new CategoryModel(2L, "Category B", ""));
+        categoryList.add(new CategoryModel(3L, "Category C", ""));
+        categoryList.add(new CategoryModel(4L, "Category D", ""));
 
         CategorySpinnerAdapter adapter = new CategorySpinnerAdapter(requireContext(), categoryList, (categoryModel, position) -> {
             spinner.post(() -> spinner.setSelection(position));

@@ -36,6 +36,7 @@ import com.example.app_foodstore.Fragment.Fragment_foodDisplay1;
 import com.example.app_foodstore.Model.CategoryModel;
 import com.example.app_foodstore.Model.FoodModel;
 import com.example.app_foodstore.R;
+import com.example.app_foodstore.ViewModel.CateViewModel;
 import com.example.app_foodstore.ViewModel.FoodViewModel;
 import com.example.app_foodstore.databinding.FragmentBtnCartBinding;
 import com.google.android.material.bottomappbar.BottomAppBar;
@@ -49,13 +50,14 @@ import retrofit2.Call;
 
 public class HomeScreenActivity extends AppCompatActivity {
     FoodViewModel foodViewModel;
+    CateViewModel cateViewModel;
     RecyclerView category_rv;
     NestedScrollView nestedScrollView;
     Fragment_BottomNavigation bottomNavigationFragment;
     Fragment_SearchBar searchBarFragment;
     CircleImageView ms_header_avatar;
     List<FoodModel> newFood;
-
+    List<CategoryModel> categoryModels;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,17 +75,21 @@ public class HomeScreenActivity extends AppCompatActivity {
             searchBarFragment = (Fragment_SearchBar) getSupportFragmentManager()
                     .findFragmentById(R.id.ms_fragment_searchBar_container);
         }
-        foodViewModel = new ViewModelProvider(this).get(FoodViewModel.class);
         SetUp();
-
     }
     private void SetUp() {
+        iniViewModel();
         includeFragments();
         setupCart();
         setupRcCategory();
         setupScrollView();
         setupAvartar();
         setupSeeAll();
+    }
+
+    private void iniViewModel() {
+        foodViewModel = new ViewModelProvider(this).get(FoodViewModel.class);
+        cateViewModel = new ViewModelProvider(this).get(CateViewModel.class);
     }
 
     private void setupSeeAll() {
@@ -146,16 +152,19 @@ public class HomeScreenActivity extends AppCompatActivity {
 
     private void setupRcCategory() {
         category_rv = findViewById(R.id.ms_rv_category);
-        List<CategoryModel> categoryModels = new ArrayList<>();
-        categoryModels.add(new CategoryModel(1, "Pizza", "R.drawable.pizza"));
-        categoryModels.add(new CategoryModel(2, "Pizza1", "R.drawable.pizza"));
-        categoryModels.add(new CategoryModel(3, "Pizza2", "R.drawable.pizza"));
-        categoryModels.add(new CategoryModel(4, "Pizza3", "R.drawable.pizza"));
-        categoryModels.add(new CategoryModel(5, "Pizza4", "R.drawable.pizza"));
-        CategoryAdapter categoryAdapter = new CategoryAdapter(HomeScreenActivity.this,categoryModels);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        category_rv.setLayoutManager(layoutManager);
-        category_rv.setAdapter(categoryAdapter);
+        cateViewModel.getAllCate().observe(this, new Observer<List<CategoryModel>>() {
+            @Override
+            public void onChanged(List<CategoryModel> listCate) {
+                if (listCate != null) {
+                    categoryModels = listCate;
+                    Log.d("Catee", "onChanged: " + categoryModels.size());
+                    CategoryAdapter categoryAdapter = new CategoryAdapter(HomeScreenActivity.this,categoryModels);
+                    RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(HomeScreenActivity.this, LinearLayoutManager.HORIZONTAL, false);
+                    category_rv.setLayoutManager(layoutManager);
+                    category_rv.setAdapter(categoryAdapter);
+                }
+            }
+        });
     }
 
     private void setupCart() {
@@ -183,7 +192,6 @@ public class HomeScreenActivity extends AppCompatActivity {
             public void onChanged(List<FoodModel> foodList) {
                 if (foodList != null && !foodList.isEmpty()) {
                     newFood = foodList; // Gán dữ liệu khi đã có
-
                     // Tạo Fragment và truyền foodId qua Bundle
                     Fragment_foodDisplay1 fragment = new Fragment_foodDisplay1();
                     Bundle bundle = new Bundle();
@@ -200,7 +208,6 @@ public class HomeScreenActivity extends AppCompatActivity {
                 }
             }
         });
-
     }
     private void includeBestSellerFood() {
         // Giả sử bạn muốn truyền foodId là "123"

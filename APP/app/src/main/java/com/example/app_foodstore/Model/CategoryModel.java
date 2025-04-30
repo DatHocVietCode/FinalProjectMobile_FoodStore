@@ -1,22 +1,32 @@
 package com.example.app_foodstore.Model;
 
-public class CategoryModel {
-    private int id;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.JsonObject;
 
-    public int getId() {
+import java.io.Serializable;
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class CategoryModel implements Serializable {
+    @JsonProperty("id")
+    private Long id;
+    @JsonProperty("name")
+    private String name;
+    @JsonProperty("image")
+    private String image;
+    public Long getId() {
         return id;
     }
 
     public CategoryModel() {
     }
 
-    public CategoryModel(int id, String name, String image) {
+    public CategoryModel(Long id, String name, String image) {
         this.id = id;
         this.name = name;
         this.image = image;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -36,6 +46,5 @@ public class CategoryModel {
         this.image = image;
     }
 
-    private String name;
-    private String image;
+
 }
