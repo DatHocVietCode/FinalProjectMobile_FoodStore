@@ -8,7 +8,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Query;
 
 public interface APIServiceFood {
-    @GET("/new")
+    @GET("products/new")
     Call<APIRespone<FoodModel>> getNewProducts(
             @Query("keyword") String keyword,
             @Query("category_id") Long categoryId,

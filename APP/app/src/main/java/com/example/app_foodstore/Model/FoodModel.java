@@ -1,15 +1,19 @@
 package com.example.app_foodstore.Model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
 import java.util.List;
 
 // Chưa có avatar nha
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class FoodModel implements Serializable {
+    public FoodModel() {
+    }
     @JsonProperty("id")
-    private int id;
+    private Long id;
     @JsonProperty("category_id")
     private Long categoryId;
     @JsonProperty("thumbnail")
@@ -26,11 +30,11 @@ public class FoodModel implements Serializable {
     @JsonProperty("product_images")
     private List<FoodImage> productImages;
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -50,7 +54,7 @@ public class FoodModel implements Serializable {
         this.categoryName = categoryName;
     }
 
-    public FoodModel(String categoryName, String name, int id) {
+    public FoodModel(String categoryName, String name, Long id) {
         this.categoryName = categoryName;
         this.name = name;
         this.id = id;

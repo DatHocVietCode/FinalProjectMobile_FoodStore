@@ -69,14 +69,14 @@ public class SearchResultActivity extends AppCompatActivity {
     private void setupRcSearchResult() {
         ss_result_rc_searchResult = findViewById(R.id.ss_result_rc_searchResult);
         foods = new ArrayList<>();
-        foods.add(new FoodModel("Cate 1", "Món ăn 1",1));
-        foods.add(new FoodModel("Cate 2", "Món ăn 2",1));
-        foods.add(new FoodModel("Cate 3", "Món ăn 3",1));
-        foods.add(new FoodModel("Cate 4", "Món ăn 4",1));
-        foods.add(new FoodModel("Cate 5", "Món ăn 5",1));
-        foods.add(new FoodModel("Cate 6", "Món ăn 6",1));
-        foods.add(new FoodModel("Cate 7", "Món ăn 7",1));
-        foods.add(new FoodModel("Cate 8", "Món ăn 8",1));
+        foods.add(new FoodModel("Cate 1", "Món ăn 1",1L));
+        foods.add(new FoodModel("Cate 2", "Món ăn 2",1L));
+        foods.add(new FoodModel("Cate 3", "Món ăn 3",1L));
+        foods.add(new FoodModel("Cate 4", "Món ăn 4",1L));
+        foods.add(new FoodModel("Cate 5", "Món ăn 5",1L));
+        foods.add(new FoodModel("Cate 6", "Món ăn 6",1L));
+        foods.add(new FoodModel("Cate 7", "Món ăn 7",1L));
+        foods.add(new FoodModel("Cate 8", "Món ăn 8",1L));
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false);
         ss_result_rc_searchResult.setLayoutManager(layoutManager);
         ss_result_rc_searchResult.setAdapter(new SearchResultAdapter_rc(this, foods));

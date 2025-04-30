@@ -95,9 +95,9 @@ public class SearchActivity extends AppCompatActivity {
     private void setupRcSuggestedFood() {
         rc_suggestedFood = findViewById(R.id.ss_rc_suggestedFood);
         List<FoodModel> suggestedFoods = new ArrayList<>();
-        suggestedFoods.add(new FoodModel("Cate 1", "Món ăn 1",1));
-        suggestedFoods.add(new FoodModel("Cate 2", "Món ăn 2",2));
-        suggestedFoods.add(new FoodModel("Cate 3", "Món ăn 3",3));
+        suggestedFoods.add(new FoodModel("Cate 1", "Món ăn 1",1L));
+        suggestedFoods.add(new FoodModel("Cate 2", "Món ăn 2",2L));
+        suggestedFoods.add(new FoodModel("Cate 3", "Món ăn 3",3L));
         SuggestedFoodAdapter adapter = new SuggestedFoodAdapter(this, suggestedFoods);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         rc_suggestedFood.setLayoutManager(layoutManager);
@@ -107,14 +107,14 @@ public class SearchActivity extends AppCompatActivity {
     private void setupRcPopularFood() {
         rc_popularFood = findViewById(R.id.ss_rv_popularFoods);
         foods = new ArrayList<>();
-        foods.add(new FoodModel("Cate 1", "Món ăn 1",1));
-        foods.add(new FoodModel("Cate 2", "Món ăn 2",1));
-        foods.add(new FoodModel("Cate 3", "Món ăn 3",1));
-        foods.add(new FoodModel("Cate 4", "Món ăn 4",1));
-        foods.add(new FoodModel("Cate 5", "Món ăn 5",1));
-        foods.add(new FoodModel("Cate 6", "Món ăn 6",1));
-        foods.add(new FoodModel("Cate 7", "Món ăn 7",1));
-        foods.add(new FoodModel("Cate 8", "Món ăn 8",1));
+        foods.add(new FoodModel("Cate 1", "Món ăn 1",1L));
+        foods.add(new FoodModel("Cate 2", "Món ăn 2",1L));
+        foods.add(new FoodModel("Cate 3", "Món ăn 3",1L));
+        foods.add(new FoodModel("Cate 4", "Món ăn 4",1L));
+        foods.add(new FoodModel("Cate 5", "Món ăn 5",1L));
+        foods.add(new FoodModel("Cate 6", "Món ăn 6",1L));
+        foods.add(new FoodModel("Cate 7", "Món ăn 7",1L));
+        foods.add(new FoodModel("Cate 8", "Món ăn 8",1L));
 
         gv_adapter = new PopularFoodAdapter_rc(this, foods);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this,

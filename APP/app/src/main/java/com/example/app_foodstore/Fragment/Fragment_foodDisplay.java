@@ -34,11 +34,11 @@ public class Fragment_foodDisplay extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         binding.fragmentFoodDisplayRc.setLayoutManager(layoutManager);
         List<FoodModel> listFood= new ArrayList<>();
-        listFood.add(new FoodModel("Category1", "Food1", 1));
-        listFood.add(new FoodModel("Category1", "Food1", 1));
-        listFood.add(new FoodModel("Category1", "Food1", 1));
-        listFood.add(new FoodModel("Category1", "Food1", 1));
-        listFood.add(new FoodModel("Category1", "Food1", 1));
+        listFood.add(new FoodModel("Category1", "Food1", 1L));
+        listFood.add(new FoodModel("Category1", "Food1", 1L));
+        listFood.add(new FoodModel("Category1", "Food1", 1L));
+        listFood.add(new FoodModel("Category1", "Food1", 1L));
+        listFood.add(new FoodModel("Category1", "Food1", 1L));
         FoodTabLayoutAdapter adapter = new FoodTabLayoutAdapter(getContext(), listFood, tabNum);
         binding.fragmentFoodDisplayRc.setAdapter(adapter);
         return binding.getRoot();
