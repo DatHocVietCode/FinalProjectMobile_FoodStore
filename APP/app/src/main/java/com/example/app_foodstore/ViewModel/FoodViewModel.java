@@ -20,4 +20,7 @@ public class FoodViewModel extends ViewModel {
     public LiveData<List<FoodModel>> getNewFoodList() {
         return newFoodList;
     }
+    public LiveData<List<FoodModel>> getFoods(String keyword, Long categoryId, String sortByName, String sortByPrice) {
+        return foodRepository.getFoods(keyword, categoryId, sortByName, sortByPrice);
+    }
 }

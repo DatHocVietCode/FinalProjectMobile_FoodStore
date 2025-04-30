@@ -13,17 +13,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.app_foodstore.Adapter.ViewPagerFoodTabLayoutAdapter;
 import com.example.app_foodstore.Fragment.Fragment_btn_filter;
 import com.example.app_foodstore.R;
+import com.example.app_foodstore.ViewModel.FoodViewModel;
 import com.example.app_foodstore.databinding.ActivityMenuBinding;
 import com.google.android.material.tabs.TabLayout;
 
 public class MenuActivity extends AppCompatActivity {
     ActivityMenuBinding binding;
     ViewPagerFoodTabLayoutAdapter adapter;
+    FoodViewModel foodViewModel;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,13 +45,36 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     private void AnhXa() {
+        iniViewModel();
         setupBtnFilter();
         setupViewpager();
         setupTableLayout();
     }
 
+    private void iniViewModel() {
+        foodViewModel = new ViewModelProvider(this).get(FoodViewModel.class);
+    }
+
     private void setupViewpager() {
-        adapter = new ViewPagerFoodTabLayoutAdapter(getSupportFragmentManager(), getLifecycle());
+        // Lấy dữ liệu từ Intent và đảm bảo có giá trị mặc định nếu không có
+        String keyword = getIntent().getStringExtra("keyword");
+        if (keyword == null) {
+            keyword = "";  // Giá trị mặc định cho keyword
+        }
+        Long categoryId = getIntent().getLongExtra("categoryId", -1L);  // Dùng -1 làm default nếu không có giá trị
+        if (categoryId == -1L) {
+            categoryId = null;  // Nếu không có categoryId, truyền null để API xử lý
+        }
+        String sortByName = getIntent().getStringExtra("sortByName");
+        if (sortByName == null) {
+            sortByName = "";  // Giá trị mặc định cho sortByName
+        }
+        String sortByPrice = getIntent().getStringExtra("sortByPrice");
+        if (sortByPrice == null) {
+            sortByPrice = "";  // Giá trị mặc định cho sortByPrice
+        }
+        adapter = new ViewPagerFoodTabLayoutAdapter(getSupportFragmentManager(), getLifecycle()
+                , keyword, categoryId, sortByName, sortByPrice);
         binding.menuScreenViewpager.setAdapter(adapter);
     }
 

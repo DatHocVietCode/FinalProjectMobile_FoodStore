@@ -38,7 +38,9 @@ public class FoodTabLayoutAdapter extends RecyclerView.Adapter<FoodTabLayoutAdap
     @Override
     public void onBindViewHolder(@NonNull FoodTabLayoutAdapter.FoodTabLayoutViewHolder holder, int position) {
         FoodModel foodModel = list.get(position);
-        //holder.tv_foodName.setText(foodModel.getName());
+        holder.tv_foodName.setText(foodModel.getName());
+        holder.tv_price.setText("$" + foodModel.getPrice());
+        //holder.tv_rating.setText(foodModel.getRating().toString());
         //holder.img_food.setImageResource(R.drawable.food_sample);
         switch (tabNum)
         {
@@ -72,7 +74,7 @@ public class FoodTabLayoutAdapter extends RecyclerView.Adapter<FoodTabLayoutAdap
     }
 
     public class FoodTabLayoutViewHolder extends RecyclerView.ViewHolder {
-        TextView tv_foodName, tv_categoryName, tv_price, tv_comments;
+        TextView tv_foodName, tv_categoryName, tv_price, tv_comments, tv_rating;
         ImageView img_food;
         ConstraintLayout layout_bestSeller, layout_new;
         public FoodTabLayoutViewHolder(@NonNull View itemView) {
@@ -84,6 +86,7 @@ public class FoodTabLayoutAdapter extends RecyclerView.Adapter<FoodTabLayoutAdap
             tv_comments = itemView.findViewById(R.id.fragment_food_display_tablayout_tv_comments);
             layout_bestSeller = itemView.findViewById(R.id.fragment_food_display_tablayout_tv_best_seller);
             layout_new = itemView.findViewById(R.id.fragment_food_display_tablayout_tv_new);
+            tv_rating = itemView.findViewById(R.id.fragment_food_display_tablayout_tv_rating);
         }
     }
 }
