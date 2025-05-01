@@ -86,47 +86,6 @@ public class Fragment_foodDisplay extends Fragment {
         binding = FragmentRcFoodDisplayBinding.inflate(inflater, container, false);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         binding.fragmentFoodDisplayRc.setLayoutManager(layoutManager);
-        /*switch (tabNum)
-        {
-            case 0:
-                // Gọi phương thức getFoods() trong ViewModel và quan sát LiveData
-                foodViewModel.getFoods(keyword, categoryId, sortByName, sortByPrice).observe(getViewLifecycleOwner(), foods -> {
-                    if (foods != null && !foods.isEmpty()) {
-                        adapter = new FoodTabLayoutAdapter(getContext(), foods, tabNum);
-                        binding.fragmentFoodDisplayRc.setAdapter(adapter);
-                        adapter.notifyDataSetChanged();
-                    } else {
-                        // Xử lý nếu không có dữ liệu (Hiển thị thông báo hay giao diện khác)
-                        Log.d("Fragment_foodDisplay", "onCreateView: No food items found");
-                    }
-                });
-                break;
-            case 1:
-                foodViewModel.getBestSellerFoodList("", null, "", "").observe(getViewLifecycleOwner(), newFoodList -> {
-                    if (newFoodList != null && !newFoodList.isEmpty()) {
-                        adapter = new FoodTabLayoutAdapter(getContext(), newFoodList, tabNum);
-                        binding.fragmentFoodDisplayRc.setAdapter(adapter);
-                        adapter.notifyDataSetChanged();
-                    } else {
-                        // Xử lý nếu không có dữ liệu (Hiển thị thông báo hay giao diện khác)
-                        Log.d("Fragment_foodDisplay", "onCreateView: No food items found");
-                    }
-                });
-                break;
-            case 2:
-                foodViewModel.getNewFoodList("", null, "", "").observe(getViewLifecycleOwner(), newFoodList -> {
-                    if (newFoodList != null && !newFoodList.isEmpty()) {
-                        adapter = new FoodTabLayoutAdapter(getContext(), newFoodList, tabNum);
-                        binding.fragmentFoodDisplayRc.setAdapter(adapter);
-                        adapter.notifyDataSetChanged();
-                    } else {
-                        // Xử lý nếu không có dữ liệu (Hiển thị thông báo hay giao diện khác)
-                        Log.d("Fragment_foodDisplay", "onCreateView: No food items found");
-                    }
-                });
-                break;
-            default:
-        }*/
     }
 
     private void initViewModel() {
@@ -168,7 +127,12 @@ public class Fragment_foodDisplay extends Fragment {
                         }
                         adapter = new FoodTabLayoutAdapter(getContext(), foods, tabNum);
                         binding.fragmentFoodDisplayRc.setAdapter(adapter);
+                        binding.fragmentFoodDisplayTvNoProduct.setVisibility(View.INVISIBLE);
                         adapter.notifyDataSetChanged();
+                        if (foods.isEmpty())
+                        {
+                            binding.fragmentFoodDisplayTvNoProduct.setVisibility(View.VISIBLE);
+                        }
                     }
                 });
                 break;
@@ -178,7 +142,12 @@ public class Fragment_foodDisplay extends Fragment {
                     if (foods != null) {
                         adapter = new FoodTabLayoutAdapter(getContext(), foods, tabNum);
                         binding.fragmentFoodDisplayRc.setAdapter(adapter);
+                        binding.fragmentFoodDisplayTvNoProduct.setVisibility(View.INVISIBLE);
                         adapter.notifyDataSetChanged();
+                        if (foods.isEmpty())
+                        {
+                            binding.fragmentFoodDisplayTvNoProduct.setVisibility(View.VISIBLE);
+                        }
                     }
                 });
                 break;
@@ -189,8 +158,14 @@ public class Fragment_foodDisplay extends Fragment {
                     if (foods != null) {
                         adapter = new FoodTabLayoutAdapter(getContext(), foods, tabNum);
                         binding.fragmentFoodDisplayRc.setAdapter(adapter);
+                        binding.fragmentFoodDisplayTvNoProduct.setVisibility(View.INVISIBLE);
                         adapter.notifyDataSetChanged();
+                        if (foods.isEmpty())
+                        {
+                            binding.fragmentFoodDisplayTvNoProduct.setVisibility(View.VISIBLE);
+                        }
                     }
+
                 });
                 break;
         }
