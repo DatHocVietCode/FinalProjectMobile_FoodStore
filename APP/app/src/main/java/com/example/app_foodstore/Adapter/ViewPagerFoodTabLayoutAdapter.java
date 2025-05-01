@@ -20,7 +20,7 @@ public class ViewPagerFoodTabLayoutAdapter extends FragmentStateAdapter {
             , String keyword, Long categoryId, String sortByName, String sortByPrice) {
         super(fragmentManager, lifecycle);
         this.keyword = (keyword != null) ? keyword : "";  // Mặc định là chuỗi rỗng
-        this.categoryId = (categoryId != null) ? categoryId : -1L;  // Mặc định là -1L nếu categoryId là null
+        this.categoryId = (categoryId != null) ? categoryId : 0L;  // Mặc định là 0L nếu categoryId là null
         this.sortByName = (sortByName != null) ? sortByName : "";  // Mặc định là chuỗi rỗng
         this.sortByPrice = (sortByPrice != null) ? sortByPrice : "";  // Mặc định là chuỗi rỗng
     }

@@ -45,7 +45,6 @@ public class Fragment_foodDisplay extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         getArgumentsFromParent();
-        initViewModel();
         initView(inflater, container);
         return binding.getRoot();
     }
@@ -53,6 +52,7 @@ public class Fragment_foodDisplay extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        initViewModel();
         initObservers();
     }
 
@@ -61,40 +61,23 @@ public class Fragment_foodDisplay extends Fragment {
             Log.e("observe", "initObservers: filterViewModel is null");
             return;
         }
-
-        // Các biến để lưu giá trị cũ
-        final Long[] lastCategoryId = {null};
-        final String[] lastSortByName = {null};
-        final String[] lastSortByPrice = {null};
-
+        filterViewModel.setFilters(categoryId, sortByName, sortByPrice);
         // Quan sát sự thay đổi của CategoryId
         filterViewModel.getCategoryId().observe(getViewLifecycleOwner(), catId -> {
-            if ((lastCategoryId[0] == null && catId != null && catId != 0L) ||
-                    (lastCategoryId[0] != null && !lastCategoryId[0].equals(catId))) {
-                lastCategoryId[0] = catId;
-                reloadData();
-                Log.d("observe", "CategoryId changed to " + catId);
-            }
-        });
+            reloadData();
+            Log.d("observe", "CategoryId changed to " + catId);
 
+        });
         // Quan sát sự thay đổi của SortByName
         filterViewModel.getSortByName().observe(getViewLifecycleOwner(), nameSort -> {
-            if ((lastSortByName[0] == null && nameSort != null && !nameSort.isEmpty()) ||
-                    (lastSortByName[0] != null && !lastSortByName[0].equals(nameSort))) {
-                lastSortByName[0] = nameSort;
-                reloadData();
-                Log.d("observe", "SortByName changed to " + nameSort);
-            }
+            reloadData();
+            Log.d("observe", "SortByName changed to " + nameSort);
         });
 
         // Quan sát sự thay đổi của SortByPrice
         filterViewModel.getSortByPrice().observe(getViewLifecycleOwner(), priceSort -> {
-            if ((lastSortByPrice[0] == null && priceSort != null && !priceSort.isEmpty()) ||
-                    (lastSortByPrice[0] != null && !lastSortByPrice[0].equals(priceSort))) {
-                lastSortByPrice[0] = priceSort;
-                reloadData();
-                Log.d("observe", "SortByPrice changed to " + priceSort);
-            }
+            reloadData();
+            Log.d("observe", "SortByPrice changed to " + priceSort);
         });
     }
 
@@ -103,7 +86,7 @@ public class Fragment_foodDisplay extends Fragment {
         binding = FragmentRcFoodDisplayBinding.inflate(inflater, container, false);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         binding.fragmentFoodDisplayRc.setLayoutManager(layoutManager);
-        switch (tabNum)
+        /*switch (tabNum)
         {
             case 0:
                 // Gọi phương thức getFoods() trong ViewModel và quan sát LiveData
@@ -111,6 +94,7 @@ public class Fragment_foodDisplay extends Fragment {
                     if (foods != null && !foods.isEmpty()) {
                         adapter = new FoodTabLayoutAdapter(getContext(), foods, tabNum);
                         binding.fragmentFoodDisplayRc.setAdapter(adapter);
+                        adapter.notifyDataSetChanged();
                     } else {
                         // Xử lý nếu không có dữ liệu (Hiển thị thông báo hay giao diện khác)
                         Log.d("Fragment_foodDisplay", "onCreateView: No food items found");
@@ -122,6 +106,7 @@ public class Fragment_foodDisplay extends Fragment {
                     if (newFoodList != null && !newFoodList.isEmpty()) {
                         adapter = new FoodTabLayoutAdapter(getContext(), newFoodList, tabNum);
                         binding.fragmentFoodDisplayRc.setAdapter(adapter);
+                        adapter.notifyDataSetChanged();
                     } else {
                         // Xử lý nếu không có dữ liệu (Hiển thị thông báo hay giao diện khác)
                         Log.d("Fragment_foodDisplay", "onCreateView: No food items found");
@@ -133,6 +118,7 @@ public class Fragment_foodDisplay extends Fragment {
                     if (newFoodList != null && !newFoodList.isEmpty()) {
                         adapter = new FoodTabLayoutAdapter(getContext(), newFoodList, tabNum);
                         binding.fragmentFoodDisplayRc.setAdapter(adapter);
+                        adapter.notifyDataSetChanged();
                     } else {
                         // Xử lý nếu không có dữ liệu (Hiển thị thông báo hay giao diện khác)
                         Log.d("Fragment_foodDisplay", "onCreateView: No food items found");
@@ -140,7 +126,7 @@ public class Fragment_foodDisplay extends Fragment {
                 });
                 break;
             default:
-        }
+        }*/
     }
 
     private void initViewModel() {
@@ -151,8 +137,8 @@ public class Fragment_foodDisplay extends Fragment {
     private void getArgumentsFromParent() {
         if (getArguments() != null) {
             keyword = getArguments().getString("keyword", "");  // Default value là ""
-            categoryId = getArguments().getLong("categoryId", -1L);  // Default là -1L nếu không có giá trị
-            if (categoryId == -1L) {
+            categoryId = getArguments().getLong("categoryId", 0L);
+            if (categoryId == 0L) {
                 categoryId = null;  // Nếu không có categoryId, truyền null để API xử lý
             }
             sortByName = getArguments().getString("sortByName", "");  // Default value là ""
@@ -169,23 +155,27 @@ public class Fragment_foodDisplay extends Fragment {
 
         String nameSort = filterViewModel.getSortByName().getValue();
         String priceSort = filterViewModel.getSortByPrice().getValue();
+        Log.d("reloadData", "reloadData: " + catId + " " + nameSort + " " + priceSort);
 
         switch (tabNum) {
             case 0:
                 foodViewModel.getFoods(keyword, catId, nameSort, priceSort).removeObservers(getViewLifecycleOwner());
                 foodViewModel.getFoods(keyword, catId, nameSort, priceSort).observe(getViewLifecycleOwner(), foods -> {
-                    if (foods != null && !foods.isEmpty()) {
+                    if (foods != null) {
+                        for (FoodModel food:
+                                foods) {
+                            Log.d("foods", "initView: " + food.getPrice());
+                        }
                         adapter = new FoodTabLayoutAdapter(getContext(), foods, tabNum);
                         binding.fragmentFoodDisplayRc.setAdapter(adapter);
                         adapter.notifyDataSetChanged();
                     }
                 });
                 break;
-
             case 1:
                 foodViewModel.getBestSellerFoodList(keyword, catId, nameSort, priceSort).removeObservers(getViewLifecycleOwner());
                 foodViewModel.getBestSellerFoodList(keyword, catId, nameSort, priceSort).observe(getViewLifecycleOwner(), foods -> {
-                    if (foods != null && !foods.isEmpty()) {
+                    if (foods != null) {
                         adapter = new FoodTabLayoutAdapter(getContext(), foods, tabNum);
                         binding.fragmentFoodDisplayRc.setAdapter(adapter);
                         adapter.notifyDataSetChanged();
@@ -196,7 +186,7 @@ public class Fragment_foodDisplay extends Fragment {
             case 2:
                 foodViewModel.getNewFoodList(keyword, catId, nameSort, priceSort).removeObservers(getViewLifecycleOwner());
                 foodViewModel.getNewFoodList(keyword, catId, nameSort, priceSort).observe(getViewLifecycleOwner(), foods -> {
-                    if (foods != null && !foods.isEmpty()) {
+                    if (foods != null) {
                         adapter = new FoodTabLayoutAdapter(getContext(), foods, tabNum);
                         binding.fragmentFoodDisplayRc.setAdapter(adapter);
                         adapter.notifyDataSetChanged();

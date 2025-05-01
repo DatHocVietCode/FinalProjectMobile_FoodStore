@@ -62,8 +62,8 @@ public class MenuActivity extends AppCompatActivity {
         if (keyword == null) {
             keyword = "";  // Giá trị mặc định cho keyword
         }
-        categoryId = getIntent().getLongExtra("categoryId", -1L);  // Dùng -1 làm default nếu không có giá trị
-        if (categoryId == -1L) {
+        categoryId = getIntent().getLongExtra("categoryId", 0L);  // Dùng 0 làm default nếu không có giá trị
+        if (categoryId == 0L) {
             categoryId = null;  // Nếu không có categoryId, truyền null để API xử lý
         }
         sortByName = getIntent().getStringExtra("sortByName");
@@ -84,6 +84,7 @@ public class MenuActivity extends AppCompatActivity {
         adapter = new ViewPagerFoodTabLayoutAdapter(getSupportFragmentManager(), getLifecycle()
                 , keyword, categoryId, sortByName, sortByPrice);
         binding.menuScreenViewpager.setAdapter(adapter);
+        binding.menuScreenViewpager.setOffscreenPageLimit(3);
         adapter.notifyDataSetChanged();
     }
 
