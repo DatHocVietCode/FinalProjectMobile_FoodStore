@@ -27,6 +27,10 @@ public class MenuActivity extends AppCompatActivity {
     ActivityMenuBinding binding;
     ViewPagerFoodTabLayoutAdapter adapter;
     FoodViewModel foodViewModel;
+    String keyword;
+    Long categoryId;
+    String sortByName;
+    String sortByPrice;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,9 +50,30 @@ public class MenuActivity extends AppCompatActivity {
 
     private void AnhXa() {
         iniViewModel();
+        getKeyWord();
         setupBtnFilter();
         setupViewpager();
         setupTableLayout();
+    }
+
+    private void getKeyWord() {
+        // Lấy dữ liệu từ Intent và đảm bảo có giá trị mặc định nếu không có
+        keyword = getIntent().getStringExtra("keyword");
+        if (keyword == null) {
+            keyword = "";  // Giá trị mặc định cho keyword
+        }
+        categoryId = getIntent().getLongExtra("categoryId", -1L);  // Dùng -1 làm default nếu không có giá trị
+        if (categoryId == -1L) {
+            categoryId = null;  // Nếu không có categoryId, truyền null để API xử lý
+        }
+        sortByName = getIntent().getStringExtra("sortByName");
+        if (sortByName == null) {
+            sortByName = "";  // Giá trị mặc định cho sortByName
+        }
+        sortByPrice = getIntent().getStringExtra("sortByPrice");
+        if (sortByPrice == null) {
+            sortByPrice = "";  // Giá trị mặc định cho sortByPrice
+        }
     }
 
     private void iniViewModel() {
@@ -56,32 +81,22 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     private void setupViewpager() {
-        // Lấy dữ liệu từ Intent và đảm bảo có giá trị mặc định nếu không có
-        String keyword = getIntent().getStringExtra("keyword");
-        if (keyword == null) {
-            keyword = "";  // Giá trị mặc định cho keyword
-        }
-        Long categoryId = getIntent().getLongExtra("categoryId", -1L);  // Dùng -1 làm default nếu không có giá trị
-        if (categoryId == -1L) {
-            categoryId = null;  // Nếu không có categoryId, truyền null để API xử lý
-        }
-        String sortByName = getIntent().getStringExtra("sortByName");
-        if (sortByName == null) {
-            sortByName = "";  // Giá trị mặc định cho sortByName
-        }
-        String sortByPrice = getIntent().getStringExtra("sortByPrice");
-        if (sortByPrice == null) {
-            sortByPrice = "";  // Giá trị mặc định cho sortByPrice
-        }
         adapter = new ViewPagerFoodTabLayoutAdapter(getSupportFragmentManager(), getLifecycle()
                 , keyword, categoryId, sortByName, sortByPrice);
         binding.menuScreenViewpager.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
     }
 
     private void setupBtnFilter() {
+        Bundle bundle = new Bundle();
+        if (categoryId != null)
+        {
+            bundle.putLong("categoryId", categoryId);
+        }
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         Fragment_btn_filter btn_filter = new Fragment_btn_filter();
+        btn_filter.setArguments(bundle);
         transaction.replace(R.id.menu_screen_fragmentContainer_btnFilter, btn_filter);
         transaction.commit();
     }

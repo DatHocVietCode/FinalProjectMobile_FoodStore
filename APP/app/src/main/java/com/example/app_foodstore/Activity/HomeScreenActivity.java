@@ -187,7 +187,7 @@ public class HomeScreenActivity extends AppCompatActivity {
     }
 
     private void includeNewFood() {
-        foodViewModel.getNewFoodList().observe(this, new Observer<List<FoodModel>>() {
+        foodViewModel.getNewFoodList("", null, "", "").observe(this, new Observer<List<FoodModel>>() {
             @Override
             public void onChanged(List<FoodModel> foodList) {
                 if (foodList != null && !foodList.isEmpty()) {

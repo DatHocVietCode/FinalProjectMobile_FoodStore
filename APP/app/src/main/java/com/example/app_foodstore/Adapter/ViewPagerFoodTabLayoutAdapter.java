@@ -29,7 +29,6 @@ public class ViewPagerFoodTabLayoutAdapter extends FragmentStateAdapter {
     @Override
     public Fragment createFragment(int position) {
         Fragment_foodDisplay fragment = new Fragment_foodDisplay();
-
         // Tạo Bundle để truyền tham số vào Fragment
         Bundle args = new Bundle();
         args.putString("keyword", keyword);

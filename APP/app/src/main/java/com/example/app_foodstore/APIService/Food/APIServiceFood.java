@@ -16,6 +16,13 @@ public interface APIServiceFood {
             @Query("sort_by_name") String sortByName,
             @Query("sort_by_price") String sortByPrice
     );
+    @GET("products/best-seller")
+    Call<APIRespone<FoodModel>> getBestSellerProducts(
+            @Query("keyword") String keyword,
+            @Query("category_id") Long categoryId,
+            @Query("sort_by_name") String sortByName,
+            @Query("sort_by_price") String sortByPrice
+    );
     @GET("products")
     Call<APIResponePagination> getProducts(
             @Query("keyword") String keyword,

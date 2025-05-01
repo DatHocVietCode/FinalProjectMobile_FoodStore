@@ -15,10 +15,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.app_foodstore.Adapter.CategorySpinnerAdapter;
 import com.example.app_foodstore.Model.CategoryModel;
 import com.example.app_foodstore.R;
+import com.example.app_foodstore.ViewModel.CateViewModel;
+import com.example.app_foodstore.ViewModel.FilterViewModel;
 import com.example.app_foodstore.databinding.FragmentBtnFilterBinding;
 
 import java.lang.reflect.Method;
@@ -27,12 +30,17 @@ import java.util.List;
 
 public class Fragment_btn_filter extends Fragment {
     FragmentBtnFilterBinding binding;
+    CateViewModel cateViewModel;
     AppCompatSpinner spinner;
+    private Long selectedCategoryId = 0L; // mặc định là All
+    private boolean isCategoryListPrepared = false;
+    FilterViewModel filterViewModel;
     public Fragment_btn_filter() {
     }
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        filterViewModel = new ViewModelProvider(requireActivity()).get(FilterViewModel.class);
         binding = FragmentBtnFilterBinding.inflate(inflater, container, false);
         binding.btnFilter.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,45 +59,56 @@ public class Fragment_btn_filter extends Fragment {
                 btnOk.setOnClickListener(v -> {
                     // Tên
                     int nameId = radioGroupName.getCheckedRadioButtonId();
-                    String nameSort = "Tên: Mặc định";
-                    if (nameId == R.id.radioNameAZ) nameSort = "Tên: A → Z";
-                    else if (nameId == R.id.radioNameZA) nameSort = "Tên: Z → A";
+                    String nameSort = "";
+                    if (nameId == R.id.radioNameAZ) nameSort = "acs";
+                    else if (nameId == R.id.radioNameZA) nameSort = "decs";
 
                     // Giá
                     int priceId = radioGroupPrice.getCheckedRadioButtonId();
-                    String priceSort = "Giá: Mặc định";
-                    if (priceId == R.id.radioPriceLowHigh) priceSort = "Giá: Thấp → Cao";
-                    else if (priceId == R.id.radioPriceHighLow) priceSort = "Giá: Cao → Thấp";
+                    String priceSort = "";
+                    if (priceId == R.id.radioPriceLowHigh) priceSort = "acs";
+                    else if (priceId == R.id.radioPriceHighLow) priceSort = "decs";
 
                     Toast.makeText(getActivity(),
                             nameSort + "\n" + priceSort, Toast.LENGTH_SHORT).show();
 
+                    filterViewModel.setFilters(selectedCategoryId, nameSort, priceSort);
                     dialog.dismiss();
                 });
                 btnCancel.setOnClickListener(v -> dialog.dismiss());
                 dialog.show();
             }
         });
+        Bundle args = getArguments();
+        if (args != null) {
+            selectedCategoryId = args.getLong("categoryId", 0L);
+        }
         return binding.getRoot();
     }
     private void setupSpinner(Dialog dialog) {
         spinner = dialog.findViewById(R.id.spinnerCategory);
-        List<CategoryModel> categoryList = new ArrayList<>();
-        categoryList.add(new CategoryModel(0L, "All", ""));
-        categoryList.add(new CategoryModel(1L, "Category A", ""));
-        categoryList.add(new CategoryModel(2L, "Category B", ""));
-        categoryList.add(new CategoryModel(3L, "Category C", ""));
-        categoryList.add(new CategoryModel(4L, "Category D", ""));
+        cateViewModel = new ViewModelProvider(this).get(CateViewModel.class);
+        cateViewModel.getAllCate().observe(getViewLifecycleOwner(), categoryModels -> {
+            if (categoryModels != null && !categoryModels.isEmpty()) {
+                if (!isCategoryListPrepared) {
+                    categoryModels.add(0, new CategoryModel(0L, "All", ""));
+                    isCategoryListPrepared = true;
+                }
+                setupCategorySpinner(categoryModels);
+            }
+        });
+    }
 
+    private void setupCategorySpinner(List<CategoryModel> categoryModels) {
         CategorySpinnerAdapter adapter = new CategorySpinnerAdapter(
                 requireContext(),
-                categoryList,
+                categoryModels,
                 new CategorySpinnerAdapter.OnCategorySelectedListener() {
                     @Override
                     public void OnCategorySelectedListener(CategoryModel categoryModel, int position) {
                         // Đặt lại selected item
                         spinner.post(() -> spinner.setSelection(position));
-
+                        selectedCategoryId = categoryModel.getId();
                         // Thực hiện hack để spinner reset dropdown (nếu cần)
                         try {
                             Method method = Spinner.class.getDeclaredMethod("onDetachedFromWindow");
@@ -103,7 +122,7 @@ public class Fragment_btn_filter extends Fragment {
         );
 
         spinner.setAdapter(adapter);
-        // Đặt mặc định là dòng đầu tiên (không chọn voucher)
-        spinner.setSelection(0);
+        spinner.setSelection(Math.toIntExact(selectedCategoryId));
     }
+
 }
