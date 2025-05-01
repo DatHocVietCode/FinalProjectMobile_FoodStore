@@ -25,9 +25,18 @@ public class FoodRepository {
     public FoodRepository() {
         apiService = Constant.retrofit.create(APIServiceFood.class);
     }
-
+    private String TurnEmptyToNull(String keyword)
+    {
+        if (keyword.isEmpty())
+        {
+            keyword = null;
+        }
+        return keyword;
+    }
     public LiveData<List<FoodModel>> getNewFood(String keyword, Long categoryId, String sortByName, String sortByPrice) {
         MutableLiveData<List<FoodModel>> foodData = new MutableLiveData<>();
+        sortByName = TurnEmptyToNull(sortByName);
+        sortByPrice = TurnEmptyToNull(sortByPrice);
         Call<APIRespone<FoodModel>> call = apiService.getNewProducts(keyword, categoryId, sortByName, sortByPrice);
         call.enqueue(new Callback<APIRespone<FoodModel>>() {
             @Override
@@ -46,6 +55,8 @@ public class FoodRepository {
     }
     public LiveData<List<FoodModel>> getBestSeller(String keyword, Long categoryId, String sortByName, String sortByPrice) {
         MutableLiveData<List<FoodModel>> foodData = new MutableLiveData<>();
+        sortByName = TurnEmptyToNull(sortByName);
+        sortByPrice = TurnEmptyToNull(sortByPrice);
         Call<APIRespone<FoodModel>> call = apiService.getBestSellerProducts(keyword, categoryId, sortByName, sortByPrice);
         call.enqueue(new Callback<APIRespone<FoodModel>>() {
             @Override
@@ -63,22 +74,23 @@ public class FoodRepository {
         return foodData;
     }
     public LiveData<List<FoodModel>> getFoods(String keyword, Long categoryId, String sortByName, String sortByPrice) {
-       MutableLiveData<Data> data = new MutableLiveData<>();
-       MutableLiveData<List<FoodModel>> foodData = new MutableLiveData<>();
-       Call<APIResponePagination> call = apiService.getProducts(keyword, categoryId, sortByName, sortByPrice);
-       call.enqueue(new Callback<APIResponePagination>() {
+        MutableLiveData<Data> data = new MutableLiveData<>();
+        MutableLiveData<List<FoodModel>> foodData = new MutableLiveData<>();
+        sortByName = TurnEmptyToNull(sortByName);
+        sortByPrice = TurnEmptyToNull(sortByPrice);
+        Log.d("API Request", "keyword: " + keyword + ", categoryId: " + categoryId + ", sortByName: " + sortByName + ", sortByPrice: " + sortByPrice);
+        Call<APIResponePagination> call = apiService.getProducts(keyword, categoryId, sortByName, sortByPrice);
+        call.enqueue(new Callback<APIResponePagination>() {
            @Override
            public void onResponse(Call<APIResponePagination> call, Response<APIResponePagination> response) {
                if (response.body() != null) {
-                   Log.d("API Response", response.body().getData().toString());
+                   //Log.d("API Response", response.body().getData().toString());
                    data.setValue(response.body().getData()); // Lưu dữ liệu vào LiveData
                    foodData.setValue(data.getValue().getFoods()); // Lưu dữ liệu vào LiveData
-
-                  /* Log.d("Success", "Page Number: " + Objects.requireNonNull(data.getValue()).getPageNumber());
-                   Log.d("Success", "Total Element: " + Objects.requireNonNull(data.getValue()).getTotalElements());
-                   Log.d("Success", "Total Pages: " + Objects.requireNonNull(data.getValue()).getTotalPages());
-                   Log.d("Success", "PageSize: " + Objects.requireNonNull(data.getValue()).getPageSize());
-                   Log.d("Success", "onResponse: " + Objects.requireNonNull(data.getValue()).getFoods().get(0).getName());*/
+                   for (FoodModel food:
+                        data.getValue().getFoods()) {
+                       Log.d("API Response", food.getPrice().toString());
+                   }
                }
            }
            @Override

@@ -1,6 +1,7 @@
 package com.example.app_foodstore.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.app_foodstore.Activity.MenuActivity;
 import com.example.app_foodstore.Model.CategoryModel;
 import com.example.app_foodstore.R;
 
@@ -59,6 +61,15 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
                 .load(categoryModel.getImage())
                 .into(holder.category_image);
         holder.tv_name.setText(categoryModel.getName());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, MenuActivity.class);
+                intent.putExtra("categoryId", categoryModel.getId());
+                context.startActivity(intent);
+            }
+        });
+
     }
 
     @Override

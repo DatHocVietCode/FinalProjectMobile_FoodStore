@@ -65,19 +65,19 @@ public class Fragment_foodDisplay extends Fragment {
         // Quan sát sự thay đổi của CategoryId
         filterViewModel.getCategoryId().observe(getViewLifecycleOwner(), catId -> {
             reloadData();
-            Log.d("observe", "CategoryId changed to " + catId);
+            //Log.d("observe", "CategoryId changed to " + catId);
 
         });
         // Quan sát sự thay đổi của SortByName
         filterViewModel.getSortByName().observe(getViewLifecycleOwner(), nameSort -> {
             reloadData();
-            Log.d("observe", "SortByName changed to " + nameSort);
+            //Log.d("observe", "SortByName changed to " + nameSort);
         });
 
         // Quan sát sự thay đổi của SortByPrice
         filterViewModel.getSortByPrice().observe(getViewLifecycleOwner(), priceSort -> {
             reloadData();
-            Log.d("observe", "SortByPrice changed to " + priceSort);
+            //Log.d("observe", "SortByPrice changed to " + priceSort);
         });
     }
 
@@ -114,17 +114,13 @@ public class Fragment_foodDisplay extends Fragment {
 
         String nameSort = filterViewModel.getSortByName().getValue();
         String priceSort = filterViewModel.getSortByPrice().getValue();
-        Log.d("reloadData", "reloadData: " + catId + " " + nameSort + " " + priceSort);
+        Log.d("reloadData", "reloadData: " + catId + " nameSort:" + nameSort + " priceSort:" + priceSort);
 
         switch (tabNum) {
             case 0:
                 foodViewModel.getFoods(keyword, catId, nameSort, priceSort).removeObservers(getViewLifecycleOwner());
                 foodViewModel.getFoods(keyword, catId, nameSort, priceSort).observe(getViewLifecycleOwner(), foods -> {
                     if (foods != null) {
-                        for (FoodModel food:
-                                foods) {
-                            Log.d("foods", "initView: " + food.getPrice());
-                        }
                         adapter = new FoodTabLayoutAdapter(getContext(), foods, tabNum);
                         binding.fragmentFoodDisplayRc.setAdapter(adapter);
                         binding.fragmentFoodDisplayTvNoProduct.setVisibility(View.INVISIBLE);

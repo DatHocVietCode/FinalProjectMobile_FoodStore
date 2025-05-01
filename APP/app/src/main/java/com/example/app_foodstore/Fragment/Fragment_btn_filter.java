@@ -35,6 +35,9 @@ public class Fragment_btn_filter extends Fragment {
     private Long selectedCategoryId = 0L; // mặc định là All
     private boolean isCategoryListPrepared = false;
     FilterViewModel filterViewModel;
+    private String selectedNameSort = "";
+    private String selectedPriceSort = "";
+
     public Fragment_btn_filter() {
     }
     @Nullable
@@ -51,6 +54,20 @@ public class Fragment_btn_filter extends Fragment {
 
                 RadioGroup radioGroupName = dialog.findViewById(R.id.radioGroupName);
                 RadioGroup radioGroupPrice = dialog.findViewById(R.id.radioGroupPrice);
+                // Gán lại radio name
+                if ("asc".equals(selectedNameSort)) {
+                    radioGroupName.check(R.id.radioNameAZ);
+                } else if ("desc".equals(selectedNameSort)) {
+                    radioGroupName.check(R.id.radioNameZA);
+                }
+
+                // Gán lại radio price
+                if ("asc".equals(selectedPriceSort)) {
+                    radioGroupPrice.check(R.id.radioPriceLowHigh);
+                } else if ("desc".equals(selectedPriceSort)) {
+                    radioGroupPrice.check(R.id.radioPriceHighLow);
+                }
+
                 Button btnOk = dialog.findViewById(R.id.btnOk);
                 Button btnCancel = dialog.findViewById(R.id.btnCancel);
 
@@ -60,19 +77,21 @@ public class Fragment_btn_filter extends Fragment {
                     // Tên
                     int nameId = radioGroupName.getCheckedRadioButtonId();
                     String nameSort = "";
-                    if (nameId == R.id.radioNameAZ) nameSort = "acs";
-                    else if (nameId == R.id.radioNameZA) nameSort = "decs";
+                    if (nameId == R.id.radioNameAZ) nameSort = "asc";
+                    else if (nameId == R.id.radioNameZA) nameSort = "desc";
 
                     // Giá
                     int priceId = radioGroupPrice.getCheckedRadioButtonId();
                     String priceSort = "";
-                    if (priceId == R.id.radioPriceLowHigh) priceSort = "acs";
-                    else if (priceId == R.id.radioPriceHighLow) priceSort = "decs";
+                    if (priceId == R.id.radioPriceLowHigh) priceSort = "asc";
+                    else if (priceId == R.id.radioPriceHighLow) priceSort = "desc";
 
                     Toast.makeText(getActivity(),
                             nameSort + "\n" + priceSort, Toast.LENGTH_SHORT).show();
 
                     filterViewModel.setFilters(selectedCategoryId, nameSort, priceSort);
+                    selectedNameSort = nameSort;
+                    selectedPriceSort = priceSort;
                     dialog.dismiss();
                 });
                 btnCancel.setOnClickListener(v -> dialog.dismiss());
@@ -120,7 +139,6 @@ public class Fragment_btn_filter extends Fragment {
                     }
                 }
         );
-
         spinner.setAdapter(adapter);
         spinner.setSelection(Math.toIntExact(selectedCategoryId));
     }
