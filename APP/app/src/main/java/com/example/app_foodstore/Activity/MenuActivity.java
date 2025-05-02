@@ -51,9 +51,9 @@ public class MenuActivity extends AppCompatActivity {
     private void AnhXa() {
         iniViewModel();
         getKeyWord();
-        setupBtnFilter();
         setupViewpager();
         setupTableLayout();
+        setupBtnFilter();
     }
 
     private void getKeyWord() {
@@ -92,6 +92,7 @@ public class MenuActivity extends AppCompatActivity {
         Bundle bundle = new Bundle();
         if (categoryId != null)
         {
+            Log.d("setupBtnFilter", "setupBtnFilter: " + categoryId);
             bundle.putLong("categoryId", categoryId);
         }
         FragmentManager fragmentManager = getSupportFragmentManager();

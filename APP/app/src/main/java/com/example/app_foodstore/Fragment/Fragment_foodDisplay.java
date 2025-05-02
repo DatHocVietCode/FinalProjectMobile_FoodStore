@@ -61,25 +61,15 @@ public class Fragment_foodDisplay extends Fragment {
             Log.e("observe", "initObservers: filterViewModel is null");
             return;
         }
+
         filterViewModel.setFilters(categoryId, sortByName, sortByPrice);
-        // Quan sát sự thay đổi của CategoryId
-        filterViewModel.getCategoryId().observe(getViewLifecycleOwner(), catId -> {
-            reloadData();
-            //Log.d("observe", "CategoryId changed to " + catId);
-
-        });
-        // Quan sát sự thay đổi của SortByName
-        filterViewModel.getSortByName().observe(getViewLifecycleOwner(), nameSort -> {
-            reloadData();
-            //Log.d("observe", "SortByName changed to " + nameSort);
-        });
-
-        // Quan sát sự thay đổi của SortByPrice
-        filterViewModel.getSortByPrice().observe(getViewLifecycleOwner(), priceSort -> {
-            reloadData();
-            //Log.d("observe", "SortByPrice changed to " + priceSort);
-        });
+        MediatorLiveData<Object> mediator = new MediatorLiveData<>();
+        mediator.addSource(filterViewModel.getCategoryId(), val -> mediator.setValue(new Object()));
+        mediator.addSource(filterViewModel.getSortByName(), val -> mediator.setValue(new Object()));
+        mediator.addSource(filterViewModel.getSortByPrice(), val -> mediator.setValue(new Object()));
+        mediator.observe(getViewLifecycleOwner(), val -> reloadData());
     }
+
 
 
     private void initView(LayoutInflater inflater, ViewGroup container) {
@@ -91,6 +81,7 @@ public class Fragment_foodDisplay extends Fragment {
     private void initViewModel() {
         foodViewModel = new ViewModelProvider(requireActivity()).get(FoodViewModel.class);
         filterViewModel = new ViewModelProvider(requireActivity()).get(FilterViewModel.class);
+        filterViewModel.setFilters(categoryId, sortByName, sortByPrice);
     }
 
     private void getArgumentsFromParent() {
@@ -111,11 +102,9 @@ public class Fragment_foodDisplay extends Fragment {
         if (catId != null && catId == 0L) {
             catId = null;
         }
-
         String nameSort = filterViewModel.getSortByName().getValue();
         String priceSort = filterViewModel.getSortByPrice().getValue();
-        Log.d("reloadData", "reloadData: " + catId + " nameSort:" + nameSort + " priceSort:" + priceSort);
-
+        //Log.d("reloadData", "reloadData: categoryId" + catId + " nameSort:" + nameSort + " priceSort:" + priceSort + " tabnum" + tabNum);
         switch (tabNum) {
             case 0:
                 foodViewModel.getFoods(keyword, catId, nameSort, priceSort).removeObservers(getViewLifecycleOwner());
@@ -136,14 +125,24 @@ public class Fragment_foodDisplay extends Fragment {
                 foodViewModel.getBestSellerFoodList(keyword, catId, nameSort, priceSort).removeObservers(getViewLifecycleOwner());
                 foodViewModel.getBestSellerFoodList(keyword, catId, nameSort, priceSort).observe(getViewLifecycleOwner(), foods -> {
                     if (foods != null) {
+                        for (FoodModel food:
+                                foods) {
+                            Log.d("reloadData", "foods1 is not null: foodName " + food.getName());
+                        }
                         adapter = new FoodTabLayoutAdapter(getContext(), foods, tabNum);
                         binding.fragmentFoodDisplayRc.setAdapter(adapter);
                         binding.fragmentFoodDisplayTvNoProduct.setVisibility(View.INVISIBLE);
+                        Log.d("reloadData", "reloadData: foods1 is not null " + foods.get(0).getCategoryId() + " nameSort:" + nameSort + " priceSort:" + priceSort );
                         adapter.notifyDataSetChanged();
                         if (foods.isEmpty())
                         {
                             binding.fragmentFoodDisplayTvNoProduct.setVisibility(View.VISIBLE);
+                            Log.d("reloadData", "reloadData: foods1 is empty" );
                         }
+                    }
+                    else
+                    {
+                        Log.d("reloadData", "reloadData: foods1 is null" );
                     }
                 });
                 break;
@@ -152,21 +151,28 @@ public class Fragment_foodDisplay extends Fragment {
                 foodViewModel.getNewFoodList(keyword, catId, nameSort, priceSort).removeObservers(getViewLifecycleOwner());
                 foodViewModel.getNewFoodList(keyword, catId, nameSort, priceSort).observe(getViewLifecycleOwner(), foods -> {
                     if (foods != null) {
+                        for (FoodModel food:
+                             foods) {
+                            Log.d("reloadData", "foods2 is not null: foodName " + food.getName());
+                        }
                         adapter = new FoodTabLayoutAdapter(getContext(), foods, tabNum);
                         binding.fragmentFoodDisplayRc.setAdapter(adapter);
                         binding.fragmentFoodDisplayTvNoProduct.setVisibility(View.INVISIBLE);
+                        Log.d("reloadData", "reloadData: foods2 is not null " + foods.get(0).getCategoryId() + " nameSort:" + nameSort + " priceSort:" + priceSort );
                         adapter.notifyDataSetChanged();
                         if (foods.isEmpty())
                         {
                             binding.fragmentFoodDisplayTvNoProduct.setVisibility(View.VISIBLE);
+                            Log.d("reloadData", "reloadData: foods1 is empty" );
                         }
                     }
-
+                    else
+                    {
+                        Log.d("reloadData", "reloadData: foods2 is null" );
+                    }
                 });
                 break;
         }
     }
-
-
 }
 

@@ -27,6 +27,8 @@ public class FoodRepository {
     }
     private String TurnEmptyToNull(String keyword)
     {
+        if (keyword == null)
+            return keyword;
         if (keyword.isEmpty())
         {
             keyword = null;
@@ -87,10 +89,6 @@ public class FoodRepository {
                    //Log.d("API Response", response.body().getData().toString());
                    data.setValue(response.body().getData()); // Lưu dữ liệu vào LiveData
                    foodData.setValue(data.getValue().getFoods()); // Lưu dữ liệu vào LiveData
-                   for (FoodModel food:
-                        data.getValue().getFoods()) {
-                       Log.d("API Response", food.getPrice().toString());
-                   }
                }
            }
            @Override

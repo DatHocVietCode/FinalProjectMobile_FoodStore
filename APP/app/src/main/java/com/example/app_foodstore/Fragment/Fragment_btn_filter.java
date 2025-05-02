@@ -2,6 +2,7 @@ package com.example.app_foodstore.Fragment;
 
 import android.app.Dialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,7 +44,6 @@ public class Fragment_btn_filter extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        filterViewModel = new ViewModelProvider(requireActivity()).get(FilterViewModel.class);
         binding = FragmentBtnFilterBinding.inflate(inflater, container, false);
         binding.btnFilter.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,12 +98,23 @@ public class Fragment_btn_filter extends Fragment {
                 dialog.show();
             }
         });
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        filterViewModel = new ViewModelProvider(requireActivity()).get(FilterViewModel.class);
         Bundle args = getArguments();
         if (args != null) {
             selectedCategoryId = args.getLong("categoryId", 0L);
+            Log.d("btnFilterOnViewCreated", "onViewCreated: " + args.getLong("categoryId", 0L));
+            filterViewModel.setFilters(selectedCategoryId, selectedNameSort, selectedPriceSort);
+            Log.d("FilterDebug", "categoryId: " + filterViewModel.getCategoryId().getValue());
+
         }
-        return binding.getRoot();
     }
+
     private void setupSpinner(Dialog dialog) {
         spinner = dialog.findViewById(R.id.spinnerCategory);
         cateViewModel = new ViewModelProvider(this).get(CateViewModel.class);

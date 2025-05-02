@@ -1,6 +1,7 @@
 package com.example.app_foodstore.Adapter;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -23,6 +24,7 @@ public class ViewPagerFoodTabLayoutAdapter extends FragmentStateAdapter {
         this.categoryId = (categoryId != null) ? categoryId : 0L;  // Mặc định là 0L nếu categoryId là null
         this.sortByName = (sortByName != null) ? sortByName : "";  // Mặc định là chuỗi rỗng
         this.sortByPrice = (sortByPrice != null) ? sortByPrice : "";  // Mặc định là chuỗi rỗng
+        Log.d("ViewPagerFoodTabLayoutAdapter", "ViewPagerFoodTabLayoutAdapter: " + keyword + " " + categoryId + " " + sortByName + " " + sortByPrice);
     }
 
     @NonNull
@@ -31,11 +33,8 @@ public class ViewPagerFoodTabLayoutAdapter extends FragmentStateAdapter {
         Fragment_foodDisplay fragment = new Fragment_foodDisplay();
         // Tạo Bundle để truyền tham số vào Fragment
         Bundle args = new Bundle();
-        args.putString("keyword", keyword);
         args.putLong("categoryId", categoryId);
-        args.putString("sortByName", sortByName);
-        args.putString("sortByPrice", sortByPrice);
-        args.putInt("tabNum", position); // Truyền số tab (vị trí) vào Bundle
+        args.putInt("tabNum", position);
         fragment.setArguments(args);  // Đặt Bundle vào Fragment
         return fragment;
     }
