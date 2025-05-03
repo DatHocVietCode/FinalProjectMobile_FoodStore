@@ -21,7 +21,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="24dp"
-            android:layout_marginStart="24dp"
+            android:layout_marginStart="12dp"
             android:layout_marginEnd="24dp"
             android:gravity="start"
             >
@@ -47,7 +47,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/reservateSreen_ln_header"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="24dp"
             android:text="Reservation Form"
             android:fontFamily="@font/sen"
             android:textSize="36sp"
@@ -55,7 +55,7 @@
             android:textColor="#FF7622"
             />
         <LinearLayout
-            android:id="@+id/reservateScreen_ln_dateTime"
+            android:id="@+id/reservateScreen_ln_Date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -69,36 +69,114 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Date"
+                android:text="Comming Date"
                 android:fontFamily="@font/sen"
                 android:textColor="#FF7622"
                 android:textSize="24sp"
                 android:layout_marginStart="4dp"/>
-            <EditText
-                android:id="@+id/reservateSceen_et_date"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:fontFamily="@font/sen"
-                android:singleLine="true"
-                android:text="DateTime.Now"
-                android:background="@drawable/rectangle_corner_radius"
-                android:padding="16sp"
-                android:backgroundTint="#F0F5FA"
-                android:textColor="#6B6E82"
-                android:inputType="textEmailAddress"
-                android:layout_marginBottom="8dp"/>
-            <DatePicker
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"/>
+                android:orientation="horizontal">
+                <EditText
+                    android:id="@+id/reservateSceen_et_date"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="7"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/sen"
+                    android:singleLine="true"
+                    android:text="Select your Date"
+                    android:background="@drawable/rectangle_corner_radius"
+                    android:padding="16sp"
+                    android:backgroundTint="#F0F5FA"
+                    android:textColor="#6B6E82"
+                    android:inputType="textEmailAddress"
+                    android:layout_marginBottom="8dp"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:clickable="false"
+                    android:focusable="false"/>
+                <Button
+                    android:id="@+id/reservateScreen_btn_selectDate"
+                    android:layout_width="0dp"
+                    android:layout_weight="4"
+                    android:layout_height="wrap_content"
+                    android:text="Select Date"
+                    android:background="@drawable/rectangle_corner_radius_ff7622"
+                    android:clipToOutline="true"
+                    app:backgroundTint="@null"
+                    android:layout_marginStart="8dp"
+                    android:focusable="true"
+                    android:clickable="true"
+                    android:foreground="?attr/selectableItemBackground"/>
+            </LinearLayout>
         </LinearLayout>
+        <LinearLayout
+            android:id="@+id/reservateScreen_ln_Time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@+id/reservateScreen_ln_Date"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginTop="12dp"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Comming Time"
+                android:fontFamily="@font/sen"
+                android:textColor="#FF7622"
+                android:textSize="24sp"
+                android:layout_marginStart="4dp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <EditText
+                    android:id="@+id/reservateSceen_et_time"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="7"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/sen"
+                    android:singleLine="true"
+                    android:text="Select your time"
+                    android:background="@drawable/rectangle_corner_radius"
+                    android:padding="16sp"
+                    android:backgroundTint="#F0F5FA"
+                    android:textColor="#6B6E82"
+                    android:inputType="textEmailAddress"
+                    android:layout_marginBottom="8dp"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:clickable="false"
+                    android:focusable="false"/>
+                <Button
+                    android:id="@+id/reservateScreen_btn_selectTime"
+                    android:layout_width="0dp"
+                    android:layout_weight="4"
+                    android:layout_height="wrap_content"
+                    android:text="Select Time"
+                    android:background="@drawable/rectangle_corner_radius_ff7622"
+                    android:clipToOutline="true"
+                    app:backgroundTint="@null"
+                    android:layout_marginStart="8dp"
+                    android:focusable="true"
+                    android:clickable="true"
+                    android:foreground="?attr/selectableItemBackground"/>
+            </LinearLayout>
+        </LinearLayout>
+
         <LinearLayout
             android:id="@+id/reservateScreen_ln_numberOfGuest"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintTop_toBottomOf="@+id/reservateScreen_ln_dateTime"
+            app:layout_constraintTop_toBottomOf="@+id/reservateScreen_ln_Time"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginStart="12dp"
@@ -112,18 +190,20 @@
                 android:textColor="#FF7622"
                 android:textSize="24sp"
                 android:layout_marginStart="4dp"
-                android:inputType="number"/>
+                />
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:background="@drawable/rectangle_corner_radius">
                 <EditText
                     android:id="@+id/reservateSceen_et_numberOfGuest"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/reservateScreen_ln_btnAdjust"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginEnd="8dp"
                     android:textSize="16sp"
                     android:fontFamily="@font/sen"
                     android:singleLine="true"
@@ -132,29 +212,41 @@
                     android:padding="16sp"
                     android:backgroundTint="#F0F5FA"
                     android:textColor="#6B6E82"
-                    android:inputType="textEmailAddress"/>
-                <ImageView
+                    android:inputType="number"/>
+                <LinearLayout
+                    android:id="@+id/reservateScreen_ln_btnAdjust"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/arrow_add_up"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginTop="4dp"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:foreground="@drawable/ripple_circle"/>
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/arrow_minus_down"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginBottom="4dp"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:foreground="@drawable/ripple_circle"/>
+                    app:layout_constraintBottom_toBottomOf="parent">
+                    <ImageView
+                        android:id="@+id/reservateScreen_imgAdd"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/arrow_add_up"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginTop="4dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="@drawable/ripple_circle"/>
+                    <ImageView
+                        android:id="@+id/reservateScreen_imgMinus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/arrow_minus_down"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginBottom="4dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="@drawable/ripple_circle"/>
+                </LinearLayout>
+
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
         <LinearLayout
@@ -204,7 +296,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Contact Person"
+                android:text="Contact Person's Name"
                 android:fontFamily="@font/sen"
                 android:textColor="#FF7622"
                 android:textSize="24sp"
@@ -254,7 +346,8 @@
                 android:padding="16sp"
                 android:backgroundTint="#F0F5FA"
                 android:textColor="#6B6E82"
-                android:inputType="textEmailAddress"/>
+                android:inputType="phone"
+                />
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"

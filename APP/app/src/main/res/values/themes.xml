@@ -15,4 +15,26 @@
     <style name="BottomAppBarOverlay">
         <item name="colorControlNormal">#FFFFFF</item>
     </style>
+    <!-- Tùy chỉnh màu DatePickerDialog / TimePickerDialog -->
+    <style name="MyDatePickerDialogTheme" parent="Theme.MaterialComponents.Light.Dialog">
+        <item name="colorPrimary">#FF7622</item>
+        <item name="colorPrimaryVariant">#FF7622</item>
+        <item name="colorAccent">#FF7622</item>
+        <item name="android:textColorPrimary">@android:color/black</item>
+        <!-- This will set a custom style to the dialog Button Positive-->
+        <item name="android:buttonBarPositiveButtonStyle">@style/DialogButtonPositive</item>
+        <!-- This will set a custom style to the dialog Button Negative-->
+        <item name="android:buttonBarNegativeButtonStyle">@style/DialogButtonNegative</item>
+    </style>
+    <!-- Custom DatePicker Button Style-->
+    <!-- styles.xml -->
+    <style name="DialogButtonPositive" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:textColor">#FF7622</item>
+        <item name="fontFamily">@font/sen</item>
+    </style>
+    <style name="DialogButtonNegative" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:textColor">#FF7622</item>
+        <item name="fontFamily">@font/sen</item>
+    </style>
+
 </resources>
