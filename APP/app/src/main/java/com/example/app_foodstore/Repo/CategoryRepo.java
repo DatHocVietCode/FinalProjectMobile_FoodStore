@@ -24,7 +24,7 @@ public class CategoryRepo {
     }
     public LiveData<List<CategoryModel>> getCategories() {
         MutableLiveData<List<CategoryModel>> categoryData = new MutableLiveData<>();
-        Call<APIRespone<CategoryModel>> call = apiService.getCategories();
+        Call<APIRespone<CategoryModel>> call = apiService.getCategories(null);
         call.enqueue(new Callback<APIRespone<CategoryModel>>() {
             @Override
             public void onResponse(Call<APIRespone<CategoryModel>> call, Response<APIRespone<CategoryModel>> response) {
@@ -43,4 +43,26 @@ public class CategoryRepo {
         });
         return categoryData;
     }
+    public LiveData<List<CategoryModel>> getCategoriesById(Long id) {
+        MutableLiveData<List<CategoryModel>> categoryData = new MutableLiveData<>();
+        Call<APIRespone<CategoryModel>> call = apiService.getCategories(id);
+        call.enqueue(new Callback<APIRespone<CategoryModel>>() {
+            @Override
+            public void onResponse(Call<APIRespone<CategoryModel>> call, Response<APIRespone<CategoryModel>> response) {
+                if (response.body() != null) {
+                    categoryData.setValue(response.body().getData()); // Lưu dữ liệu vào LiveData
+                    Log.d("Repo", "onResponse: " + response.body().getData());
+                }
+                else {
+                    Log.d("Repo", "onResponse: null");
+                }
+            }
+            @Override
+            public void onFailure(Call<APIRespone<CategoryModel>> call, Throwable t) {
+                Log.d("Repo", "onResponse: error");
+            }
+        });
+        return categoryData;
+    }
+
 }

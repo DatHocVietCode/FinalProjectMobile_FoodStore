@@ -4,7 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="#FFFFFF">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -77,16 +78,17 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_gravity="center_vertical">
                 <EditText
                     android:id="@+id/reservateSceen_et_date"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="7"
+                    android:layout_weight="6"
                     android:textSize="16sp"
                     android:fontFamily="@font/sen"
                     android:singleLine="true"
-                    android:text="Select your Date"
+                    android:hint="Select your Date"
                     android:background="@drawable/rectangle_corner_radius"
                     android:padding="16sp"
                     android:backgroundTint="#F0F5FA"
@@ -135,16 +137,17 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_gravity="center_vertical">
                 <EditText
                     android:id="@+id/reservateSceen_et_time"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="7"
+                    android:layout_weight="6"
                     android:textSize="16sp"
                     android:fontFamily="@font/sen"
                     android:singleLine="true"
-                    android:text="Select your time"
+                    android:hint="Select your time"
                     android:background="@drawable/rectangle_corner_radius"
                     android:padding="16sp"
                     android:backgroundTint="#F0F5FA"
@@ -275,7 +278,7 @@
                 android:textSize="16sp"
                 android:fontFamily="@font/sen"
                 android:singleLine="true"
-                android:text=".etc by Car, Motorbike, ..."
+                android:hint=".etc by Car, Motorbike, ..."
                 android:background="@drawable/rectangle_corner_radius"
                 android:padding="16sp"
                 android:backgroundTint="#F0F5FA"
@@ -308,7 +311,7 @@
                 android:textSize="16sp"
                 android:fontFamily="@font/sen"
                 android:singleLine="true"
-                android:text="So that we can contact you easily"
+                android:hint="So that we can contact you easily"
                 android:background="@drawable/rectangle_corner_radius"
                 android:padding="16sp"
                 android:backgroundTint="#F0F5FA"
@@ -341,7 +344,7 @@
                 android:textSize="16sp"
                 android:fontFamily="@font/sen"
                 android:singleLine="true"
-                android:text="xxxx xxx xxx"
+                android:hint="xxxx xxx xxx"
                 android:background="@drawable/rectangle_corner_radius"
                 android:padding="16sp"
                 android:backgroundTint="#F0F5FA"

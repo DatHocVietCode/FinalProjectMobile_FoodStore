@@ -15,7 +15,7 @@ public class FoodModel implements Serializable {
     @JsonProperty("id")
     private Long id;
     @JsonProperty("category_id")
-    private Long categoryId;
+    private Long category_id;
     @JsonProperty("thumbnail")
     private String thumbnail;
     @JsonProperty("description")
@@ -28,7 +28,7 @@ public class FoodModel implements Serializable {
     @JsonProperty("price")
     private Float price;
     @JsonProperty("product_images")
-    private List<FoodImage> productImages;
+    private List<FoodImage> product_images;
 
     public Long getId() {
         return id;
@@ -60,8 +60,8 @@ public class FoodModel implements Serializable {
         this.id = id;
     }
 
-    public Long getCategoryId() {
-        return categoryId;
+    public Long getCategory_id() {
+        return category_id;
     }
 
     public Float getPrice() {
@@ -80,7 +80,7 @@ public class FoodModel implements Serializable {
         return sold;
     }
 
-    public List<FoodImage> getProductImages() {
-        return productImages;
+    public List<FoodImage> getProduct_images() {
+        return product_images;
     }
 }

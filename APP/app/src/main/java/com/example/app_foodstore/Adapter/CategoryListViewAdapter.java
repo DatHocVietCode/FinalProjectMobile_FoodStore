@@ -1,5 +1,7 @@
 package com.example.app_foodstore.Adapter;
 
+import static com.example.app_foodstore.APIService.Constant.IMG_URL;
+
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,6 +13,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
+import com.bumptech.glide.Glide;
 import com.example.app_foodstore.Model.CategoryModel;
 import com.example.app_foodstore.R;
 
@@ -67,7 +70,9 @@ public class CategoryListViewAdapter extends ArrayAdapter<CategoryModel> {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
         String formattedDate = sdf.format(new Date());
         holder.tvDateCreated.setText(formattedDate);
-
+        Glide.with(context)
+                .load(IMG_URL + model.getImage())
+                .into(holder.imgIcon);
         // Set click listener trên convertView, không phải holder
         convertView.setOnClickListener(v -> {
             if (onCategoryClickListener != null) {

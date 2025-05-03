@@ -39,11 +39,17 @@ public class ReservateScreenActivity extends AppCompatActivity {
         imgMinus = findViewById(R.id.reservateScreen_imgMinus);
         txtNumberOfGuest = findViewById(R.id.reservateSceen_et_numberOfGuest);
         imgAdd.setOnClickListener(v -> {
+            if (txtNumberOfGuest.getText().toString().isEmpty()) {
+                txtNumberOfGuest.setText("1");
+            }
             int currentNumber = Integer.parseInt(txtNumberOfGuest.getText().toString());
             currentNumber++;
             txtNumberOfGuest.setText(String.valueOf(currentNumber));
         });
         imgMinus.setOnClickListener(v -> {
+            if (txtNumberOfGuest.getText().toString().isEmpty()) {
+                txtNumberOfGuest.setText("1");
+            }
             int currentNumber = Integer.parseInt(txtNumberOfGuest.getText().toString());
             if (currentNumber > 1) {
                 currentNumber--;

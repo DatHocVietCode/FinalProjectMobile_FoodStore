@@ -10,6 +10,7 @@ public class Constant {
     public static final String BASE_URL = "http://192.168.1.109:8081/";
     // Render
     //public static final String BASE_URL = "https://backend-foodapp-latest.onrender.com/";
+    public static  final String IMG_URL = BASE_URL + "uploads/";
     public static final Retrofit retrofit = new Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())

@@ -14,17 +14,10 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.app_foodstore.Adapter.FoodTabLayoutAdapter;
-import com.example.app_foodstore.Adapter.OrderHistoryAdapter;
 import com.example.app_foodstore.Model.FoodModel;
-import com.example.app_foodstore.Model.OrderModel;
 import com.example.app_foodstore.ViewModel.FilterViewModel;
 import com.example.app_foodstore.ViewModel.FoodViewModel;
-import com.example.app_foodstore.databinding.FragmentOrderHistoryBinding;
 import com.example.app_foodstore.databinding.FragmentRcFoodDisplayBinding;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 public class Fragment_foodDisplay extends Fragment {
     FragmentRcFoodDisplayBinding binding;
@@ -132,7 +125,7 @@ public class Fragment_foodDisplay extends Fragment {
                         adapter = new FoodTabLayoutAdapter(getContext(), foods, tabNum);
                         binding.fragmentFoodDisplayRc.setAdapter(adapter);
                         binding.fragmentFoodDisplayTvNoProduct.setVisibility(View.INVISIBLE);
-                        Log.d("reloadData", "reloadData: foods1 is not null " + foods.get(0).getCategoryId() + " nameSort:" + nameSort + " priceSort:" + priceSort );
+                        Log.d("reloadData", "reloadData: foods1 is not null " + foods.get(0).getCategory_id() + " nameSort:" + nameSort + " priceSort:" + priceSort );
                         adapter.notifyDataSetChanged();
                         if (foods.isEmpty())
                         {
@@ -158,7 +151,7 @@ public class Fragment_foodDisplay extends Fragment {
                         adapter = new FoodTabLayoutAdapter(getContext(), foods, tabNum);
                         binding.fragmentFoodDisplayRc.setAdapter(adapter);
                         binding.fragmentFoodDisplayTvNoProduct.setVisibility(View.INVISIBLE);
-                        Log.d("reloadData", "reloadData: foods2 is not null " + foods.get(0).getCategoryId() + " nameSort:" + nameSort + " priceSort:" + priceSort );
+                        Log.d("reloadData", "reloadData: foods2 is not null " + foods.get(0).getCategory_id() + " nameSort:" + nameSort + " priceSort:" + priceSort );
                         adapter.notifyDataSetChanged();
                         if (foods.isEmpty())
                         {

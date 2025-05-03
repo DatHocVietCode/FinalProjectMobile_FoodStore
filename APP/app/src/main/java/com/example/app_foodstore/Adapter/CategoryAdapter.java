@@ -1,7 +1,10 @@
 package com.example.app_foodstore.Adapter;
 
+import static com.example.app_foodstore.APIService.Constant.IMG_URL;
+
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,10 +60,11 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
     @Override
     public void onBindViewHolder(@NonNull CategoryAdapter.CategoryViewHolder holder, int position) {
         CategoryModel categoryModel = listCate.get(position);
-        Glide.with(context)
-                .load(categoryModel.getImage())
-                .into(holder.category_image);
         holder.tv_name.setText(categoryModel.getName());
+        Glide.with(context)
+                .load(IMG_URL + categoryModel.getImage())
+                .into(holder.category_image);
+        Log.d("IMAGECATE", "onBindViewHolder: " + IMG_URL + categoryModel.getImage());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -69,7 +73,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
                 context.startActivity(intent);
             }
         });
-
     }
 
     @Override
