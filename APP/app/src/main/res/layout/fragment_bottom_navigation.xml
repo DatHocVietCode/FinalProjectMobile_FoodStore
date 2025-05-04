@@ -40,7 +40,7 @@
                     android:layout_height="40dp"
                     android:layout_gravity="center"
                     android:layout_weight="1"
-                    app:srcCompat="@drawable/home" />
+                    app:srcCompat="@drawable/house" />
 
                 <TextView
                     android:id="@+id/bottomNavigation_tvHome"
@@ -68,7 +68,7 @@
                     android:layout_height="40dp"
                     android:layout_gravity="center"
                     android:layout_weight="1"
-                    app:srcCompat="@drawable/my_order" />
+                    app:srcCompat="@drawable/notification" />
 
                 <TextView
                     android:id="@+id/bottomNavigation_tvOrder"
@@ -86,8 +86,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="0.2"
                 android:orientation="vertical"
-                android:visibility="visible"
-                >
+                android:visibility="visible">
 
                 <Space
                     android:id="@+id/imvCart"
@@ -118,17 +117,18 @@
 
                 <ImageView
                     android:id="@+id/imgVoucher"
-                    android:layout_width="47dp"
+                    android:layout_width="40dp"
                     android:layout_height="40dp"
+                    android:padding="2dp"
                     android:layout_gravity="center"
                     android:layout_weight="1"
-                    app:srcCompat="@drawable/support" />
+                    app:srcCompat="@drawable/coupon" />
 
                 <TextView
                     android:id="@+id/tvVoucher"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Support"
+                    android:text="Vouchers"
                     android:textAlignment="center"
                     android:textColor="#676767"
                     android:textSize="12sp"
@@ -150,8 +150,9 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_gravity="center"
+                    android:padding="2dp"
                     android:layout_weight="1"
-                    app:srcCompat="@drawable/setting" />
+                    app:srcCompat="@drawable/settings" />
 
                 <TextView
                     android:id="@+id/ms_bottomNavigation_tvSettings"
@@ -174,7 +175,7 @@
         android:layout_marginStart="4dp"
         android:layout_marginBottom="24dp"
         android:contentDescription="Add"
-        android:src="@drawable/add_ring_light"
+        android:src="@drawable/circle_add"
         android:scaleType="centerCrop"
         android:background="@drawable/circle_bg_ffebe4"
         android:backgroundTint="#F6F6F6"

@@ -44,7 +44,7 @@ public class Fragment_voucher_rc extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         binding.fragmentVoucherDisplayRc.setLayoutManager(layoutManager);
         List<VoucherModel> voucherList = new ArrayList<>();
-        voucherList.add(new VoucherModel("Giảm giá Tết", 50, 200000));
+        voucherList.add(new VoucherModel("Giảm giá Tết Kìn chá nà Tung Tung Tung Sahur", 50, 200000));
         voucherList.add(new VoucherModel("Mừng Khai Trương", 30, 100000));
         voucherList.add(new VoucherModel("Voucher Đặc Biệt", 70, 500000));
         voucherList.add(new VoucherModel("Giảm Cuối Tuần", 20, 50000));

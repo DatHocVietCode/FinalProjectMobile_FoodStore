@@ -20,7 +20,9 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#F0F5FA">
+            android:background="#F0F5FA"
+            android:clipToPadding="false"
+            android:clipChildren="false">
             <!-- Hình ảnh bên trái -->
             <com.example.app_foodstore.CustomView.VoucheLabelView
                 android:id="@+id/voucherImage"
@@ -41,7 +43,26 @@
                 android:layout_height="match_parent"
                 android:layout_weight="7"
                 android:gravity="center_vertical"
-                android:background="#FFFFFF">
+                android:background="#FFFFFF"
+                android:clipToPadding="false"
+                android:clipChildren="false">
+                <TextView
+                    android:id="@+id/item_row_voucher_tv_Name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="Voucher giáng sinh siêu hấp dẫn giảm 90% toàn bộ đơn hàng"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    android:textColor="@android:color/black"
+                    android:ellipsize="marquee"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    android:scrollHorizontally="true"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    />
                 <TextView
                     android:id="@+id/item_row_voucher_tv_Title"
                     android:text="Giảm 50%"
@@ -53,13 +74,22 @@
                     android:layout_marginStart="8dp"/>
                 <TextView
                     android:id="@+id/textViewDescription"
-                    android:text="Áp dụng cho đơn từ 200K"
-                    android:textSize="14sp"
-                    android:textColor="@android:color/darker_gray"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:layout_marginStart="8dp"/>
+                    android:layout_marginStart="8dp"
+                    android:maxLines="1"
+                    android:ellipsize="marquee"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    android:singleLine="true"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:scrollHorizontally="true"
+                    android:text="Áp dụng cho đơn từ 200K"
+                    android:fadingEdge="horizontal"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="14sp"
+                    android:gravity="start"/>
             </com.example.app_foodstore.CustomView.VoucherContentLayout>
             <!--<Button
                 android:id="@+id/item_row_voucher_btnGet"
@@ -81,7 +111,9 @@
                 android:layout_gravity="center">
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:clipToPadding="false"
+                    android:clipChildren="false">
                     <TextView
                         android:id="@+id/item_row_voucher_tvSave"
                         android:layout_width="wrap_content"

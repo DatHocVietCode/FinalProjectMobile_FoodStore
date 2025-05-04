@@ -37,6 +37,9 @@ public class VoucherAdapter extends RecyclerView.Adapter<VoucherAdapter.VoucherV
         VoucherModel voucherModel = list.get(position);
         holder.tv_voucherTitle.setText("Discount: " + voucherModel.getDiscount());
         holder.tv_voucherDescription.setText("Apply for order from " + voucherModel.getMinAmount() + "$");
+        holder.tv_name.setText(voucherModel.getVoucherName());
+        holder.tv_name.setSelected(true);
+        holder.tv_voucherDescription.setSelected(true);
         switch (tabNum)
         {
             case 0:
@@ -60,13 +63,14 @@ public class VoucherAdapter extends RecyclerView.Adapter<VoucherAdapter.VoucherV
     }
 
     public class VoucherViewHolder extends RecyclerView.ViewHolder {
-        TextView tv_voucherTitle, tv_voucherDescription, tv_save, tv_delete;
+        TextView tv_voucherTitle, tv_voucherDescription, tv_save, tv_delete, tv_name;
         public VoucherViewHolder(@NonNull View itemView) {
             super(itemView);
             tv_voucherTitle = itemView.findViewById(R.id.item_row_voucher_tv_Title);
             tv_voucherDescription = itemView.findViewById(R.id.textViewDescription);
             tv_save = itemView.findViewById(R.id.item_row_voucher_tvSave);
             tv_delete = itemView.findViewById(R.id.item_row_voucher_tvDelete);
+            tv_name = itemView.findViewById(R.id.item_row_voucher_tv_Name);
         }
     }
     private void animateAndRemove(int position, View view) {
