@@ -107,7 +107,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/bottomNavigation_btnSupport"
+                android:id="@+id/bottomNavigation_btnVoucher"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.2"
@@ -117,7 +117,7 @@
                 android:foreground="?attr/selectableItemBackground">
 
                 <ImageView
-                    android:id="@+id/imvSupport"
+                    android:id="@+id/imgVoucher"
                     android:layout_width="47dp"
                     android:layout_height="40dp"
                     android:layout_gravity="center"
@@ -125,7 +125,7 @@
                     app:srcCompat="@drawable/support" />
 
                 <TextView
-                    android:id="@+id/tvSupport"
+                    android:id="@+id/tvVoucher"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Support"

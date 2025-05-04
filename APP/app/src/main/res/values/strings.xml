@@ -5,4 +5,6 @@
     <string name="Edit_Profile"><u>EDIT</u></string>
     <string name="foodID"><u>foodID</u></string>
     <string name="Edit_Cart"><u>EDIT ITEMS</u></string>
+    <string name="Save_Voucher"><u>Save</u></string>
+    <string name="Delete_Voucher"><u>Delete</u></string>
 </resources>

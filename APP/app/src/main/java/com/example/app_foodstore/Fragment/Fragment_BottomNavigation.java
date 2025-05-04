@@ -15,6 +15,7 @@ import com.example.app_foodstore.Activity.HomeScreenActivity;
 import com.example.app_foodstore.Activity.OrderScreenActivity;
 import com.example.app_foodstore.Activity.ReservateScreenActivity;
 import com.example.app_foodstore.Activity.SettingActivity;
+import com.example.app_foodstore.Activity.VoucherActivity;
 import com.example.app_foodstore.R;
 import com.google.android.material.bottomappbar.BottomAppBar;
 
@@ -44,6 +45,9 @@ public class Fragment_BottomNavigation extends Fragment {
 
         view.findViewById(R.id.bottomNavigation_btnMyOrders).setOnClickListener(v -> {
             startActivity(new Intent(getContext(), OrderScreenActivity.class));
+        });
+        view.findViewById(R.id.bottomNavigation_btnVoucher).setOnClickListener(v -> {
+            startActivity(new Intent(getContext(), VoucherActivity.class));
         });
 
         view.findViewById(R.id.fabAdd).setOnClickListener(

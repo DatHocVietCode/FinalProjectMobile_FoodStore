@@ -54,6 +54,7 @@
         </activity>
         <activity android:name=".Activity.CategoriesActivity"/>
         <activity android:name=".Activity.MenuActivity"/>
+        <activity android:name=".Activity.VoucherActivity"/>
     </application>
 
 </manifest>
