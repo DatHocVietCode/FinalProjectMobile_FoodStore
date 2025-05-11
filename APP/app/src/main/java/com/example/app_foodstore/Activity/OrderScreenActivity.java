@@ -14,9 +14,13 @@ import androidx.core.content.res.ResourcesCompat;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.app_foodstore.Adapter.ViewPagerOrderSrceenAdapter;
+import com.example.app_foodstore.Model.OrderModel;
 import com.example.app_foodstore.R;
 import com.example.app_foodstore.databinding.ActivityOrderScreenBinding;
 import com.google.android.material.tabs.TabLayout;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class OrderScreenActivity extends AppCompatActivity {
     ActivityOrderScreenBinding binding;

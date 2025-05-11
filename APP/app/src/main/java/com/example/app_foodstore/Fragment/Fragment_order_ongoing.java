@@ -11,11 +11,23 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.app_foodstore.Adapter.OrderOnGoingAdapter;
+import com.example.app_foodstore.Model.OrderModel;
 import com.example.app_foodstore.databinding.FragmentOrderOngoingBinding;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Fragment_order_ongoing extends Fragment {
+    List<OrderModel> listOrderOnGoing;
     FragmentOrderOngoingBinding binding;
-    public Fragment_order_ongoing() {}
+    public Fragment_order_ongoing() {
+        // waiting for API
+        listOrderOnGoing = new ArrayList<>();
+        listOrderOnGoing.add(new OrderModel(true));
+        listOrderOnGoing.add(new OrderModel(true));
+        listOrderOnGoing.add(new OrderModel(true));
+        listOrderOnGoing.add(new OrderModel(true));
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -29,7 +41,7 @@ public class Fragment_order_ongoing extends Fragment {
         binding = FragmentOrderOngoingBinding.inflate(inflater, container, false);
         // Sau này chỉnh nữa
         binding.fragmentOrderOngoingRc.setLayoutManager(new LinearLayoutManager(getContext()));
-        binding.fragmentOrderOngoingRc.setAdapter(new OrderOnGoingAdapter(getContext()));
+        binding.fragmentOrderOngoingRc.setAdapter(new OrderOnGoingAdapter(getContext(), listOrderOnGoing));
         return binding.getRoot();
     }
 }

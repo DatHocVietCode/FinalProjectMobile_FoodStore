@@ -8,6 +8,10 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.example.app_foodstore.Fragment.Fragment_order_history;
 import com.example.app_foodstore.Fragment.Fragment_order_ongoing;
+import com.example.app_foodstore.Model.OrderModel;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ViewPagerOrderSrceenAdapter extends FragmentStateAdapter {
     public ViewPagerOrderSrceenAdapter(@NonNull FragmentManager fragmentManager, @NonNull Lifecycle lifecycle) {
