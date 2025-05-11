@@ -12,17 +12,30 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.app_foodstore.Model.OrderModel;
 import com.example.app_foodstore.R;
+import com.example.app_foodstore.ViewModel.FilterViewModel;
+import com.example.app_foodstore.ViewModel.OrderViewModel;
 
 import java.util.List;
 
 public class OrderOnGoingAdapter extends RecyclerView.Adapter<OrderOnGoingAdapter.OrderOnGoingViewHolder> {
     Context context;
     // Tính tới cái model sau
+    OrderViewModel orderViewModel;
     List<OrderModel> listOrderOngoing;
+
+    public List<OrderModel> getListOrderOngoing() {
+        return listOrderOngoing;
+    }
+
+    public void setListOrderOngoing(List<OrderModel> listOrderOngoing) {
+        this.listOrderOngoing = listOrderOngoing;
+    }
+
     public OrderOnGoingAdapter(Context context, List<OrderModel> listOrderOngoing) {
         this.context = context;
         this.listOrderOngoing = listOrderOngoing;

@@ -1,5 +1,6 @@
 package com.example.app_foodstore.Adapter;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
@@ -22,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.app_foodstore.Model.OrderModel;
 import com.example.app_foodstore.R;
+import com.example.app_foodstore.ViewModel.OrderViewModel;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -29,11 +31,11 @@ import java.util.List;
 
 public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapter.OrderHistoryViewHolder> {
     Context context;
-    List<OrderModel> listOrder;
+    OrderViewModel orderViewModel;
 
-    public OrderHistoryAdapter(Context context, List<OrderModel> listOrder) {
+    public OrderHistoryAdapter(Context context, OrderViewModel orderViewModel) {
         this.context = context;
-        this.listOrder = listOrder;
+        this.orderViewModel = orderViewModel;
     }
 
     @NonNull
@@ -45,8 +47,9 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
 
     @Override
     public void onBindViewHolder(@NonNull OrderHistoryAdapter.OrderHistoryViewHolder holder, int position) {
-        OrderModel orderModel = listOrder.get(position);
-        holder.tv_orderDate.setText(new SimpleDateFormat("dd-MM-yyyy HH:mm").format(orderModel.getOrderDate()));
+        OrderModel orderModel = orderViewModel.getHistoryOrders().getValue().get(position);
+        //holder.tv_orderDate.setText(new SimpleDateFormat("dd-MM-yyyy HH:mm").format(orderModel.getOrderDate()));
+        holder.tv_orderDate.setText("01-01-2025 12:00"); // Giá trị cứng
         if (orderModel.isCompleted())
         {
             holder.tv_orderCompleted.setVisibility(View.VISIBLE);
@@ -138,7 +141,24 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
                 dialog.show();
             }
         });
-
+        holder.btn_reOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog dialog = new AlertDialog.Builder(context)
+                        .setTitle("Tiến hành đặt hàng lại")
+                        .setMessage("Bạn có chắc chắn reOrder không?")
+                        .setPositiveButton("Yes", (dialog1, which) -> {
+                            orderViewModel.reOrder(orderModel);
+                            Toast.makeText(context, "Đơn hàng đã được đặt lại", Toast.LENGTH_SHORT).show();
+                        })
+                        .setNegativeButton("No", (dialog12, which) -> {
+                            dialog12.dismiss();
+                        })
+                        .show();
+                dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.parseColor("#FF7622"));
+                dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.parseColor("#FF7622"));
+            }
+        });
     }
     // Hàm tạo animation xoay
     private void rotateStar(int pos, List<ImageView> listStar) {
@@ -152,7 +172,7 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
     }
     @Override
     public int getItemCount() {
-        return listOrder.size();
+        return orderViewModel.getHistoryOrders().getValue().size();
     }
 
     public static class OrderHistoryViewHolder extends RecyclerView.ViewHolder {
