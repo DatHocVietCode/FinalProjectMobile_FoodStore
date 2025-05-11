@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/rectangle_corner_radius">
+    android:background="@drawable/rectangle_corner_radius_bg_f6f6f6">
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/imgView"
@@ -13,5 +13,5 @@
         android:baselineAligned="false"
         android:clipToOutline="true"
         android:scaleType="centerCrop"
-        app:shapeAppearanceOverlay="@drawable/rectangle_corner_radius"/>
+        app:shapeAppearanceOverlay="@drawable/rectangle_corner_radius_bg_f6f6f6"/>
 </LinearLayout>

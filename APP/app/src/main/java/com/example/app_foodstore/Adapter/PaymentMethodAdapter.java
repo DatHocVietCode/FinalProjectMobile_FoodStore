@@ -47,7 +47,7 @@ public class PaymentMethodAdapter extends RecyclerView.Adapter<PaymentMethodAdap
         }
         else
         {
-            holder.img_method.setBackgroundResource(R.drawable.rectangle_corner_radius);
+            holder.img_method.setBackgroundResource(R.drawable.rectangle_corner_radius_bg_f6f6f6);
             holder.img_method.setImageResource(paymentInterfaceModel.getImg_method_unselected());
             holder.img_isChecked.setVisibility(View.INVISIBLE);
         }
@@ -74,7 +74,7 @@ public class PaymentMethodAdapter extends RecyclerView.Adapter<PaymentMethodAdap
             holder.img_method.setImageResource(paymentInterfaceModel.getImg_method_selected());
             holder.img_isChecked.setVisibility(View.VISIBLE);
         } else {
-            holder.img_method.setBackgroundResource(R.drawable.rectangle_corner_radius);
+            holder.img_method.setBackgroundResource(R.drawable.rectangle_corner_radius_bg_f6f6f6);
             holder.img_method.setImageResource(paymentInterfaceModel.getImg_method_unselected());
             holder.img_isChecked.setVisibility(View.INVISIBLE);
         }

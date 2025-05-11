@@ -90,7 +90,7 @@
                 android:fontFamily="@font/sen"
                 android:singleLine="true"
                 android:text="Vo Phan Tan Dat"
-                android:background="@drawable/rectangle_corner_radius"
+                android:background="@drawable/rectangle_corner_radius_bg_f6f6f6"
                 android:padding="16sp"
                 android:backgroundTint="#F0F5FA"
                 android:textColor="#6B6E82"/>
@@ -117,7 +117,7 @@
                 android:fontFamily="@font/sen"
                 android:singleLine="true"
                 android:text="td13052004@gmail.com"
-                android:background="@drawable/rectangle_corner_radius"
+                android:background="@drawable/rectangle_corner_radius_bg_f6f6f6"
                 android:padding="16sp"
                 android:backgroundTint="#F0F5FA"
                 android:textColor="#6B6E82"
@@ -145,7 +145,7 @@
                 android:fontFamily="@font/sen"
                 android:singleLine="true"
                 android:text="0703622531"
-                android:background="@drawable/rectangle_corner_radius"
+                android:background="@drawable/rectangle_corner_radius_bg_f6f6f6"
                 android:padding="16sp"
                 android:backgroundTint="#F0F5FA"
                 android:textColor="#6B6E82"
@@ -172,7 +172,7 @@
                 android:textSize="16sp"
                 android:fontFamily="@font/sen"
                 android:text="Need a cat!"
-                android:background="@drawable/rectangle_corner_radius"
+                android:background="@drawable/rectangle_corner_radius_bg_f6f6f6"
                 android:padding="16dp"
                 android:backgroundTint="#F0F5FA"
                 android:textColor="#6B6E82"
@@ -197,7 +197,7 @@
             android:focusable="true"
             android:foreground="?attr/selectableItemBackground"
             android:backgroundTint="#FF7622"
-            android:background="@drawable/rectangle_corner_radius"
+            android:background="@drawable/rectangle_corner_radius_bg_f6f6f6"
             app:layout_constraintTop_toBottomOf="@+id/foodDetail_ln_price_adjustNumber"/>
     </LinearLayout>
 

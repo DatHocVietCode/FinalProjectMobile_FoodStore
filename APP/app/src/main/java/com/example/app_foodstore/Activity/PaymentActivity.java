@@ -339,7 +339,7 @@ public class PaymentActivity extends AppCompatActivity {
             checkImage.setVisibility(View.VISIBLE);
         } else {
             imageView.setImageResource(R.drawable.cash_unselected);
-            imageView.setBackgroundResource(R.drawable.rectangle_corner_radius);
+            imageView.setBackgroundResource(R.drawable.rectangle_corner_radius_bg_f6f6f6);
             checkImage.setVisibility(View.INVISIBLE);
         }
         layout.setOnClickListener(new View.OnClickListener() {
@@ -348,7 +348,7 @@ public class PaymentActivity extends AppCompatActivity {
                 if (selected)
                 {
                     imageView.setImageResource(R.drawable.cash_unselected);
-                    imageView.setBackgroundResource(R.drawable.rectangle_corner_radius);
+                    imageView.setBackgroundResource(R.drawable.rectangle_corner_radius_bg_f6f6f6);
                     checkImage.setVisibility(View.INVISIBLE);
                     selected = false;
                 }

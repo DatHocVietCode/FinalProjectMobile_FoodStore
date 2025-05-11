@@ -163,7 +163,7 @@
                 android:fontFamily="@font/sen"
                 android:singleLine="true"
                 android:text="Đại học sư phạm kỹ thuật thành phố Hồ Chí Minh"
-                android:background="@drawable/rectangle_corner_radius"
+                android:background="@drawable/rectangle_corner_radius_bg_f6f6f6"
                 android:padding="16sp"
                 android:backgroundTint="#F0F5FA"
                 android:textColor="#91959C"

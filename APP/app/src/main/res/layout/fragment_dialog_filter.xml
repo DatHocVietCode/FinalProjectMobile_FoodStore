@@ -100,7 +100,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/rectangle_corner_radius"
+            android:background="@drawable/rectangle_corner_radius_bg_f6f6f6"
             android:backgroundTint="#F3F5F6">
             <androidx.appcompat.widget.AppCompatSpinner
                 android:id="@+id/spinnerCategory"

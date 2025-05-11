@@ -25,7 +25,7 @@
             android:contentDescription="FoodImage"
             android:src="@drawable/food_sample"
             android:scaleType="centerCrop"
-            android:background="@drawable/rectangle_corner_radius"
+            android:background="@drawable/rectangle_corner_radius_bg_f6f6f6"
             android:clipToOutline="true"/>
         <TextView
             android:id="@+id/fragment_food_display1_tv_foodName"
