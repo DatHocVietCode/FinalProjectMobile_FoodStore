@@ -225,7 +225,7 @@
             android:clickable="true"
             android:foreground="?attr/selectableItemBackground"/>
         <Button
-            android:id="@+id/ffragment_order_item_history_btn_reOrder"
+            android:id="@+id/fragment_order_item_history_btn_reOrder"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"

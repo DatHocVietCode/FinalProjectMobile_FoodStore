@@ -5,6 +5,7 @@ import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -48,6 +49,12 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
         }
         holder.tv_foodId.setText("#123");
         holder.tv_foodId.setPaintFlags(holder.tv_foodId.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        holder.btn_rate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
     }
 
     @Override
@@ -57,12 +64,15 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
 
     public static class OrderHistoryViewHolder extends RecyclerView.ViewHolder {
         TextView tv_orderDate, tv_orderCompleted, tv_orderCanceled, tv_foodId;
+        Button btn_rate, btn_reOrder;
         public OrderHistoryViewHolder(@NonNull View itemView) {
             super(itemView);
             tv_orderDate = itemView.findViewById(R.id.fragment_order_item_history_tv_dateOrdered);
             tv_orderCompleted = itemView.findViewById(R.id.fragment_order_item_history_tv_status_completed);
             tv_orderCanceled = itemView.findViewById(R.id.fragment_order_item_history_tv_status_canceled);
             tv_foodId = itemView.findViewById(R.id.fragment_order_item_history_tv_foodID);
+            btn_rate = itemView.findViewById(R.id.fragment_order_item_history_btn_rate);
+            btn_reOrder = itemView.findViewById(R.id.fragment_order_item_history_btn_reOrder);
         }
     }
 }
