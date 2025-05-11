@@ -1,6 +1,8 @@
 package com.example.app_foodstore.Adapter;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.graphics.Color;
 import android.location.Address;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,6 +49,25 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.AddressV
         }
         holder.tv_type.setText(addressModel.getType());
         holder.tv_address.setText(addressModel.getAddress());
+        holder.img_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog dialog = new AlertDialog.Builder(context)
+                        .setTitle("Xác nhận xóa")
+                        .setMessage("Bạn có chắc chắn muốn xóa địa chỉ này không?")
+                        .setPositiveButton("Yes", (dialog1, which) -> {
+                            listAddress.remove(holder.getAdapterPosition());
+                            notifyItemRemoved(holder.getAdapterPosition());
+                        })
+                        .setNegativeButton("No", (dialog12, which) -> {
+                            dialog12.dismiss();
+                        })
+                        .show();
+                dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.parseColor("#FF7622"));
+                dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.parseColor("#FF7622"));
+
+            }
+        });
     }
 
     @Override
