@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.app_foodstore.R;
 
 public class SettingActivity extends AppCompatActivity {
-    LinearLayout ln_personalInfo, ln_notifications, ln_favorite;
+    LinearLayout ln_personalInfo, ln_notifications, ln_favorite, ln_cart, ln_address;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +26,24 @@ public class SettingActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(SettingActivity.this, PersonalInfoActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        ln_cart = findViewById(R.id.setting_screen_ln_cart);
+        ln_cart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(SettingActivity.this, CartActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        ln_address = findViewById(R.id.setting_screen_ln_Adresses);
+        ln_address.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(SettingActivity.this, AddressActivity.class);
                 startActivity(intent);
             }
         });
