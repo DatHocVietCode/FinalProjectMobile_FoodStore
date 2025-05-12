@@ -1,6 +1,9 @@
 package com.example.app_foodstore.Activity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
+import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,6 +20,7 @@ import java.util.List;
 public class AddressActivity extends AppCompatActivity {
     RecyclerView rc_address;
     AddressAdapter adapter;
+    ImageView img_addNewAddress;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,7 +31,18 @@ public class AddressActivity extends AppCompatActivity {
 
     private void AnhXa() {
         setupRc();
+        //setupBtn();
+        setupAddNewAddress();
     }
+
+    private void setupAddNewAddress() {
+        img_addNewAddress = findViewById(R.id.addressScreen_imgAddNewAddress);
+        img_addNewAddress.setOnClickListener(v -> {
+            Intent intent = new Intent(AddressActivity.this, AddNewAddressActivity.class);
+            startActivity(intent);
+        });
+    }
+
 
     private void setupRc() {
         List<AddressModel> listAddress;
