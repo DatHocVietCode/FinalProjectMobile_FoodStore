@@ -63,6 +63,7 @@
         android:orientation="horizontal"
         android:gravity="center_vertical">
         <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/personal_image"
             android:layout_width="128dp"
             android:layout_height="128dp"
             android:src="@drawable/user_avatar_sample"
@@ -74,6 +75,7 @@
             android:orientation="vertical"
             android:layout_marginStart="24dp">
             <TextView
+                android:id="@+id/personal_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="24sp"
@@ -87,6 +89,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="12dp"/>
             <TextView
+                android:id="@+id/personal_dob"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="16dp"
@@ -140,6 +143,7 @@
                         android:layout_marginStart="8dp"
                         android:textColor="#32343E"/>
                     <TextView
+                        android:id="@+id/personal_fullname"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Tan Dat Vo Phan"
@@ -172,6 +176,7 @@
                         android:layout_marginStart="8dp"
                         android:textColor="#32343E"/>
                     <TextView
+                        android:id="@+id/personal_email"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="td13052004@gmail.com"
@@ -204,6 +209,7 @@
                         android:layout_marginStart="8dp"
                         android:textColor="#32343E"/>
                     <TextView
+                        android:id="@+id/personal_phone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="0703622531"

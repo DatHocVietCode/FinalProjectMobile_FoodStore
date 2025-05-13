@@ -17,80 +17,86 @@
         android:padding="8dp">
         <ImageView
             android:id="@+id/fragment_food_display_tablayout_img_food"
-            android:layout_width="0dp"
-            android:layout_height="64dp"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:layout_gravity="center"
             android:background="@drawable/rectangle_corner_radius"
             android:src="@drawable/food_sample"
             android:scaleType="centerCrop"
-            android:clipToOutline="true"
-            android:layout_weight="2"
-            android:layout_gravity="center"/>
+            android:clipToOutline="true"/>
+
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="270dp"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:layout_marginStart="8dp"
-            android:layout_weight="6">
+            android:layout_weight="6"
+            android:orientation="vertical">
+
             <TextView
                 android:id="@+id/fragment_food_display_tablayout_tv_foodName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"
+                android:ellipsize="end"
                 android:fontFamily="@font/sen"
-                android:text="Food Namesadasdddsasdsadadasdaasdasd"
                 android:maxLines="1"
-                android:ellipsize="end"/>
+                android:text="Food Namesadasdddsasdsadadasdaasdasd"
+                android:textSize="20sp" />
+
             <TextView
                 android:id="@+id/fragment_food_display_tablayout_tv_categoryName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:fontFamily="@font/sen"
-                android:textColor="#6B6E82"
-                android:textStyle="bold|italic"
-                android:text="Food Category"
                 android:layout_marginTop="4dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/sen"
                 android:maxLines="1"
-                android:ellipsize="end"/>
+                android:text="Food Category"
+                android:textColor="#6B6E82"
+                android:textSize="16sp"
+                android:textStyle="bold|italic" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="4dp">
+                android:layout_marginTop="4dp"
+                android:orientation="horizontal">
+
                 <ImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:src="@drawable/i_star"
-                    android:layout_gravity="bottom"/>
+                    android:layout_gravity="bottom"
+                    android:src="@drawable/i_star" />
+
                 <TextView
                     android:id="@+id/fragment_food_display_tablayout_tv_rating"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="4.7"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="4dp"
                     android:fontFamily="@font/sen"
                     android:gravity="bottom"
-                    android:textStyle="bold"
+                    android:text="4.7"
                     android:textColor="#181C2E"
-                    android:layout_marginStart="4dp"
-                    android:layout_gravity="center"/>
+                    android:textStyle="bold" />
+
                 <ImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:src="@drawable/comment_duotone"
                     android:layout_gravity="bottom"
                     android:layout_marginStart="12dp"
-                    />
+                    android:src="@drawable/comment_duotone" />
+
                 <TextView
                     android:id="@+id/fragment_food_display_tablayout_tv_comments"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="20 comments"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="4dp"
                     android:fontFamily="@font/sen"
                     android:gravity="bottom"
-                    android:textStyle="italic"
+                    android:text="20 comments"
                     android:textColor="#6B6E82"
-                    android:layout_marginStart="4dp"
-                    android:layout_gravity="center"/>
+                    android:textStyle="italic" />
             </LinearLayout>
         </LinearLayout>
         <androidx.constraintlayout.widget.ConstraintLayout

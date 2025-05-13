@@ -1,5 +1,7 @@
 package com.example.app_foodstore.Adapter;
 
+import static com.example.app_foodstore.APIService.Constant.IMG_URL;
+
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -12,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.app_foodstore.Activity.FoodDetailActivity;
 import com.example.app_foodstore.Model.FoodModel;
 import com.example.app_foodstore.R;
@@ -40,8 +43,13 @@ public class FoodTabLayoutAdapter extends RecyclerView.Adapter<FoodTabLayoutAdap
         FoodModel foodModel = list.get(position);
         holder.tv_foodName.setText(foodModel.getName());
         holder.tv_price.setText("$" + foodModel.getPrice());
-        //holder.tv_rating.setText(foodModel.getRating().toString());
-        //holder.img_food.setImageResource(R.drawable.food_sample);
+        holder.tv_categoryName.setText(foodModel.getCategory_name());
+
+        holder.tv_rating.setText(foodModel.getAverage_rating().toString());
+        holder.tv_comments.setText(foodModel.getCount_comment().toString() + " comments");
+        Glide.with(context)
+                .load(IMG_URL + foodModel.getThumbnail())
+                .into(holder.img_food);
         switch (tabNum)
         {
             case 0:

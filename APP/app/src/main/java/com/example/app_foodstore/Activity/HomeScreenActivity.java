@@ -1,12 +1,14 @@
 package com.example.app_foodstore.Activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.widget.NestedScrollView;
@@ -17,6 +19,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.app_foodstore.Adapter.CategoryAdapter;
 import com.example.app_foodstore.Fragment.Fragment_BottomNavigation;
 import com.example.app_foodstore.Fragment.Fragment_SearchBar;
@@ -46,6 +49,8 @@ public class HomeScreenActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
+        SharedPreferences sharedPreferences = getSharedPreferences("user_prefs", MODE_PRIVATE);
+
         if (savedInstanceState == null) {
             bottomNavigationFragment = new Fragment_BottomNavigation();
             searchBarFragment = new Fragment_SearchBar();
@@ -69,6 +74,21 @@ public class HomeScreenActivity extends AppCompatActivity {
         setupScrollView();
         setupAvartar();
         setupSeeAll();
+        loadInformation();
+    }
+    private void loadInformation(){
+        SharedPreferences sharedPreferences = getSharedPreferences("user_prefs", MODE_PRIVATE);
+        boolean isLoggedIn = sharedPreferences.getBoolean("is_logged_in", false);
+        String fullname = sharedPreferences.getString("fullname", "UserName");
+        if (isLoggedIn) {
+            Glide.with(HomeScreenActivity.this)
+                    .load("http://172.16.27.240:8080/uploads/user1.jpg")
+                    .into(ms_header_avatar);
+            TextView usernameTextView = findViewById(R.id.ms_header_tv_username);
+            usernameTextView.setText(fullname);
+        } else {
+            Log.e("HomeScreenActivity", "ms_header_avatar is null");
+        }
     }
 
     private void iniViewModel() {
@@ -112,8 +132,10 @@ public class HomeScreenActivity extends AppCompatActivity {
         ms_header_avatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(HomeScreenActivity.this, PersonalInfoActivity.class);
-                startActivity(intent);
+                if (UserUtils.checkUser(HomeScreenActivity.this)) {
+                    Intent intent = new Intent(HomeScreenActivity.this, PersonalInfoActivity.class);
+                    startActivity(intent);
+                }
             }
         });
     }
@@ -250,5 +272,16 @@ public class HomeScreenActivity extends AppCompatActivity {
             }
         });
     }
+    private void clearUserData() {
+        SharedPreferences sharedPreferences = getSharedPreferences("user_prefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
 
+        // Xóa tất cả dữ liệu
+        editor.clear();
+        editor.apply();  // Hoặc editor.commit() nếu cần đảm bảo ngay lập tức
+
+        // Hoặc nếu chỉ xóa một giá trị cụ thể
+        // editor.remove("is_logged_in");
+        // editor.apply();
+    }
 }

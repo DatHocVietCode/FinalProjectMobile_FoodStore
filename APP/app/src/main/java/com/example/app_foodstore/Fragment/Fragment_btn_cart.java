@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.app_foodstore.Activity.CartActivity;
 import com.example.app_foodstore.Activity.HomeScreenActivity;
+import com.example.app_foodstore.Activity.UserUtils;
 import com.example.app_foodstore.databinding.FragmentBtnCartBinding;
 
 public class Fragment_btn_cart extends Fragment {
@@ -25,8 +26,10 @@ public class Fragment_btn_cart extends Fragment {
         binding.btnCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), CartActivity.class);
-                startActivity(intent);
+                if (UserUtils.checkUser(getActivity())) {
+                    Intent intent = new Intent(getActivity(), CartActivity.class);
+                    startActivity(intent);
+                }
             }
         });
         return binding.getRoot();

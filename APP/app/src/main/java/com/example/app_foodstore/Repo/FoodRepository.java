@@ -65,6 +65,8 @@ public class FoodRepository {
             public void onResponse(Call<APIRespone<FoodModel>> call, Response<APIRespone<FoodModel>> response) {
                 if (response.body() != null) {
                     foodData.setValue(response.body().getData()); // Lưu dữ liệu vào LiveData
+                    List<FoodModel> foods = response.body().getData();
+
                 }
             }
 
