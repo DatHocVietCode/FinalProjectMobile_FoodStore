@@ -13,26 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:alpha="0.7"/>
-
-    <!-- Header Image and Title -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@id/card_view_signup"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:padding="28dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Create Account"
-            android:textColor="@color/white"
-            android:textSize="32sp"
-            android:textStyle="bold" />
-
-    </LinearLayout>
-
+    
     <!-- CardView for Form Inputs -->
     <androidx.cardview.widget.CardView
         android:id="@+id/card_view_signup"
