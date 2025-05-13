@@ -16,7 +16,7 @@ import java.util.List;
 public class AddressLabelAdapter extends RecyclerView.Adapter<AddressLabelAdapter.AddressLabelHolder> {
     Context context;
     List<String> keywordList;
-
+    private int selectedPosition = 0;
     public AddressLabelAdapter(Context context, List<String> keywordList) {
         this.context = context;
         this.keywordList = keywordList;
@@ -31,7 +31,26 @@ public class AddressLabelAdapter extends RecyclerView.Adapter<AddressLabelAdapte
 
     @Override
     public void onBindViewHolder(@NonNull AddressLabelAdapter.AddressLabelHolder holder, int position) {
-        holder.tv_keyword.setText(keywordList.get(position));
+        holder.tv_keyword.setText(keywordList.get(holder.getAdapterPosition()));
+        // Kiểm tra xem item này có phải là item được chọn không
+        if (holder.getAdapterPosition() == selectedPosition) {
+            holder.itemView.setBackgroundResource(R.drawable.rectangle_corner_radius_ff7622);
+            holder.tv_keyword.setTextColor(context.getResources().getColor(R.color.white));
+        }
+        else
+        {
+            holder.itemView.setBackgroundResource(R.drawable.rectangle_corner_radius_bg_white);
+            holder.tv_keyword.setTextColor(context.getResources().getColor(R.color.black));
+        }
+
+        // Bắt sự kiện click
+        holder.itemView.setOnClickListener(view -> {
+            // Cập nhật vị trí được chọn
+            selectedPosition = holder.getAdapterPosition();
+            // Refresh toàn bộ danh sách
+            notifyDataSetChanged();
+        });
+
     }
 
     @Override
