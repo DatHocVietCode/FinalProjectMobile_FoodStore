@@ -3,6 +3,7 @@ package com.example.app_foodstore.Adapter;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
@@ -19,11 +20,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.app_foodstore.Activity.PaymentActivity;
+import com.example.app_foodstore.Model.OrderDetailModel;
 import com.example.app_foodstore.Model.OrderModel;
 import com.example.app_foodstore.R;
 import com.example.app_foodstore.ViewModel.OrderViewModel;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -143,19 +149,42 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
         holder.btn_reOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog dialog = new AlertDialog.Builder(context)
-                        .setTitle("Tiến hành đặt hàng lại")
-                        .setMessage("Bạn có chắc chắn reOrder không?")
-                        .setPositiveButton("Yes", (dialog1, which) -> {
-                            orderViewModel.reOrder(orderModel);
-                            Toast.makeText(context, "Đơn hàng đã được đặt lại", Toast.LENGTH_SHORT).show();
-                        })
-                        .setNegativeButton("No", (dialog12, which) -> {
-                            dialog12.dismiss();
-                        })
-                        .show();
-                dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.parseColor("#FF7622"));
-                dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.parseColor("#FF7622"));
+                // Khởi tạo BottomSheetDialog
+                BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(context);
+                View sheetView = View.inflate(context, R.layout.order_detail_bottomsheet, null);
+                bottomSheetDialog.setContentView(sheetView);
+
+                // Ánh xạ RecyclerView và Button
+                RecyclerView recyclerView = sheetView.findViewById(R.id.recycler_order_detail);
+                MaterialButton btnReOrder = sheetView.findViewById(R.id.btn_reorder);
+                MaterialButton btnCancel = sheetView.findViewById(R.id.btn_cancel);
+
+                // Tạo dữ liệu giả để test giao diện
+                List<OrderDetailModel> mockOrderDetails = new ArrayList<>();
+                mockOrderDetails.add(new OrderDetailModel(1, "Pizza Margherita", 100000, 2));
+                mockOrderDetails.add(new OrderDetailModel(2, "Spaghetti Bolognese", 75000, 1));
+                mockOrderDetails.add(new OrderDetailModel(3, "Caesar Salad", 50000, 3));
+                mockOrderDetails.add(new OrderDetailModel(4, "Garlic Bread", 30000, 2));
+
+                // Cấu hình RecyclerView với Adapter
+                OrderDetailAdapter adapter = new OrderDetailAdapter(context, mockOrderDetails);
+                recyclerView.setLayoutManager(new LinearLayoutManager(context));
+                recyclerView.setAdapter(adapter);
+
+                // Sự kiện khi nhấn nút ReOrder
+                btnReOrder.setOnClickListener(v -> {
+                    Intent intent = new Intent(context, PaymentActivity.class);
+                    context.startActivity(intent);
+                    bottomSheetDialog.dismiss();
+                });
+
+                // Sự kiện khi nhấn nút Cancel
+                btnCancel.setOnClickListener(v -> {
+                    bottomSheetDialog.dismiss();
+                });
+
+                // Hiển thị BottomSheetDialog
+                bottomSheetDialog.show();
             }
         });
     }

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#FFFFFF"
+    app:cardCornerRadius="16dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Chi tiết đơn hàng"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="#ff7622"
+            android:layout_gravity="center"
+            android:fontFamily="@font/sen"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_order_detail"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginTop="12dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="16dp">
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_reorder"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="ReOrder"
+                android:textColor="@android:color/white"
+                android:background="@drawable/rectangle_corner_radius_ff7622"
+                android:clipToOutline="true"
+                app:backgroundTint="@null"
+                android:layout_marginEnd="16dp"
+                android:focusable="true"
+                android:clickable="true"
+                android:foreground="?attr/selectableItemBackground" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_cancel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Cancel"
+                android:textColor="#FF7622"
+                android:background="@drawable/rectangle_corner_radius_stroke_ff7622"
+                android:clipToOutline="true"
+                app:backgroundTint="@null"
+                android:layout_marginStart="16dp"
+                android:focusable="true"
+                android:clickable="true"
+                android:foreground="?attr/selectableItemBackground" />
+        </LinearLayout>
+    </LinearLayout>
+
+
+
+</androidx.cardview.widget.CardView>

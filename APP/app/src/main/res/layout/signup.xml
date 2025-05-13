@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:alpha="0.7"/>
-    
+
     <!-- CardView for Form Inputs -->
     <androidx.cardview.widget.CardView
         android:id="@+id/card_view_signup"
