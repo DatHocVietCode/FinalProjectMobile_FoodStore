@@ -1,5 +1,6 @@
 package com.example.app_foodstore.Activity;
 
+import android.animation.ObjectAnimator;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -46,10 +47,14 @@ public class BreakDownOrderActivity extends AppCompatActivity {
 
         btnToggleOrderInfo.setOnClickListener(v -> {
             if (cardOrderInfo.getVisibility() == View.GONE) {
+                // Hiện cardOrderInfo với animation
                 cardOrderInfo.setVisibility(View.VISIBLE);
+                ObjectAnimator.ofFloat(cardOrderInfo, "translationY", 200f, 0f).setDuration(300).start();
                 btnToggleOrderInfo.setText("Order Information ▲");
             } else {
-                cardOrderInfo.setVisibility(View.GONE);
+                // Ẩn cardOrderInfo với animation
+                ObjectAnimator.ofFloat(cardOrderInfo, "translationY", 0f, 200f).setDuration(300).start();
+                cardOrderInfo.postDelayed(() -> cardOrderInfo.setVisibility(View.GONE), 300); // Delay trước khi setVisibility GONE
                 btnToggleOrderInfo.setText("Order Information ▼");
             }
         });
