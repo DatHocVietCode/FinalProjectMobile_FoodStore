@@ -1,6 +1,7 @@
 package com.example.app_foodstore.Activity;
 
 import android.animation.ObjectAnimator;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -23,6 +24,7 @@ public class TrackOrderActivity extends AppCompatActivity {
     List<View> viewList;
     List<ImageView> imageViewList;
     List<TextView> textViewList;
+    TextView tv_breakdown;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,6 +96,7 @@ public class TrackOrderActivity extends AppCompatActivity {
     private void setupBottomCard() {
         CardView bottomCard = findViewById(R.id.trackOrder_cardView_bottomSheet);
         toggleButton = findViewById(R.id.trackOrder_cardView_bottomSheet_expandbtn);
+        tv_breakdown = findViewById(R.id.trackOrder_btn_breakDown);
         // Khởi tạo behavior từ CardView
         bottomSheetBehavior = BottomSheetBehavior.from(bottomCard);
         // Đặt chiều cao khi collapsed là 200dp
@@ -131,6 +134,14 @@ public class TrackOrderActivity extends AppCompatActivity {
                 } else {
                     Log.d("STate", "BottomSheet is settling, cannot change state");
                 }
+            }
+        });
+
+        tv_breakdown.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(TrackOrderActivity.this, BreakDownOrderActivity.class);
+                startActivity(intent);
             }
         });
     }

@@ -2,19 +2,13 @@ package com.example.app_foodstore.Adapter;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.example.app_foodstore.Fragment.Fragment_order_history;
 import com.example.app_foodstore.Fragment.Fragment_order_ongoing;
 import com.example.app_foodstore.Model.OrderModel;
-import com.example.app_foodstore.ViewModel.OrderViewModel;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class ViewPagerOrderSrceenAdapter extends FragmentStateAdapter {
     public ViewPagerOrderSrceenAdapter(@NonNull FragmentManager fragmentManager, @NonNull Lifecycle lifecycle) {

@@ -16,9 +16,6 @@ import com.example.app_foodstore.Model.OrderModel;
 import com.example.app_foodstore.ViewModel.OrderViewModel;
 import com.example.app_foodstore.databinding.FragmentOrderOngoingBinding;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Fragment_order_ongoing extends Fragment {
     OrderViewModel orderViewModel;
     FragmentOrderOngoingBinding binding;

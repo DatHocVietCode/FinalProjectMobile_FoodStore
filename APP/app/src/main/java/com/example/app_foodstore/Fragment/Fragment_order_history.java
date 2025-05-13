@@ -17,10 +17,6 @@ import com.example.app_foodstore.Model.OrderModel;
 import com.example.app_foodstore.ViewModel.OrderViewModel;
 import com.example.app_foodstore.databinding.FragmentOrderHistoryBinding;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
 public class Fragment_order_history extends Fragment {
     OrderViewModel orderViewModel;
     FragmentOrderHistoryBinding binding;

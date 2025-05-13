@@ -26,6 +26,7 @@ public class CartActivity extends AppCompatActivity {
     private BottomSheetBehavior<CardView> bottomSheetBehavior;
     private ImageButton toggleButton;
     Button btn_placeOrder;
+    TextView tv_breakdown;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,6 +80,7 @@ public class CartActivity extends AppCompatActivity {
     private void setupBottomCard() {
         CardView bottomCard = findViewById(R.id.cart_cardView_bottomSheet);
         toggleButton = findViewById(R.id.cart_cardView_bottomSheet_expandbtn);
+        tv_breakdown = findViewById(R.id.cart_btn_breakDown);
         // Khởi tạo behavior từ CardView
         bottomSheetBehavior = BottomSheetBehavior.from(bottomCard);
         // Trạng thái ban đầu (ẩn hoặc collapsed)
@@ -123,6 +125,13 @@ public class CartActivity extends AppCompatActivity {
             }
         });
 
+        tv_breakdown.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(CartActivity.this, BreakDownOrderActivity.class);
+                startActivity(intent);
+            }
+        });
     }
     private void setupRcCart() {
         rc_cart = findViewById(R.id.cart_rc_items);

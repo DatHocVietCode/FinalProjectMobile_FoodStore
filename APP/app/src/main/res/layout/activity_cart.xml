@@ -225,6 +225,9 @@
                     android:text="Breakdown"
                     android:textColor="#FF7622"
                     android:textSize="14sp"
+                    android:focusable="true"
+                    android:clickable="true"
+                    android:foreground="?attr/selectableItemBackground"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
                 <ImageView

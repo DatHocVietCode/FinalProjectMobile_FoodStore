@@ -58,6 +58,7 @@
         <activity android:name=".Activity.AddressActivity"/>
         <activity android:name=".Activity.AddNewAddressActivity"/>
         <activity android:name=".Activity.TrackOrderActivity"/>
+        <activity android:name=".Activity.BreakDownOrderActivity"/>
     </application>
 
 </manifest>

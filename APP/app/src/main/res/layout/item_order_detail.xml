@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_marginTop="8dp">
+    android:layout_marginTop="8dp"
+    android:background="#FFFFFF">
     <LinearLayout
         android:id="@+id/item_order_detail_ln_food"
         android:layout_width="0dp"
@@ -12,23 +13,23 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:gravity="bottom">
         <TextView
             android:id="@+id/item_order_detail_tv_foodName"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:maxWidth="200dp"
-            android:maxLines="2"
+            android:maxLines="1"
             android:ellipsize="end"
-            android:text="FoodNamedasdadasadadasddasdsad"
+            android:text="FoodName"
             android:fontFamily="@font/sen"
             android:textSize="20sp"
-            android:textColor="#181C2E"/>
+            android:textColor="#181C2E"
+            android:layout_marginStart="8dp"/>
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:layout_marginEnd="12dp">
             <TextView
                 android:id="@+id/item_order_detail_tv_number"
                 android:layout_width="wrap_content"
@@ -39,13 +40,26 @@
                 android:text="x1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:textColor="#181C2E"/>
+                android:textColor="#A0A5BA"
+                android:textStyle="italic"/>
+            <TextView
+                android:id="@+id/item_order_detail_tv_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:ellipsize="end"
+                android:textSize="20sp"
+                android:text="100$"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/item_order_detail_tv_number"
+                android:textColor="#181C2E"
+                />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#EBEBEB"
-
-        app:layout_constraintTop_toBottomOf="@+id/item_order_detail_ln_food"/>
+        app:layout_constraintTop_toBottomOf="@+id/item_order_detail_ln_food"
+        android:layout_marginTop="4dp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
