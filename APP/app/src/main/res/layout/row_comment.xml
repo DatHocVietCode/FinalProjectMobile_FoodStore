@@ -3,8 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/rectangle_stroke_ff7622"
-    android:padding="8dp"
+    android:background="#FFFFFF"
     android:layout_marginTop="4dp"
     android:layout_marginBottom="4dp">
     <de.hdodenhof.circleimageview.CircleImageView
@@ -22,7 +21,9 @@
         app:layout_constraintStart_toEndOf="@+id/row_comment_avatar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginStart="8dp">
+        android:layout_marginStart="8dp"
+        android:background="@drawable/rectangle_bg_f6f8fa"
+        android:padding="12dp">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"

@@ -25,7 +25,7 @@
             android:id="@+id/fragment_food_display2_img_food"
             android:layout_width="61dp"
             android:layout_height="57dp"
-            android:background="@drawable/rectangle_corner_radius"
+            android:background="@drawable/rectangle_corner_radius_bg_f6f6f6"
             android:src="@drawable/food_sample"
             android:scaleType="centerCrop"
             android:clipToOutline="true"/>
