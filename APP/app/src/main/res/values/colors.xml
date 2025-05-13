@@ -14,4 +14,6 @@
 
     <color name="my_primary">#F44336</color>
     <color name="my_secondary">#673AB7</color>
+    <color name="trackOrder_check">#FF7622</color>
+    <color name="trackOrder_uncheck">#A0A5BA</color>
 </resources>
