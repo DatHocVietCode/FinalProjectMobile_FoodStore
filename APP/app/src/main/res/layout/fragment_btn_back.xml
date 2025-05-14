@@ -13,5 +13,5 @@
         android:layout_gravity="center"
         android:focusable="true"
         android:clickable="true"
-        android:foreground="?attr/selectableItemBackground"/>
+        android:foreground="@drawable/ripple_circle"/>
 </FrameLayout>

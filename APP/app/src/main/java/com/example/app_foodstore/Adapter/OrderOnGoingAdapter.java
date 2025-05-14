@@ -2,6 +2,7 @@ package com.example.app_foodstore.Adapter;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.view.LayoutInflater;
@@ -9,15 +10,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.app_foodstore.Activity.TrackOrderActivity;
 import com.example.app_foodstore.Model.OrderModel;
 import com.example.app_foodstore.R;
-import com.example.app_foodstore.ViewModel.FilterViewModel;
 import com.example.app_foodstore.ViewModel.OrderViewModel;
 
 import java.util.List;
@@ -70,6 +69,10 @@ public class OrderOnGoingAdapter extends RecyclerView.Adapter<OrderOnGoingAdapte
             dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.parseColor("#FF7622"));
             dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.parseColor("#FF7622"));
 
+        });
+        holder.btn_track.setOnClickListener(v -> {
+            Intent intent = new Intent(context, TrackOrderActivity.class);
+            context.startActivity(intent);
         });
 
     }

@@ -33,6 +33,7 @@ public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.
     public void onBindViewHolder(@NonNull OrderDetailAdapter.OrderDetailViewHolder holder, int position) {
         holder.tvFoodName.setText(orderDetailModelList.get(position).getFoodName());
         holder.tvNumber.setText("x" + orderDetailModelList.get(position).getNumber());
+        holder.tvPrice.setText("$" + orderDetailModelList.get(position).getPrice());
     }
 
     @Override
@@ -41,11 +42,12 @@ public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.
     }
 
     public static class OrderDetailViewHolder extends RecyclerView.ViewHolder {
-        TextView tvFoodName, tvNumber;
+        TextView tvFoodName, tvNumber, tvPrice;
         public OrderDetailViewHolder(@NonNull View itemView) {
             super(itemView);
             tvFoodName = itemView.findViewById(R.id.item_order_detail_tv_foodName);
             tvNumber = itemView.findViewById(R.id.item_order_detail_tv_number);
+            tvPrice = itemView.findViewById(R.id.item_order_detail_tv_price);
         }
     }
 }

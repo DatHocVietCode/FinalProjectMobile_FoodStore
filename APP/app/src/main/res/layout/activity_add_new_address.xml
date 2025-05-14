@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -50,17 +51,169 @@
             android:maxLines="1"
             android:ellipsize="end"/>
             <EditText
-                android:id="@+id/edit_PI_et_Name"
+                android:id="@+id/addAddressScreen_et_Address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
                 android:fontFamily="@font/sen"
                 android:singleLine="true"
-                android:text="Vo Phan Tan Dat"
+                android:text="Số 1 Võ Văn Ngân, TP.Thủ Đứcaaaaaahghjghjhjghj"
+                android:ellipsize="end"
                 android:background="@drawable/rectangle_corner_radius_bg_f6f6f6"
                 android:padding="16sp"
                 android:backgroundTint="#F0F5FA"
                 android:textColor="#6B6E82"
-                android:drawableLeft="@drawable/bg_other_location"/>
+                android:drawableLeft="@drawable/i_location"
+                android:drawablePadding="12dp"/>
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginBottom="12dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginTop="0dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginBottom="4dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/sen"
+            android:maxLines="1"
+            android:text="FULL NAME"
+            android:textColor="#32343E"
+            android:textSize="16sp" />
+        <EditText
+            android:id="@+id/addAddressScreen_et_Name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:fontFamily="@font/sen"
+            android:singleLine="true"
+            android:text="Võ Phan Tấn Đạt"
+            android:ellipsize="end"
+            android:background="@drawable/rectangle_corner_radius_bg_f6f6f6"
+            android:padding="16sp"
+            android:backgroundTint="#F0F5FA"
+            android:textColor="#6B6E82"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginBottom="12dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginTop="0dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginBottom="4dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/sen"
+            android:maxLines="1"
+            android:text="PHONE NUMBER"
+            android:textColor="#32343E"
+            android:textSize="16sp" />
+        <EditText
+            android:id="@+id/addAddressScreen_et_Phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:fontFamily="@font/sen"
+            android:singleLine="true"
+            android:text="xx-xxxx-xxxx"
+            android:ellipsize="end"
+            android:background="@drawable/rectangle_corner_radius_bg_f6f6f6"
+            android:padding="16sp"
+            android:backgroundTint="#F0F5FA"
+            android:textColor="#6B6E82"
+            android:inputType="phone"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="12dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginTop="0dp"
+        android:gravity="center_vertical"
+        tools:ignore="UseSwitchCompatOrMaterialXml">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Set as Default Address"
+            android:textSize="16sp"
+            android:textColor="#32343E"
+            android:fontFamily="@font/sen"
+            android:layout_marginStart="8dp"/>
+        <Switch
+            android:id="@+id/switch_default_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:thumbTint="#FF7622"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginBottom="12dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginTop="0dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginBottom="4dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/sen"
+            android:maxLines="1"
+            android:text="LABEL AS"
+            android:textColor="#32343E"
+            android:textSize="16sp" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/addNewAddress_rc_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+    <Button
+        android:id="@+id/addNewAddress_btn_addAddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="ADD NEW ADDRESS"
+        android:fontFamily="@font/sen"
+        android:textColor="@color/white"
+        android:textSize="24dp"
+        android:textStyle="bold"
+        android:padding="12dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/rectangle_corner_radius_ff7622"
+        app:backgroundTint="@null"
+        android:clipToOutline="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="24dp"
+        android:focusable="true"
+        android:clickable="true"
+        android:foreground="?attr/selectableItemBackground"
+        />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>
