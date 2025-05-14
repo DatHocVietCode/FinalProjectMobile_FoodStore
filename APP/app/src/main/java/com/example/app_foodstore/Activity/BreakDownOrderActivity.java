@@ -83,7 +83,7 @@ public class BreakDownOrderActivity extends AppCompatActivity {
 
     private void setupRc() {
         rcOrderDetail = findViewById(R.id.trackOrder_rc_orderDetail);
-        OrderDetailAdapter adapter = new OrderDetailAdapter(this, listOrder);
+        OrderDetailAdapter adapter = new OrderDetailAdapter(this, listOrder, false);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         rcOrderDetail.setAdapter(adapter);
         rcOrderDetail.setLayoutManager(linearLayoutManager);

@@ -2,59 +2,90 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginTop="8dp"
     android:background="#FFFFFF">
     <LinearLayout
         android:id="@+id/item_order_detail_ln_food"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:orientation="vertical"
-        android:gravity="bottom">
-        <TextView
-            android:id="@+id/item_order_detail_tv_foodName"
-            android:layout_width="match_parent"
+        android:gravity="center_vertical">
+        <LinearLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:maxLines="1"
-            android:ellipsize="end"
-            android:text="FoodName"
-            android:fontFamily="@font/sen"
-            android:textSize="20sp"
-            android:textColor="#181C2E"
-            android:layout_marginStart="8dp"/>
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="12dp">
+            android:layout_weight="8"
+            android:orientation="vertical"
+            android:gravity="bottom">
             <TextView
-                android:id="@+id/item_order_detail_tv_number"
-                android:layout_width="wrap_content"
+                android:id="@+id/item_order_detail_tv_foodName"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:singleLine="true"
+                android:maxLines="1"
                 android:ellipsize="end"
+                android:text="FoodName"
+                android:fontFamily="@font/sen"
                 android:textSize="20sp"
-                android:text="x1"
+                android:textColor="#181C2E"
+                android:layout_marginStart="8dp"/>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="12dp">
+                <TextView
+                    android:id="@+id/item_order_detail_tv_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:ellipsize="end"
+                    android:textSize="20sp"
+                    android:text="x1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:textColor="#A0A5BA"
+                    android:textStyle="italic"/>
+                <TextView
+                    android:id="@+id/item_order_detail_tv_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:ellipsize="end"
+                    android:textSize="20sp"
+                    android:text="100$"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/item_order_detail_tv_number"
+                    android:textColor="#181C2E"
+                    />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/item_order_detail_cl_rate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:visibility="gone"
+            android:padding="4dp">
+            <ImageView
+                android:id="@+id/item_order_detail_img_rate"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginStart="12dp"
+                android:src="@drawable/i_edit"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:textColor="#A0A5BA"
-                android:textStyle="italic"/>
-            <TextView
-                android:id="@+id/item_order_detail_tv_price"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:singleLine="true"
-                android:ellipsize="end"
-                android:textSize="20sp"
-                android:text="100$"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/item_order_detail_tv_number"
-                android:textColor="#181C2E"
-                />
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
+                android:visibility="gone"
+                android:layout_marginEnd="12dp"
+                android:padding="8dp"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
+
     </LinearLayout>
     <View
         android:layout_width="match_parent"

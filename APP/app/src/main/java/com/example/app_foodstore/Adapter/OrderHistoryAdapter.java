@@ -70,7 +70,7 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
         holder.btn_rate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Tạo Dialog
+                /*// Tạo Dialog
                 Dialog dialog = new Dialog(view.getContext());
 
                 // Gán layout cho Dialog
@@ -143,13 +143,14 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
                 });
 
                 // Hiển thị Dialog
-                dialog.show();
+                dialog.show();*/
+                callBottomSheet(true);
             }
         });
         holder.btn_reOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Khởi tạo BottomSheetDialog
+                /*// Khởi tạo BottomSheetDialog
                 BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(context);
                 View sheetView = View.inflate(context, R.layout.order_detail_bottomsheet, null);
                 bottomSheetDialog.setContentView(sheetView);
@@ -167,7 +168,7 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
                 mockOrderDetails.add(new OrderDetailModel(4, "Garlic Bread", 30000, 2));
 
                 // Cấu hình RecyclerView với Adapter
-                OrderDetailAdapter adapter = new OrderDetailAdapter(context, mockOrderDetails);
+                OrderDetailAdapter adapter = new OrderDetailAdapter(context, mockOrderDetails, false);
                 recyclerView.setLayoutManager(new LinearLayoutManager(context));
                 recyclerView.setAdapter(adapter);
 
@@ -184,20 +185,56 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
                 });
 
                 // Hiển thị BottomSheetDialog
-                bottomSheetDialog.show();
+                bottomSheetDialog.show();*/
+                callBottomSheet(false);
             }
         });
     }
-    // Hàm tạo animation xoay
-    private void rotateStar(int pos, List<ImageView> listStar) {
-        for (int i = 0; i <= pos; i++) {
-            ImageView view = listStar.get(i);
-            view.animate()
-                    .rotationBy(360)  // Xoay 360 độ
-                    .setDuration(500) // Thời gian xoay là 300ms
-                    .start();
+    private void callBottomSheet(boolean isRating)
+    {
+        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(context);
+        View sheetView = View.inflate(context, R.layout.order_detail_bottomsheet, null);
+        bottomSheetDialog.setContentView(sheetView);
+
+        // Ánh xạ RecyclerView và Button
+        RecyclerView recyclerView = sheetView.findViewById(R.id.recycler_order_detail);
+        MaterialButton btnReOrder = sheetView.findViewById(R.id.btn_reorder);
+        MaterialButton btnCancel = sheetView.findViewById(R.id.btn_cancel);
+
+        // Tạo dữ liệu giả để test giao diện
+        List<OrderDetailModel> mockOrderDetails = new ArrayList<>();
+        mockOrderDetails.add(new OrderDetailModel(1, "Pizza Margherita", 100000, 2));
+        mockOrderDetails.add(new OrderDetailModel(2, "Spaghetti Bolognese", 75000, 1));
+        mockOrderDetails.add(new OrderDetailModel(3, "Caesar Salad", 50000, 3));
+        mockOrderDetails.add(new OrderDetailModel(4, "Garlic Bread", 30000, 2));
+
+        // Cấu hình RecyclerView với Adapter
+        OrderDetailAdapter adapter = new OrderDetailAdapter(context, mockOrderDetails, isRating);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
+
+        if (isRating)
+        {
+            btnReOrder.setVisibility(View.GONE);
+            btnCancel.setVisibility(View.GONE);
         }
+        // Sự kiện khi nhấn nút ReOrder
+        btnReOrder.setOnClickListener(v -> {
+            Intent intent = new Intent(context, PaymentActivity.class);
+            context.startActivity(intent);
+            bottomSheetDialog.dismiss();
+        });
+
+        // Sự kiện khi nhấn nút Cancel
+        btnCancel.setOnClickListener(v -> {
+            bottomSheetDialog.dismiss();
+        });
+
+        // Hiển thị BottomSheetDialog
+        bottomSheetDialog.show();
     }
+
     @Override
     public int getItemCount() {
         return orderViewModel.getHistoryOrders().getValue().size();
