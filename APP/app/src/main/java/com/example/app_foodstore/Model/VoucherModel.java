@@ -4,19 +4,37 @@ import androidx.annotation.NonNull;
 
 import java.io.Serializable;
 
-public class VoucherModel implements Serializable {
-    private String voucherName;
+public class VoucherModel {
+    private int id;
+    private String code;
+    private String name;
+    private int minAmount;  // CamelCase cho trường min_amount
+    private Integer discount;  // Sử dụng Integer để có thể chứa null
 
-    private Long id;
-    private int discount;
-    private int minAmount;
+    // Getters và setters
 
-    public int getDiscount() {
-        return discount;
+    public int getId() {
+        return id;
     }
 
-    public void setDiscount(int discount) {
-        this.discount = discount;
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getMinAmount() {
@@ -27,35 +45,11 @@ public class VoucherModel implements Serializable {
         this.minAmount = minAmount;
     }
 
-    public Long getId() {
-        return id;
+    public Integer getDiscount() {
+        return discount;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public VoucherModel(String voucherName) {
-        this.voucherName = voucherName;
-    }
-
-    public String getVoucherName() {
-        return voucherName;
-    }
-
-    public void setVoucherName(String voucherName) {
-        this.voucherName = voucherName;
-    }
-    @NonNull
-    @Override
-    public String toString() {
-        return voucherName; // đây là text hiển thị trên Spinner khi collapsed
-    }
-
-    public VoucherModel(int discount, int minAmount, Long id, String voucherName) {
+    public void setDiscount(Integer discount) {
         this.discount = discount;
-        this.minAmount = minAmount;
-        this.id = id;
-        this.voucherName = voucherName;
     }
 }

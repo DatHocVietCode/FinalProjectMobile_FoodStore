@@ -37,7 +37,7 @@ public class VoucherAdapter extends RecyclerView.Adapter<VoucherAdapter.VoucherV
         VoucherModel voucherModel = list.get(position);
         holder.tv_voucherTitle.setText("Discount: " + voucherModel.getDiscount());
         holder.tv_voucherDescription.setText("Apply for order from " + voucherModel.getMinAmount() + "$");
-        holder.tv_name.setText(voucherModel.getVoucherName());
+        holder.tv_name.setText(voucherModel.getName());
         holder.tv_name.setSelected(true);
         holder.tv_voucherDescription.setSelected(true);
         switch (tabNum)
@@ -84,5 +84,9 @@ public class VoucherAdapter extends RecyclerView.Adapter<VoucherAdapter.VoucherV
                 })
                 .start();
     }
-
+    public void updateVoucherList(List<VoucherModel> vouchers) {
+        list.clear();
+        list.addAll(vouchers);
+        notifyDataSetChanged();
+    }
 }

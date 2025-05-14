@@ -306,10 +306,10 @@ public class PaymentActivity extends AppCompatActivity {
     private void setupVoucher() {
         spinnerVouchers = findViewById(R.id.spinnerVouchers);
         List<VoucherModel> voucherList = new ArrayList<>();
-        voucherList.add(new VoucherModel("Không áp dụng voucher"));
-        voucherList.add(new VoucherModel("Voucher A"));
-        voucherList.add(new VoucherModel("Voucher B"));
-        voucherList.add(new VoucherModel("Voucher C"));
+//        voucherList.add(new VoucherModel("Không áp dụng voucher"));
+//        voucherList.add(new VoucherModel("Voucher A"));
+//        voucherList.add(new VoucherModel("Voucher B"));
+//        voucherList.add(new VoucherModel("Voucher C"));
 
         VoucherSpinnerAdapter adapter = new VoucherSpinnerAdapter(this, voucherList, new VoucherSpinnerAdapter.OnVoucherSelectedListener() {
             @Override

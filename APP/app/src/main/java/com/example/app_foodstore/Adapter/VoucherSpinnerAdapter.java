@@ -37,7 +37,7 @@ public class VoucherSpinnerAdapter extends ArrayAdapter<VoucherModel> {
 
         VoucherModel voucher = getItem(position);
         TextView textView = convertView.findViewById(R.id.spinner_item_text);
-        textView.setText(voucher.getVoucherName());
+        textView.setText(voucher.getName());
 
         return convertView;
     }
@@ -50,7 +50,7 @@ public class VoucherSpinnerAdapter extends ArrayAdapter<VoucherModel> {
 
         VoucherModel voucher = getItem(position);
         TextView textView = convertView.findViewById(R.id.spinner_item_text);
-        textView.setText(voucher.getVoucherName());
+        textView.setText(voucher.getName());
         // Gắn sự kiện click
         convertView.setOnClickListener(v -> {
             if (listener != null) {
