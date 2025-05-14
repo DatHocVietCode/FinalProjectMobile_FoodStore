@@ -47,5 +47,14 @@ public class SettingActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        ln_favorite = findViewById(R.id.setting_screen_ln_favorite);
+        ln_favorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(SettingActivity.this, FavoriteFoodActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }

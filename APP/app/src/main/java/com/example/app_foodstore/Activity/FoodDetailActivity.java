@@ -1,5 +1,7 @@
 package com.example.app_foodstore.Activity;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -7,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -44,6 +47,9 @@ public class FoodDetailActivity extends AppCompatActivity {
     private TextView tv_noComments;
     private static final int LOAD_COUNT = 5;
     private int currentLoaded = 0;
+    ImageButton btn_add, btn_minus;
+    TextView tv_count, tv_price;
+    Button btn_addCart;
     private Runnable runnable = new Runnable() {
         @Override
         public void run() {
@@ -100,6 +106,11 @@ public class FoodDetailActivity extends AppCompatActivity {
     private void setupBottomCard() {
         CardView bottomCard = findViewById(R.id.foodDetail_cardView_bottomSheet);
         toggleButton = findViewById(R.id.foodDetail_cardView_bottomSheet_expandbtn);
+        btn_add = findViewById(R.id.foodDetail_btn_plus);
+        btn_minus = findViewById(R.id.foodDetail_btn_minus);
+        tv_count = findViewById(R.id.foodDetail_tv_count);
+        btn_addCart = findViewById(R.id.foodDetail_btn_addToCart);
+        tv_price = findViewById(R.id.foodDetail_tv_total_price);
         // Khởi tạo behavior từ CardView
         bottomSheetBehavior = BottomSheetBehavior.from(bottomCard);
         // Trạng thái ban đầu (ẩn hoặc collapsed)
@@ -143,7 +154,71 @@ public class FoodDetailActivity extends AppCompatActivity {
                 }
             }
         });
+        // Khởi tạo giá trị ban đầu
+        int[] count = {2}; // Đặt trong mảng để có thể thay đổi giá trị bên trong Lambda
 
+        tv_count.setText(String.valueOf(count[0]));
+
+        // Xử lý sự kiện khi bấm nút "+"
+        btn_add.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("WrongConstant")
+            @Override
+            public void onClick(View view) {
+                // Lấy giá trị hiện tại của TextView và chuyển thành số
+                int count = Integer.parseInt(tv_count.getText().toString());
+
+                // Tăng giá trị
+                count++;
+
+                // Lấy trạng thái hiện tại của BottomSheet trước khi thay đổi
+                int currentState = bottomSheetBehavior.getState();
+
+                // Cập nhật lại TextView
+                tv_count.setText(String.valueOf(count));
+                tv_price.setText(String.valueOf(count * 100)); // Chỉnh lại logic
+                // Nếu cần, thiết lập lại BottomSheetBehavior với trạng thái cũ
+                bottomSheetBehavior.setState(currentState);
+
+                // Debug log để kiểm tra
+                Log.d("DEBUG", "Current BottomSheet State: " + currentState);
+            }
+        });
+
+        // Xử lý sự kiện khi bấm nút "-"
+        btn_minus.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("WrongConstant")
+            @Override
+            public void onClick(View view) {
+                // Lấy giá trị hiện tại của TextView và chuyển thành số
+                int count = Integer.parseInt(tv_count.getText().toString());
+
+                // Giảm giá trị nếu count > 1
+                if (count > 1) {
+                    count--;
+                }
+
+                // Lấy trạng thái hiện tại của BottomSheet trước khi thay đổi
+                int currentState = bottomSheetBehavior.getState();
+
+                // Cập nhật lại TextView
+                tv_count.setText(String.valueOf(count));
+                tv_price.setText(String.valueOf(count * 100)); // Chỉnh lại logic
+                // Nếu cần, thiết lập lại BottomSheetBehavior với trạng thái cũ
+                bottomSheetBehavior.setState(currentState);
+
+                // Debug log để kiểm tra
+                Log.d("DEBUG", "Current BottomSheet State: " + currentState);
+            }
+        });
+
+
+        btn_addCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("DEBUG", "onClick: " + bottomSheetBehavior.getState());
+                Toast.makeText(view.getContext(), "Success", Toast.LENGTH_SHORT).show();  // Sửa tại đây
+            }
+        });
     }
 
     private void setupBtnFavorite() {

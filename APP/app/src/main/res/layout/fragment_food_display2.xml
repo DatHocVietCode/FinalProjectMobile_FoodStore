@@ -11,16 +11,10 @@
     android:clickable="true"
     android:foreground="?attr/selectableItemBackground">
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:padding="8dp">
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-        </LinearLayout>
         <ImageView
             android:id="@+id/fragment_food_display2_img_food"
             android:layout_width="61dp"
@@ -64,6 +58,21 @@
                     android:layout_gravity="bottom"/>
             </LinearLayout>
         </LinearLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ImageButton
+                android:id="@+id/fragment_food_display2_btn_favorite"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/favorite_active"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginEnd="12dp"
+                android:clipToOutline="true"
+                android:visibility="gone"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
     <View
         android:layout_width="match_parent"
