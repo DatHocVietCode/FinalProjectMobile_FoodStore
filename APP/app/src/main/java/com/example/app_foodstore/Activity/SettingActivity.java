@@ -56,5 +56,14 @@ public class SettingActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        ln_notifications = findViewById(R.id.setting_screen_ln_notifications);
+        ln_notifications.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(SettingActivity.this, NotificationActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }
