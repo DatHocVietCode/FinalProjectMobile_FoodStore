@@ -15,7 +15,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Sắp xếp theo TÊN"
+            android:text="Sort by NAME"
             android:textSize="16sp"
             android:textStyle="bold"
             android:layout_marginBottom="8dp"
@@ -29,7 +29,7 @@
                 android:id="@+id/radioNameDefault"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Mặc định"
+                android:text="Default"
                 android:checked="true"
                 app:buttonTint="#FF7622"
                 android:fontFamily="@font/sen"/>
@@ -37,14 +37,14 @@
                 android:id="@+id/radioNameAZ"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Tên: A → Z"
+                android:text="Name: A → Z"
                 app:buttonTint="#FF7622"
                 android:fontFamily="@font/sen"/>
             <RadioButton
                 android:id="@+id/radioNameZA"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Tên: Z → A"
+                android:text="Name: Z → A"
                 app:buttonTint="#FF7622"
                 android:fontFamily="@font/sen"/>
         </RadioGroup>
@@ -53,7 +53,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Sắp xếp theo GIÁ"
+            android:text="Sort by PRICE"
             android:textSize="16sp"
             android:textStyle="bold"
             android:layout_marginTop="16dp"
@@ -65,33 +65,35 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             >
+
             <RadioButton
                 android:id="@+id/radioPriceDefault"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Mặc định"
                 android:checked="true"
-                app:buttonTint="#FF7622"
-                android:fontFamily="@font/sen"/>
+                android:fontFamily="@font/sen"
+                android:text="Default"
+                app:buttonTint="#FF7622" />
+
             <RadioButton
                 android:id="@+id/radioPriceLowHigh"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Giá: Thấp → Cao"
+                android:text="Price: Low → High"
                 android:fontFamily="@font/sen"
                 app:buttonTint="#FF7622"/>
             <RadioButton
                 android:id="@+id/radioPriceHighLow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Giá: Cao → Thấp"
+                android:text="High: High → Low"
                 android:fontFamily="@font/sen"
                 app:buttonTint="#FF7622"/>
         </RadioGroup>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Lọc theo CATEGORY:"
+            android:text="Filter by CATEGORY:"
             android:textSize="16sp"
             android:textStyle="bold"
             android:layout_marginTop="16dp"
@@ -126,7 +128,7 @@
                 android:id="@+id/btnCancel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Hủy"
+                android:text="Cancel"
                 android:backgroundTint="#ECF0F4"
                 android:fontFamily="@font/sen"
                 android:textColor="#FF7622"
