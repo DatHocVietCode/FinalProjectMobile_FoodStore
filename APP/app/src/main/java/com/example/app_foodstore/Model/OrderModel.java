@@ -5,7 +5,7 @@ import java.util.Date;
 
 public class OrderModel implements Serializable {
     // Sau chỉnh lại cho khớp API
-    private boolean isCompleted;
+    private boolean isCompleted; // Chắc bỏ
     private Date orderDate;
     private int orderId;
     private int paymentMethod;
