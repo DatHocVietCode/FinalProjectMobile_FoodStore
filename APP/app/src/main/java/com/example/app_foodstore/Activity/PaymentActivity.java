@@ -6,6 +6,7 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -75,27 +76,71 @@ public class PaymentActivity extends AppCompatActivity {
     @Override
     public void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
+        Log.d("ZaloPay", "onNewIntent triggered");
+        Log.d("ZaloPay", "Intent Data: " + intent.getDataString());
+        // Kiểm tra dữ liệu có về hay không
+        if (intent != null && intent.getData() != null) {
+            Log.d("ZaloPay", "Deeplink data: " + intent.getData().toString());
+        } else {
+            Log.d("ZaloPay", "No Deeplink Data Received");
+        }
         ZaloPaySDK.getInstance().onResult(intent);
     }
 
     //Implement interface PayOrderListener để nhận kết quả thanh toán
+    // Implement interface PayOrderListener để nhận kết quả thanh toán
     private static class MyZaloPayListener implements PayOrderListener {
+        private final PaymentActivity activity;
+
+        // Constructor để truyền vào context
+        public MyZaloPayListener(PaymentActivity activity) {
+            this.activity = activity;
+        }
+
         @Override
         public void onPaymentSucceeded(final String transactionId, final String transToken, final String appTransID) {
-            //Handle Success
+            activity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Log.d("ZaloPay", "Onpayment Sucess Triggered");
+                    Intent intent = new Intent(activity, PaymentNotificationActivity.class);
+                    activity.startActivity(intent);
+
+                }
+            });
         }
 
         @Override
         public void onPaymentCanceled(String zpTransToken, String appTransID) {
-            //Handle User Canceled
+            activity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    AlertDialog dialog = new AlertDialog.Builder(activity)
+                            .setTitle("User Canceled Payment")
+                            .setMessage(String.format("Transaction Token: %s", zpTransToken))
+                            .setPositiveButton("OK", null)
+                            .show();
+                    dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.parseColor("#FF7622"));
+                }
+            });
         }
 
         @Override
         public void onPaymentError(ZaloPayError zaloPayError, String zpTransToken, String appTransID) {
-            //Redirect to Zalo/ZaloPay Store when zaloPayError == ZaloPayError.PAYMENT_APP_NOT_FOUND
-            //Handle Error
+            activity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    AlertDialog dialog = new AlertDialog.Builder(activity)
+                            .setTitle("Payment Failed")
+                            .setMessage(String.format("Error: %s\nTransaction Token: %s", zaloPayError.toString(), zpTransToken))
+                            .setPositiveButton("OK", null)
+                            .show();
+                    dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.parseColor("#FF7622"));
+                }
+            });
         }
     }
+
     private void AnhXa() {
         //setupPayment(); Sample cũ khi còn dùng linear layout
         setupVoucher();
@@ -192,13 +237,14 @@ public class PaymentActivity extends AppCompatActivity {
                     return;
                 CreateOrder orderApi = new CreateOrder();
 
-                try {
+                /*try {
                     JSONObject data = orderApi.createOrder("100000");
                     //Log.d("Amount", txtAmount.getText().toString());
                     String code = data.getString("return_code");
                     Toast.makeText(getApplicationContext(), "return_code: " + code, Toast.LENGTH_LONG).show();
                     if (code.equals("1")) {
                         String token = data.getString("zp_trans_token");
+                        MyZaloPayListener listener = new MyZaloPayListener(PaymentActivity.this);
                         //IsDone();
                         ZaloPaySDK.getInstance().payOrder(PaymentActivity.this, token, "demozpdk://payment", new PayOrderListener() {
                             @Override
@@ -212,14 +258,21 @@ public class PaymentActivity extends AppCompatActivity {
                                                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                                     @Override
                                                     public void onClick(DialogInterface dialog, int which) {
+                                                        // Chuyển trang về HomeScreenActivity
+                                                        Intent intent = new Intent(PaymentActivity.this, HomeScreenActivity.class);
+                                                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                                                        startActivity(intent);
+
+                                                        // Kết thúc PaymentActivity nếu muốn không quay lại
+                                                        finish();
                                                     }
                                                 })
-                                                .setNegativeButton("Cancel", null).show();
+                                                .setNegativeButton("Cancel", null)
+                                                .show();
                                     }
-
                                 });
-                                //IsLoading();
                             }
+
 
                             @Override
                             public void onPaymentCanceled(String zpTransToken, String appTransID) {
@@ -247,6 +300,23 @@ public class PaymentActivity extends AppCompatActivity {
                                         .setNegativeButton("Cancel", null).show();
                             }
                         });
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }*/
+                try {
+                    JSONObject data = orderApi.createOrder("100000");
+                    String code = data.getString("return_code");
+                    Toast.makeText(getApplicationContext(), "return_code: " + code, Toast.LENGTH_LONG).show();
+
+                    if (code.equals("1")) {
+                        String token = data.getString("zp_trans_token");
+
+                        // Khởi tạo listener với context của Activity
+                        MyZaloPayListener listener = new MyZaloPayListener(PaymentActivity.this);
+
+                        // Thanh toán ZaloPay
+                        ZaloPaySDK.getInstance().payOrder(PaymentActivity.this, token, "demozpdk://payment", listener);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
