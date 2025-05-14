@@ -26,9 +26,17 @@ public class PaymentNotificationActivity extends AppCompatActivity {
     private void setupBtn() {
         btnTrackOrder = findViewById(R.id.activity_payment_notification_btnTrackrder);
         btnTrackOrder.setOnClickListener(v -> {
-            Intent intent = new Intent(PaymentNotificationActivity.this, TrackOrderActivity.class);
-            startActivity(intent);
+            Intent homeIntent = new Intent(PaymentNotificationActivity.this, HomeScreenActivity.class);
+            homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(homeIntent);
+
+            // Điều hướng ngay lập tức đến TrackOrderActivity
+            Intent trackOrderIntent = new Intent(PaymentNotificationActivity.this, TrackOrderActivity.class);
+            startActivity(trackOrderIntent);
+
+            // Kết thúc PaymentNotificationActivity để không còn nằm trong stack
             finish();
+
         });
     }
 }
