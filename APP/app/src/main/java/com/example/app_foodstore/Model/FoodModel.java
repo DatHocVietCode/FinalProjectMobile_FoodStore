@@ -37,6 +37,17 @@ public class FoodModel implements Serializable {
     @JsonProperty("count_comment")
     private Integer count_comment;
 
+    @JsonProperty("comments")
+    private List<CommentModel> comments;
+
+    public List<CommentModel> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<CommentModel> comments) {
+        this.comments = comments;
+    }
+
     public void setCategory_id(Long category_id) {
         this.category_id = category_id;
     }

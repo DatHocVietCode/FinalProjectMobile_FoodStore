@@ -42,8 +42,8 @@ public class PersonalInfoActivity extends AppCompatActivity {
     private void loadData() {
         // Lấy token từ SharedPreferences
         SharedPreferences prefs = getSharedPreferences("user_prefs", MODE_PRIVATE);
-        String token = prefs.getString("access_token", "");
 
+        String token = prefs.getString("access_token", "");
         // Gọi ViewModel để lấy dữ liệu người dùng
         userViewModel.getUserProfile(token);
 
@@ -79,7 +79,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
 
         // Tải ảnh đại diện với Glide
         Glide.with(PersonalInfoActivity.this)
-                .load("IMG_URL" + userRes.getProfile_image()) // Thay "IMG_URL" bằng URL thực tế của ảnh
+                .load(IMG_URL + userRes.getProfile_image()) // Thay "IMG_URL" bằng URL thực tế của ảnh
                 .placeholder(R.drawable.user_avatar_sample)  // Ảnh placeholder khi ảnh chưa tải
                 .error(R.drawable.user_avatar_sample)       // Ảnh hiển thị khi có lỗi tải ảnh
                 .into(imageView);

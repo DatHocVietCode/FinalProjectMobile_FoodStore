@@ -17,26 +17,17 @@ public class FoodImage implements Serializable {
         this.id = id;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public String getImage_url() {
+        return image_url;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
-
-    public FoodModel getFood() {
-        return food;
-    }
-
-    public void setFood(FoodModel food) {
-        this.food = food;
+    public void setImage_url(String image_url) {
+        this.image_url = image_url;
     }
 
     @JsonProperty("id")
     private Long id;
     @JsonProperty("image_url")
-    private String imageUrl;
-    private FoodModel food;
+    private String image_url;
 
 }

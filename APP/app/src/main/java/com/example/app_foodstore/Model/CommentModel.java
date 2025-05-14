@@ -4,48 +4,49 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class CommentModel implements Serializable {
-    private int idComment;
-    //private String avatar;
-    private int avatar;
+    private int id;
+    private String avatar_user;
     private String name;
     private String content;
 
-    public double getRating() {
+    private Integer rating;
+    private String created_at;
+
+    public Integer getRating() {
         return rating;
     }
 
-    public void setRating(double rating) {
+    public void setRating(Integer rating) {
         this.rating = rating;
     }
 
-    public CommentModel(int idComment, int avatar, String name, String content, double rating, Date dateCreated) {
-        this.idComment = idComment;
-        this.avatar = avatar;
+    public CommentModel(int id, String avatar_user, String name, String content, Integer rating, String created_at) {
+        this.id = id;
+        this.avatar_user = avatar_user;
         this.name = name;
         this.content = content;
         this.rating = rating;
-        this.dateCreated = dateCreated;
+        this.created_at = created_at;
     }
 
-    private double rating;
     // For test only
     public CommentModel() {
     }
 
-    public int getIdComment() {
-        return idComment;
+    public String getAvatar_user() {
+        return avatar_user;
     }
 
-    public void setIdComment(int idComment) {
-        this.idComment = idComment;
+    public void setAvatar_user(String avatar_user) {
+        this.avatar_user = avatar_user;
     }
 
-    public int getAvatar() {
-        return avatar;
+    public int getId() {
+        return id;
     }
 
-    public void setAvatar(int avatar) {
-        this.avatar = avatar;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -64,14 +65,11 @@ public class CommentModel implements Serializable {
         this.content = content;
     }
 
-    public Date getDateCreated() {
-        return dateCreated;
+    public String getCreated_at() {
+        return created_at;
     }
 
-    public void setDateCreated(Date dateCreated) {
-        this.dateCreated = dateCreated;
+    public void setCreated_at(String created_at) {
+        this.created_at = created_at;
     }
-
-    private Date dateCreated;
-
 }

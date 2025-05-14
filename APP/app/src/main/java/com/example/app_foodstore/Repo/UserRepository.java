@@ -25,6 +25,7 @@ public class UserRepository {
     }
 
     public LiveData<UserRes> getUserProfile(String token) {
+        Log.d("ViewModel", "Calling getUserProfile with token: " + token);
         final MutableLiveData<UserRes> userData = new MutableLiveData<>();
 
         // Gọi API getMyProfile

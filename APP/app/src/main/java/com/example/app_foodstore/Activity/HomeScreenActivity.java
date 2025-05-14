@@ -1,5 +1,7 @@
 package com.example.app_foodstore.Activity;
 
+import static com.example.app_foodstore.APIService.Constant.IMG_URL;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -9,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.widget.NestedScrollView;
@@ -27,9 +30,11 @@ import com.example.app_foodstore.Fragment.Fragment_btn_cart;
 import com.example.app_foodstore.Fragment.Fragment_foodDisplay1;
 import com.example.app_foodstore.Model.CategoryModel;
 import com.example.app_foodstore.Model.FoodModel;
+import com.example.app_foodstore.Model.response.UserRes;
 import com.example.app_foodstore.R;
 import com.example.app_foodstore.ViewModel.CateViewModel;
 import com.example.app_foodstore.ViewModel.FoodViewModel;
+import com.example.app_foodstore.ViewModel.UserViewModel;
 
 import java.util.List;
 
@@ -45,6 +50,7 @@ public class HomeScreenActivity extends AppCompatActivity {
     CircleImageView ms_header_avatar;
     List<FoodModel> newFood;
     List<CategoryModel> categoryModels;
+    UserViewModel userViewModel;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,33 +73,20 @@ public class HomeScreenActivity extends AppCompatActivity {
         SetUp();
     }
     private void SetUp() {
+//        clearUserData();
         iniViewModel();
         includeFragments();
         setupCart();
         setupRcCategory();
         setupScrollView();
-        setupAvartar();
+        setupAvatar();
         setupSeeAll();
-        loadInformation();
-    }
-    private void loadInformation(){
-        SharedPreferences sharedPreferences = getSharedPreferences("user_prefs", MODE_PRIVATE);
-        boolean isLoggedIn = sharedPreferences.getBoolean("is_logged_in", false);
-        String fullname = sharedPreferences.getString("fullname", "UserName");
-        if (isLoggedIn) {
-            Glide.with(HomeScreenActivity.this)
-                    .load("http://172.16.27.240:8080/uploads/user1.jpg")
-                    .into(ms_header_avatar);
-            TextView usernameTextView = findViewById(R.id.ms_header_tv_username);
-            usernameTextView.setText(fullname);
-        } else {
-            Log.e("HomeScreenActivity", "ms_header_avatar is null");
-        }
     }
 
     private void iniViewModel() {
         foodViewModel = new ViewModelProvider(this).get(FoodViewModel.class);
         cateViewModel = new ViewModelProvider(this).get(CateViewModel.class);
+        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
     }
 
     private void setupSeeAll() {
@@ -127,7 +120,7 @@ public class HomeScreenActivity extends AppCompatActivity {
         });
     }
 
-    private void setupAvartar() {
+    private void setupAvatar() {
         ms_header_avatar = findViewById(R.id.ms_header_avatar);
         ms_header_avatar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -138,6 +131,33 @@ public class HomeScreenActivity extends AppCompatActivity {
                 }
             }
         });
+        SharedPreferences sharedPreferences = getSharedPreferences("user_prefs", MODE_PRIVATE);
+        boolean isLoggedIn = sharedPreferences.getBoolean("is_logged_in", false);
+        if (isLoggedIn) {
+            // Gọi ViewModel để lấy dữ liệu người dùng
+            String token = sharedPreferences.getString("access_token", "");
+            userViewModel.getUserProfile(token);
+            // Quan sát dữ liệu thay đổi
+            userViewModel.getUserProfileLiveData().observe(this, new Observer<UserRes>() {
+                @Override
+                public void onChanged(UserRes userRes) {
+                    if (userRes != null) {
+                        // Cập nhật UI khi dữ liệu người dùng thay đổi
+                        Glide.with(HomeScreenActivity.this)
+                                .load(IMG_URL  + userRes.getProfile_image())
+                                .into(ms_header_avatar);
+                        TextView usernameTextView = findViewById(R.id.ms_header_tv_username);
+                        usernameTextView.setText(userRes.getFullname());
+                        Log.d("Hello123", userRes.getProfile_image());
+
+                    } else {
+                        Toast.makeText(HomeScreenActivity.this, "Không lấy được dữ liệu người dùng", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+        } else {
+            Log.e("HomeScreenActivity", "ms_header_avatar is null");
+        }
     }
 
     private void setupScrollView() {

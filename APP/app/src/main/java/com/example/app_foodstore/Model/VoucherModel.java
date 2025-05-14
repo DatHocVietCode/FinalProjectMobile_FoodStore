@@ -6,6 +6,8 @@ import java.io.Serializable;
 
 public class VoucherModel implements Serializable {
     private String voucherName;
+
+    private Long id;
     private int discount;
     private int minAmount;
 
@@ -25,10 +27,12 @@ public class VoucherModel implements Serializable {
         this.minAmount = minAmount;
     }
 
-    public VoucherModel(String voucherName, int discount, int minAmount) {
-        this.voucherName = voucherName;
-        this.discount = discount;
-        this.minAmount = minAmount;
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public VoucherModel(String voucherName) {
@@ -46,5 +50,12 @@ public class VoucherModel implements Serializable {
     @Override
     public String toString() {
         return voucherName; // đây là text hiển thị trên Spinner khi collapsed
+    }
+
+    public VoucherModel(int discount, int minAmount, Long id, String voucherName) {
+        this.discount = discount;
+        this.minAmount = minAmount;
+        this.id = id;
+        this.voucherName = voucherName;
     }
 }

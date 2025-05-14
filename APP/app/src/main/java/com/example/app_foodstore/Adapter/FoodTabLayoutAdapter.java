@@ -71,6 +71,7 @@ public class FoodTabLayoutAdapter extends RecyclerView.Adapter<FoodTabLayoutAdap
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, FoodDetailActivity.class);
+                intent.putExtra("foodModel", foodModel);
                 context.startActivity(intent);
             }
         });
