@@ -206,8 +206,12 @@ public class PaymentActivity extends AppCompatActivity {
             VoucherModel selectedVoucher = (VoucherModel) spinnerVouchers.getSelectedItem();
 
             Long idVoucher = selectedVoucher != null ? selectedVoucher.getId() : null;
-            discount = selectedVoucher.getDiscount().toString();
-
+            if(selectedVoucher == null){
+                discount = "0";
+            }
+            else{
+                discount = selectedVoucher.getDiscount().toString();
+            }
 
                     // 🔸 Tạo PaymentRequest
             PaymentRequest paymentRequest = new PaymentRequest(paymentMethod, shippingMethodName, idVoucher, idAddress);
