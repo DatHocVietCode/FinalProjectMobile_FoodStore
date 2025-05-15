@@ -2,8 +2,6 @@ package com.example.app_foodstore.Adapter;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.graphics.Color;
-import android.location.Address;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,60 +11,80 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.app_foodstore.Model.AddressModel;
+import com.example.app_foodstore.Model.response.AddressResponse;
 import com.example.app_foodstore.R;
 
 import java.util.List;
 
 public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.AddressViewHolder> {
-    Context context;
-    List<AddressModel> listAddress;
+    private final Context context;
+    private final List<AddressResponse> listAddress;
+    private final OnAddressDeleteListener deleteListener;
+    private final OnItemClickListener itemClickListener;
 
-    public AddressAdapter(Context context, List<AddressModel> listAddress) {
+    public AddressAdapter(Context context,
+                          List<AddressResponse> addressList,
+                          OnAddressDeleteListener deleteListener,
+                          OnItemClickListener itemClickListener) {
         this.context = context;
-        this.listAddress = listAddress;
+        this.listAddress = addressList;
+        this.deleteListener = deleteListener;
+        this.itemClickListener = itemClickListener;
+    }
+
+    // Interface khi nhấn xóa địa chỉ
+    public interface OnAddressDeleteListener {
+        void onDeleteAddress(Long addressId, int position);
+    }
+
+    // Interface khi click chọn địa chỉ
+    public interface OnItemClickListener {
+        void onItemClick(AddressResponse address);
     }
 
     @NonNull
     @Override
-    public AddressAdapter.AddressViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public AddressViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_row_address, parent, false);
-        AddressViewHolder holder = new AddressViewHolder(view);
-        return holder;
+        return new AddressViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AddressAdapter.AddressViewHolder holder, int position) {
-        AddressModel addressModel = listAddress.get(position);
-        if (addressModel.getType().equals("HOME")) {
+    public void onBindViewHolder(@NonNull AddressViewHolder holder, int position) {
+        AddressResponse address = listAddress.get(position);
+
+        // Hiển thị loại địa chỉ
+        holder.tv_type.setText(address.getAddressType().toString());
+        holder.tv_address.setText(address.getAddress());
+
+        // Hiển thị icon tương ứng
+        if ("HOME".equalsIgnoreCase(address.getAddressType().toString())) {
             holder.img_type.setImageResource(R.drawable.bg_home_location);
-        }
-        if (addressModel.getType().equals("WORK")) {
+        } else if ("WORK".equalsIgnoreCase(address.getAddressType().toString())) {
             holder.img_type.setImageResource(R.drawable.bg_office_location);
-        }
-        if (addressModel.getType().equals("OTHER")) {
+        } else {
             holder.img_type.setImageResource(R.drawable.bg_other_location);
         }
-        holder.tv_type.setText(addressModel.getType());
-        holder.tv_address.setText(addressModel.getAddress());
-        holder.img_delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog dialog = new AlertDialog.Builder(context)
-                        .setTitle("Xác nhận xóa")
-                        .setMessage("Bạn có chắc chắn muốn xóa địa chỉ này không?")
-                        .setPositiveButton("Yes", (dialog1, which) -> {
-                            listAddress.remove(holder.getAdapterPosition());
-                            notifyItemRemoved(holder.getAdapterPosition());
-                        })
-                        .setNegativeButton("No", (dialog12, which) -> {
-                            dialog12.dismiss();
-                        })
-                        .show();
-                dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.parseColor("#FF7622"));
-                dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.parseColor("#FF7622"));
 
+        // Click vào item để trả về địa chỉ
+        holder.itemView.setOnClickListener(v -> {
+            if (itemClickListener != null) {
+                itemClickListener.onItemClick(address);
             }
+        });
+
+        // Click vào nút xóa
+        holder.img_delete.setOnClickListener(v -> {
+            new AlertDialog.Builder(context)
+                    .setTitle("Xác nhận xóa")
+                    .setMessage("Bạn có chắc chắn muốn xóa địa chỉ này không?")
+                    .setPositiveButton("Yes", (dialog1, which) -> {
+                        if (deleteListener != null) {
+                            deleteListener.onDeleteAddress(address.getId(), holder.getAdapterPosition());
+                        }
+                    })
+                    .setNegativeButton("No", null)
+                    .show();
         });
     }
 
@@ -75,12 +93,14 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.AddressV
         return listAddress.size();
     }
 
-    public class AddressViewHolder extends RecyclerView.ViewHolder {
-        ImageView img_type;
-        ImageView img_delete;
-        ImageView img_edit;
-        TextView tv_type;
-        TextView tv_address;
+    public void removeItem(int position) {
+        listAddress.remove(position);
+        notifyItemRemoved(position);
+    }
+
+    public static class AddressViewHolder extends RecyclerView.ViewHolder {
+        ImageView img_type, img_delete, img_edit;
+        TextView tv_type, tv_address;
 
         public AddressViewHolder(@NonNull View itemView) {
             super(itemView);

@@ -4,7 +4,6 @@ import static com.example.app_foodstore.ZaloPay.Constant.AppInfo.APP_ID;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
@@ -16,7 +15,9 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -24,6 +25,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.cardview.widget.CardView;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
@@ -34,9 +36,10 @@ import com.example.app_foodstore.Adapter.VoucherSpinnerAdapter;
 import com.example.app_foodstore.Model.OrderDetailModel;
 import com.example.app_foodstore.Model.PaymentInterfaceModel;
 import com.example.app_foodstore.Model.VoucherModel;
+import com.example.app_foodstore.Model.request.PaymentRequest;
 import com.example.app_foodstore.R;
-import com.example.app_foodstore.ZaloPay.Api.CreateOrder;
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.example.app_foodstore.ViewModel.PaymentViewModel;
+import com.example.app_foodstore.ViewModel.VoucherViewModel;
 
 import org.json.JSONObject;
 
@@ -50,35 +53,53 @@ import vn.zalopay.sdk.ZaloPaySDK;
 import vn.zalopay.sdk.listeners.PayOrderListener;
 
 public class PaymentActivity extends AppCompatActivity {
-    boolean selected = true; // hoặc false tùy trạng thái
-    ViewPager2 viewPager2;
-    AppCompatSpinner spinnerVouchers;
-    ImageView imageView;
-    LinearLayout layout;
-    ImageView checkImage;
-    RecyclerView rc_methods;
-    PaymentMethodAdapter paymentMethodAdapter;
-    Button btn_pay;
-    List<OrderDetailModel> orderDetailModelList;
-    private BottomSheetBehavior<CardView> bottomSheetBehavior;
+
+    private ViewPager2 viewPager2;
+    private VoucherViewModel voucherViewModel;
+    private AppCompatSpinner spinnerVouchers;
+    private RecyclerView rc_methods;
+    private PaymentMethodAdapter paymentMethodAdapter;
+    private Button btn_pay;
     private ImageButton toggleButton;
+    private String token;
+    private PaymentViewModel paymentViewModel;
+    private Long idAddress;
+    private RadioGroup radioGroupPrice;
+    String order,delivery,discount;
+    TextView tvDeliveryFee,tvVoucher,tvOrderPrice;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment);
+        tvDeliveryFee = findViewById(R.id.payment_ordersummary_DeliveryFee);
+        tvVoucher = findViewById(R.id.payment_ordersummary_voucher);
+        tvOrderPrice = findViewById(R.id.payment_ordersummary_order_price);
+
+        // Lấy idAddress từ Intent
+       Long idAddress = getIntent().getLongExtra("idAddress", -1L);
+       order = getIntent().getStringExtra("order");
+
+        if (idAddress != -1L) {
+            Log.d("PaymentActivity", "idAddress: " + idAddress);
+        } else {
+            Log.d("PaymentActivity", "idAddress không được truyền hoặc có giá trị không hợp lệ");
+        }
+        paymentViewModel = new ViewModelProvider(this).get(PaymentViewModel.class);
         ZaloPaySDK.init(APP_ID, Environment.SANDBOX);
-        StrictMode.ThreadPolicy policy = new
-                StrictMode.ThreadPolicy.Builder().permitAll().build();
+        token = UserUtils.getTokenFromPreferences(this);
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
+
         AnhXa();
     }
-    //Cần bắt sự kiện OnNewIntent vì ZaloPay App sẽ gọi deeplink về app của Merchant
+
+    // Deeplink callback from ZaloPay App
     @Override
     public void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         Log.d("ZaloPay", "onNewIntent triggered");
         Log.d("ZaloPay", "Intent Data: " + intent.getDataString());
-        // Kiểm tra dữ liệu có về hay không
         if (intent != null && intent.getData() != null) {
             Log.d("ZaloPay", "Deeplink data: " + intent.getData().toString());
         } else {
@@ -87,196 +108,131 @@ public class PaymentActivity extends AppCompatActivity {
         ZaloPaySDK.getInstance().onResult(intent);
     }
 
-    //Implement interface PayOrderListener để nhận kết quả thanh toán
-    // Implement interface PayOrderListener để nhận kết quả thanh toán
+    // Listener for ZaloPay payment result
     private static class MyZaloPayListener implements PayOrderListener {
         private final PaymentActivity activity;
 
-        // Constructor để truyền vào context
         public MyZaloPayListener(PaymentActivity activity) {
             this.activity = activity;
         }
 
         @Override
         public void onPaymentSucceeded(final String transactionId, final String transToken, final String appTransID) {
-            activity.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    Log.d("ZaloPay", "Onpayment Sucess Triggered");
-                    Intent intent = new Intent(activity, PaymentNotificationActivity.class);
-                    activity.startActivity(intent);
-
-                }
+            activity.runOnUiThread(() -> {
+                Log.d("ZaloPay", "Onpayment Success Triggered");
+                Intent intent = new Intent(activity, PaymentNotificationActivity.class);
+                activity.startActivity(intent);
             });
         }
 
         @Override
         public void onPaymentCanceled(String zpTransToken, String appTransID) {
-            activity.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    AlertDialog dialog = new AlertDialog.Builder(activity)
-                            .setTitle("User Canceled Payment")
-                            .setMessage(String.format("Transaction Token: %s", zpTransToken))
-                            .setPositiveButton("OK", null)
-                            .show();
-                    dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.parseColor("#FF7622"));
-                }
+            activity.runOnUiThread(() -> {
+                AlertDialog dialog = new AlertDialog.Builder(activity)
+                        .setTitle("User Canceled Payment")
+                        .setMessage(String.format("Transaction Token: %s", zpTransToken))
+                        .setPositiveButton("OK", null)
+                        .show();
+                dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.parseColor("#FF7622"));
             });
         }
 
         @Override
         public void onPaymentError(ZaloPayError zaloPayError, String zpTransToken, String appTransID) {
-            activity.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    AlertDialog dialog = new AlertDialog.Builder(activity)
-                            .setTitle("Payment Failed")
-                            .setMessage(String.format("Error: %s\nTransaction Token: %s", zaloPayError.toString(), zpTransToken))
-                            .setPositiveButton("OK", null)
-                            .show();
-                    dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.parseColor("#FF7622"));
-                }
+            activity.runOnUiThread(() -> {
+                AlertDialog dialog = new AlertDialog.Builder(activity)
+                        .setTitle("Payment Failed")
+                        .setMessage(String.format("Error: %s\nTransaction Token: %s", zaloPayError.toString(), zpTransToken))
+                        .setPositiveButton("OK", null)
+                        .show();
+                dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.parseColor("#FF7622"));
             });
         }
     }
 
     private void AnhXa() {
-        //setupPayment(); Sample cũ khi còn dùng linear layout
+        radioGroupPrice = findViewById(R.id.radioGroupPrice);
         setupVoucher();
         setupViewPager();
         setupRecyclerViewMethod();
         setupbtnPay();
-        //setupOrderDetail();
-        //setupBottomCard();
-    }
-    private void setupBottomCard() {
-        CardView bottomCard = findViewById(R.id.payment_cardView_bottomSheet);
-        toggleButton = findViewById(R.id.payment_cardView_bottomSheet_expandbtn);
-        // Khởi tạo behavior từ CardView
-        bottomSheetBehavior = BottomSheetBehavior.from(bottomCard);
-        // Trạng thái ban đầu (ẩn hoặc collapsed)
-        bottomCard.post(() -> {
-            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-            bottomSheetBehavior.setHideable(false);
-            int peekDp = 30; // dp bạn muốn
-            float density = getResources().getDisplayMetrics().density;
-            int peekPx = (int) (peekDp * density);
-            bottomSheetBehavior.setPeekHeight(peekPx);
-        });
 
-        Log.d("STate", "Current: " + bottomSheetBehavior.getState());
-        Log.d("STate", "Peek height: " + bottomSheetBehavior.getPeekHeight());
-        Log.d("STate", "Is Hideable: " + bottomSheetBehavior.isHideable());
-
-        // Xử lý toggle khi nhấn nút
-        toggleButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d("STate", "onClick: " + bottomSheetBehavior.getState());
-
-                int currentState = bottomSheetBehavior.getState();
-
-                // Kiểm tra xem BottomSheet có đang trong trạng thái Settling không
-                if (currentState != BottomSheetBehavior.STATE_SETTLING) {
-                    if (currentState == BottomSheetBehavior.STATE_EXPANDED) {
-                        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-                        //toggleButton.setImageResource(R.drawable.expand_up);
-                        bottomSheetBehavior.setHideable(false);
-                        int peekDp = 30; // dp bạn muốn
-                        float density = getResources().getDisplayMetrics().density;
-                        int peekPx = (int) (peekDp * density);
-                        bottomSheetBehavior.setPeekHeight(peekPx);
-                    } else {
-                        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-                        //toggleButton.setImageResource(R.drawable.expand_down);
-                    }
-                } else {
-                    Log.d("STate", "BottomSheet is settling, cannot change state");
-                }
-            }
-        });
-
-    }
-    /*private void setupOrderDetail() {
-        rc_orderDetail = findViewById(R.id.payment_rc_detail);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        rc_orderDetail.setLayoutManager(linearLayoutManager);
-        orderDetailModelList = getOrderDetail();
-        OrderDetailAdapter adapter = new OrderDetailAdapter(this, orderDetailModelList);
-        rc_orderDetail.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
-    }*/
-
-    private List<OrderDetailModel> getOrderDetail() {
-        List<OrderDetailModel> orderDetailModelList = new ArrayList<>();
-        orderDetailModelList.add(new OrderDetailModel(1, "FoodNamedasdadasadadasddasdsad", 1));
-        orderDetailModelList.add(new OrderDetailModel(2, "Món ăn B", 2));
-        orderDetailModelList.add(new OrderDetailModel(3, "Món ăn C", 3));
-        orderDetailModelList.add(new OrderDetailModel(1, "Món ăn A", 1));
-        orderDetailModelList.add(new OrderDetailModel(2, "Món ăn B", 2));
-        orderDetailModelList.add(new OrderDetailModel(3, "Món ăn C", 3));
-        orderDetailModelList.add(new OrderDetailModel(1, "Món ăn A", 1));
-        orderDetailModelList.add(new OrderDetailModel(2, "Món ăn B", 2));
-        orderDetailModelList.add(new OrderDetailModel(3, "Món ăn C", 3));
-        orderDetailModelList.add(new OrderDetailModel(1, "Món ăn A", 1));
-        orderDetailModelList.add(new OrderDetailModel(2, "Món ăn B", 2));
-        orderDetailModelList.add(new OrderDetailModel(3, "Món ăn C", 3));
-
-        return orderDetailModelList;
+        tvDeliveryFee.setText(delivery);
+        tvVoucher.setText(discount);
+        tvOrderPrice.setText(order);
     }
 
     private void setupbtnPay() {
         btn_pay = findViewById(R.id.payment_btn_payAndConfirm);
-        btn_pay.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.O)
-            @SuppressLint("SetTextI18n")
-            @Override
-            public void onClick(View v) {
-                switch (viewPager2.getCurrentItem())
-                {
-                    case 0:
-                        Intent intent = new Intent(PaymentActivity.this, PaymentNotificationActivity.class);
-                        startActivity(intent);
-                        break;
-                    case 1:
-                        CreateOrder orderApi = new CreateOrder();
-                        try {
-                            JSONObject data = orderApi.createOrder("1000000");
-                            String code = data.getString("return_code");
-                            Toast.makeText(getApplicationContext(), "return_code: " + code, Toast.LENGTH_LONG).show();
-
-                            if (code.equals("1")) {
-                                String token = data.getString("zp_trans_token");
-
-                                // Khởi tạo listener với context của Activity
-                                MyZaloPayListener listener = new MyZaloPayListener(PaymentActivity.this);
-
-                                // Thanh toán ZaloPay
-                                ZaloPaySDK.getInstance().payOrder(PaymentActivity.this, token, "demozpdk://payment", listener);
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        break;
-                    default:
-                        break;
-                }
+        btn_pay.setOnClickListener(v -> {
+            // Lấy phương thức thanh toán đang chọn (tương ứng với ViewPager2)
+            int currentMethodPosition = viewPager2.getCurrentItem();
+            String paymentMethod = null;
+            switch (currentMethodPosition) {
+                case 0: paymentMethod = "Cash"; break;
+                case 1: paymentMethod = "ZaloPay"; break;
+                case 2: paymentMethod = "VNPay"; break;
+                case 3: paymentMethod = "Visa"; break;
+                case 4: paymentMethod = "MasterCard"; break;
+                case 5: paymentMethod = "Paypal"; break;
             }
+
+            // 🔸 Lấy shippingMethod từ RadioGroup
+            int selectedShippingId = radioGroupPrice.getCheckedRadioButtonId();
+            if (selectedShippingId == -1) {
+                Toast.makeText(this, "Vui lòng chọn phương thức vận chuyển!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            radioGroupPrice.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                    if(i == 0){
+                        delivery = "10000VND";
+                        tvDeliveryFee.setText(delivery);
+                    }
+                    else{
+                        delivery = "20000VND";
+                        tvDeliveryFee.setText(delivery);
+                    }
+                }
+            });
+
+            RadioButton selectedShippingButton = findViewById(selectedShippingId);
+            String shippingMethod = selectedShippingButton.getText().toString();
+            String[] parts = shippingMethod.split(" \\("); // Tách lấy tên
+            String shippingMethodName = parts[0]; // Ví dụ: "Standard" hoặc "Express"
+
+            // 🔸 Lấy voucher đang chọn từ spinner
+            VoucherModel selectedVoucher = (VoucherModel) spinnerVouchers.getSelectedItem();
+
+            Long idVoucher = selectedVoucher != null ? selectedVoucher.getId() : null;
+            discount = selectedVoucher.getDiscount().toString();
+
+
+                    // 🔸 Tạo PaymentRequest
+            PaymentRequest paymentRequest = new PaymentRequest(paymentMethod, shippingMethodName, idVoucher, idAddress);
+
+            // 🔸 Gọi ViewModel để thanh toán
+            paymentViewModel.makePayment(token, paymentRequest).observe(PaymentActivity.this, isSuccess -> {
+                if (isSuccess) {
+                    Toast.makeText(this, "Thanh toán thành công!", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(PaymentActivity.this, PaymentNotificationActivity.class);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(this, "Thanh toán thất bại!", Toast.LENGTH_SHORT).show();
+                }
+            });
         });
+
     }
 
     private void setupRecyclerViewMethod() {
         rc_methods = findViewById(R.id.payment_rc_methods);
         List<PaymentInterfaceModel> paymentInterfaceModelList = GetPaymentMethod();
         paymentMethodAdapter = new PaymentMethodAdapter(this, paymentInterfaceModelList,
-                new PaymentMethodAdapter.OnPaymentMethodSelectedListener() {
-                    @Override
-                    public void onMethodSelected(int position) {
-                        // ViewPager2 nhảy đến trang tương ứng với method được chọn
-                        viewPager2.setCurrentItem(position, true);
-                        Log.d("Position", "onMethodSelected: " + position);
-                    }
+                position -> {
+                    viewPager2.setCurrentItem(position, true);
+                    Log.d("Position", "onMethodSelected: " + position);
                 });
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         rc_methods.setLayoutManager(linearLayoutManager);
@@ -285,7 +241,6 @@ public class PaymentActivity extends AppCompatActivity {
     }
 
     private List<PaymentInterfaceModel> GetPaymentMethod() {
-        // Sau này bú từ API
         List<PaymentInterfaceModel> paymentInterfaceModelList = new ArrayList<>();
         paymentInterfaceModelList.add(new PaymentInterfaceModel(R.drawable.cash_selected, R.drawable.cash_unselected, "Cash", true));
         paymentInterfaceModelList.add(new PaymentInterfaceModel(R.drawable.zalopay_selected, R.drawable.zalopay_unselected, "ZaloPay", false));
@@ -302,75 +257,29 @@ public class PaymentActivity extends AppCompatActivity {
         viewPager2.setAdapter(adapter);
 
         viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-
             @Override
             public void onPageSelected(int position) {
                 if (paymentMethodAdapter != null) {
                     paymentMethodAdapter.setCheckedPosition(position);
                 }
-                //bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
             }
         });
     }
-
 
     private void setupVoucher() {
         spinnerVouchers = findViewById(R.id.spinnerVouchers);
-        List<VoucherModel> voucherList = new ArrayList<>();
-//        voucherList.add(new VoucherModel("Không áp dụng voucher"));
-//        voucherList.add(new VoucherModel("Voucher A"));
-//        voucherList.add(new VoucherModel("Voucher B"));
-//        voucherList.add(new VoucherModel("Voucher C"));
+        VoucherViewModel voucherViewModel = new ViewModelProvider(this).get(VoucherViewModel.class);
 
-        VoucherSpinnerAdapter adapter = new VoucherSpinnerAdapter(this, voucherList, new VoucherSpinnerAdapter.OnVoucherSelectedListener() {
-            @Override
-            public void onVoucherSelected(VoucherModel voucher, int position) {
-                spinnerVouchers.post(() -> spinnerVouchers.setSelection(position));
-                try {
-                    Method method = Spinner.class.getDeclaredMethod("onDetachedFromWindow");
-                    method.setAccessible(true);
-                    method.invoke(spinnerVouchers);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+        voucherViewModel.getMyVouchers(token).observe(this, voucherModels -> {
+            if (voucherModels != null && !voucherModels.isEmpty()) {
+                VoucherSpinnerAdapter adapter = new VoucherSpinnerAdapter(this, R.layout.spinner_voucher_item, voucherModels);
+                spinnerVouchers.setAdapter(adapter);
+            } else {
+                // Xử lý không có voucher
+                spinnerVouchers.setAdapter(null);
+
             }
         });
-        spinnerVouchers.setAdapter(adapter);
-        // Đặt mặc định là dòng đầu tiên (không chọn voucher)
-        spinnerVouchers.setSelection(0);
-    }
 
-    private void setupPayment() {
-        imageView = findViewById(R.id.payment_cash_image);
-        layout = findViewById(R.id.payment_cash_container);
-        checkImage = findViewById(R.id.payment_cash_check);
-        if (selected) {
-            imageView.setImageResource(R.drawable.cash_selected);
-            imageView.setBackgroundResource(R.drawable.rectangle_corner_radius_stroke_ff7622);
-            checkImage.setVisibility(View.VISIBLE);
-        } else {
-            imageView.setImageResource(R.drawable.cash_unselected);
-            imageView.setBackgroundResource(R.drawable.rectangle_corner_radius_bg_f6f6f6);
-            checkImage.setVisibility(View.INVISIBLE);
-        }
-        layout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (selected)
-                {
-                    imageView.setImageResource(R.drawable.cash_unselected);
-                    imageView.setBackgroundResource(R.drawable.rectangle_corner_radius_bg_f6f6f6);
-                    checkImage.setVisibility(View.INVISIBLE);
-                    selected = false;
-                }
-                else
-                {
-                    imageView.setImageResource(R.drawable.cash_selected);
-                    imageView.setBackgroundResource(R.drawable.rectangle_corner_radius_stroke_ff7622);
-                    checkImage.setVisibility(View.VISIBLE);
-                    selected = true;
-                }
-            }
-        });
     }
 }

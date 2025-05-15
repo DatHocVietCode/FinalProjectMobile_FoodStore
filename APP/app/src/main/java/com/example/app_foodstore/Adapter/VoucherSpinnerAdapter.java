@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.example.app_foodstore.Model.VoucherModel;
 import com.example.app_foodstore.R;
@@ -15,48 +16,45 @@ import com.example.app_foodstore.R;
 import java.util.List;
 
 public class VoucherSpinnerAdapter extends ArrayAdapter<VoucherModel> {
-    Context context;
-    List<VoucherModel> voucherList;
-    private OnVoucherSelectedListener listener;
-    public interface OnVoucherSelectedListener {
-        void onVoucherSelected(VoucherModel voucher, int position);
-    }
+    private Context context;
+    private List<VoucherModel> voucherList;
 
-    public VoucherSpinnerAdapter(@NonNull Context context, List<VoucherModel> voucherList, OnVoucherSelectedListener listener) {
-        super(context, 0, voucherList);
+    public VoucherSpinnerAdapter(@NonNull Context context, int resource, @NonNull List<VoucherModel> voucherList) {
+        super(context, resource, voucherList);
         this.context = context;
         this.voucherList = voucherList;
-        this.listener = listener;
     }
+
+    // View hiển thị voucher đã chọn (trong Spinner khi chưa mở dropdown)
+    @NonNull
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        // Inflate layout cho item trong spinner
+    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(R.layout.spinner_voucher_item, parent, false);
         }
-
         VoucherModel voucher = getItem(position);
         TextView textView = convertView.findViewById(R.id.spinner_item_text);
-        textView.setText(voucher.getName());
-
+        if (voucher != null) {
+            textView.setText(voucher.getName());
+        } else {
+            textView.setText("");
+        }
         return convertView;
     }
+
+    // View hiển thị voucher trong dropdown danh sách
     @Override
-    public View getDropDownView(int position, View convertView, ViewGroup parent) {
-        // Inflate layout cho dropdown
+    public View getDropDownView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(R.layout.spinner_voucher_item, parent, false);
         }
-
         VoucherModel voucher = getItem(position);
         TextView textView = convertView.findViewById(R.id.spinner_item_text);
-        textView.setText(voucher.getName());
-        // Gắn sự kiện click
-        convertView.setOnClickListener(v -> {
-            if (listener != null) {
-                listener.onVoucherSelected(voucher, position);
-            }
-        });
+        if (voucher != null) {
+            textView.setText(voucher.getName());
+        } else {
+            textView.setText("");
+        }
         return convertView;
     }
 }

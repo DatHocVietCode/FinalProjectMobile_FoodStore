@@ -14,43 +14,54 @@ import com.example.app_foodstore.R;
 import java.util.List;
 
 public class AddressLabelAdapter extends RecyclerView.Adapter<AddressLabelAdapter.AddressLabelHolder> {
-    Context context;
-    List<String> keywordList;
+    private Context context;
+    private List<String> keywordList;
     private int selectedPosition = 0;
-    public AddressLabelAdapter(Context context, List<String> keywordList) {
+    private OnLabelSelectedListener listener;
+
+    // Interface callback để thông báo label được chọn
+    public interface OnLabelSelectedListener {
+        void onLabelSelected(String label);
+    }
+
+    // Constructor có thêm tham số listener
+    public AddressLabelAdapter(Context context, List<String> keywordList, OnLabelSelectedListener listener) {
         this.context = context;
         this.keywordList = keywordList;
+        this.listener = listener;
     }
 
     @NonNull
     @Override
-    public AddressLabelAdapter.AddressLabelHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public AddressLabelHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.fragment_keyword, parent, false);
         return new AddressLabelHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AddressLabelAdapter.AddressLabelHolder holder, int position) {
-        holder.tv_keyword.setText(keywordList.get(holder.getAdapterPosition()));
-        // Kiểm tra xem item này có phải là item được chọn không
-        if (holder.getAdapterPosition() == selectedPosition) {
+    public void onBindViewHolder(@NonNull AddressLabelHolder holder, int position) {
+        String label = keywordList.get(position);
+        holder.tv_keyword.setText(label);
+
+        // Set background và màu chữ tùy theo item được chọn
+        if (position == selectedPosition) {
             holder.itemView.setBackgroundResource(R.drawable.rectangle_corner_radius_ff7622);
             holder.tv_keyword.setTextColor(context.getResources().getColor(R.color.white));
-        }
-        else
-        {
+        } else {
             holder.itemView.setBackgroundResource(R.drawable.rectangle_corner_radius_bg_white);
             holder.tv_keyword.setTextColor(context.getResources().getColor(R.color.black));
         }
 
-        // Bắt sự kiện click
         holder.itemView.setOnClickListener(view -> {
-            // Cập nhật vị trí được chọn
-            selectedPosition = holder.getAdapterPosition();
-            // Refresh toàn bộ danh sách
-            notifyDataSetChanged();
+            int pos = holder.getAdapterPosition();
+            if (pos != RecyclerView.NO_POSITION && selectedPosition != pos) {
+                selectedPosition = pos;
+                notifyDataSetChanged();
+                if (listener != null) {
+                    listener.onLabelSelected(keywordList.get(pos));
+                }
+            }
         });
-
     }
 
     @Override
@@ -58,8 +69,9 @@ public class AddressLabelAdapter extends RecyclerView.Adapter<AddressLabelAdapte
         return keywordList.size();
     }
 
-    public class AddressLabelHolder extends RecyclerView.ViewHolder {
+    public static class AddressLabelHolder extends RecyclerView.ViewHolder {
         TextView tv_keyword;
+
         public AddressLabelHolder(@NonNull View itemView) {
             super(itemView);
             tv_keyword = itemView.findViewById(R.id.fragment_keyword_tv_recentKeyWord);
