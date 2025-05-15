@@ -39,9 +39,10 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     public void onBindViewHolder(@NonNull NotificationAdapter.ViewHolder holder, int position) {
         NotificationModel notify = list.get(position);
         // Này là API
-        /*holder.item_row_notification_tvOrderId.setText(list.get(position).getOrderId());
-        holder.item_row_notification_tvDecs.setText(list.get(position).getDecs());*/
+        holder.item_row_notification_tvOrderId.setText(list.get(position).getOrderId());
+        holder.item_row_notification_tvDecs.setText(list.get(position).getDecs());
         holder.item_row_notification_gapTime.setText(notify.getGapTime());
+        holder.item_row_notification_img_food.setImageResource(notify.getImage());
         switch (notify.getStatusId()){
             case 0:
                 holder.item_row_notification_tvStatus.setText(notify.getStatus());

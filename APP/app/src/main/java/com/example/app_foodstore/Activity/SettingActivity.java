@@ -24,7 +24,8 @@ import com.example.app_foodstore.ViewModel.UserViewModel;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class SettingActivity extends AppCompatActivity {
-    LinearLayout ln_personalInfo, ln_notifications, ln_favorite, ln_cart, ln_address;
+    LinearLayout ln_personalInfo, ln_notifications, ln_favorite, ln_cart, ln_address
+            , ln_logout;
     UserViewModel userViewModel;
     CircleImageView ms_header_avatar;
     TextView username;
@@ -113,6 +114,23 @@ public class SettingActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(SettingActivity.this, NotificationActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        ln_logout = findViewById(R.id.setting_screen_ln_logout);
+        ln_logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SharedPreferences sharedPreferences = getSharedPreferences("user_prefs", MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.clear(); // Xóa toàn bộ thông tin
+                editor.apply(); // Hoặc editor.commit();
+
+                // Chuyển về LoginActivity
+                Intent intent = new Intent(SettingActivity.this, LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+                finish(); // Kết thúc Activity hiện tại
             }
         });
     }

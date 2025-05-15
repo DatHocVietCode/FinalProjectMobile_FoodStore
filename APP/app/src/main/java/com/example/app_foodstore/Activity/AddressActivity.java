@@ -57,9 +57,9 @@ public class AddressActivity extends AppCompatActivity {
 
     private List<AddressModel> getAddress() {
         List<AddressModel> listAddress = new ArrayList<>();
-        listAddress.add(new AddressModel(1, "Số 1 VVN aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "HOME"));
-        listAddress.add(new AddressModel(2, "Số 2 VVN aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "WORK"));
-        listAddress.add(new AddressModel(3, "Số 3 VVN aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "OTHER"));
+        listAddress.add(new AddressModel(1, "Số 1 VVN, Thành phố Thủ Đức", "WORK"));
+        listAddress.add(new AddressModel(2, "37/96/2, Phường 2, Quận 4, Thành Phế Hồ Chí Minh", "HOME"));
+        listAddress.add(new AddressModel(3, "Ấp 5, Xã Tân Mỹ Chánh, Thành phố Mỹ Tho", "OTHER"));
         listAddress.add(new AddressModel(4, "Số 4 VVN aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "HOME"));
         listAddress.add(new AddressModel(5, "Số 5 VVN aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "WORK"));
         listAddress.add(new AddressModel(6, "Số 6 VVN aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "OTHER"));

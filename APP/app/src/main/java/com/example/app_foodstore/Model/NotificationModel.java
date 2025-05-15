@@ -12,12 +12,21 @@ public class NotificationModel implements Serializable {
     private int status;
     private String decs;
     private Date createdDate;
-
-    public NotificationModel(String orderId, int status, String decs, Date createdDate) {
+    private int image;
+    public NotificationModel(String orderId, int status, String decs, Date createdDate, int image) {
         this.orderId = orderId;
         this.status = status;
         this.decs = decs;
         this.createdDate = createdDate;
+        this.image = image;
+    }
+
+    public int getImage() {
+        return image;
+    }
+
+    public void setImage(int image) {
+        this.image = image;
     }
 
     public String getOrderId() {
