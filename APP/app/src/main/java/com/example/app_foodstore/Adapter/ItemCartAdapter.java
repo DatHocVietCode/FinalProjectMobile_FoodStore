@@ -1,88 +1,109 @@
 package com.example.app_foodstore.Adapter;
 
+import static com.example.app_foodstore.APIService.Constant.IMG_URL;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;  // nhớ thêm dependency Glide trong build.gradle nếu dùng
 import com.example.app_foodstore.Model.CartModel;
 import com.example.app_foodstore.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ItemCartAdapter extends RecyclerView.Adapter<ItemCartAdapter.ItemCartAdapterViewHolder> {
-    Context context;
-    List<CartModel> list;
 
-    public ItemCartAdapter(Context context, List<CartModel> list) {
+    public interface OnCartItemActionListener {
+        void onQuantityChanged(CartModel cartItem, int newQuantity);
+        void onDeleteItem(CartModel cartItem);
+    }
+
+    private Context context;
+    private List<CartModel> list;
+    private boolean isEditing = false;
+    private OnCartItemActionListener actionListener;
+
+    // Constructor mới dùng listener mở rộng
+    public ItemCartAdapter(Context context, List<CartModel> list, OnCartItemActionListener listener) {
         this.context = context;
-        this.list = list;
+        this.list = list != null ? list : new ArrayList<>();
+        this.actionListener = listener;
     }
 
-    public interface OnEditModeChangeListener {
-        void onEditModeChanged(boolean isEditing);
-    }
     public void setEditMode(boolean isEditing) {
         this.isEditing = isEditing;
-        notifyDataSetChanged(); // Cập nhật giao diện
+        notifyDataSetChanged();
     }
-    private boolean isEditing = false;
-    public ItemCartAdapter(Context context) {
-        this.context = context;
+
+    public void updateCartList(List<CartModel> newList) {
+        this.list = newList != null ? newList : new ArrayList<>();
+        notifyDataSetChanged();
     }
 
     @NonNull
     @Override
-    public ItemCartAdapter.ItemCartAdapterViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ItemCartAdapterViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_cart, parent, false);
         return new ItemCartAdapterViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ItemCartAdapter.ItemCartAdapterViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ItemCartAdapterViewHolder holder, int position) {
         CartModel cartItem = list.get(position);
 
-        // Hiển thị số lượng hiện tại
+        holder.tv_name.setText(cartItem.getName());
+        holder.tv_price.setText(String.format("%,.0f đ", cartItem.getPrice()));
         holder.tv_count.setText(String.valueOf(cartItem.getQuantity()));
 
-        // ================================
-        // 🎯 Xử lý sự kiện nút Delete
-        // ================================
+        if (cartItem.getThumbnail() != null && !cartItem.getThumbnail().isEmpty()) {
+            Glide.with(context)
+                    .load(IMG_URL + cartItem.getThumbnail())
+                    .placeholder(R.drawable.food_sample)
+                    .into(holder.img_food);
+        } else {
+            holder.img_food.setImageResource(R.drawable.food_sample);
+        }
+
         holder.btn_delete.setVisibility(isEditing ? View.VISIBLE : View.GONE);
         holder.btn_delete.setOnClickListener(view -> {
-            list.remove(position);
-            notifyItemRemoved(position);
-            notifyItemRangeChanged(position, list.size());
-        });
-
-        // ================================
-        // ➖ Xử lý sự kiện nút Minus (-)
-        // ================================
-        holder.btn_minus.setOnClickListener(view -> {
-            int currentQuantity = cartItem.getQuantity();
-            if (currentQuantity > 1) {
-                currentQuantity--;
-                cartItem.setQuantity(currentQuantity);
-                holder.tv_count.setText(String.valueOf(currentQuantity));
-            } else {
-                Toast.makeText(view.getContext(), "Minimum quantity reached", Toast.LENGTH_SHORT).show();
+            if (actionListener != null) {
+                actionListener.onDeleteItem(cartItem); // Gọi callback xử lý API
             }
         });
 
-        // ================================
-        // ➕ Xử lý sự kiện nút Add (+)
-        // ================================
-        holder.btn_add.setOnClickListener(view -> {
+        holder.btn_minus.setOnClickListener(view -> {
             int currentQuantity = cartItem.getQuantity();
-            currentQuantity++;
-            cartItem.setQuantity(currentQuantity);
-            holder.tv_count.setText(String.valueOf(currentQuantity));
+            if (currentQuantity > 1) {
+                int newQuantity = currentQuantity - 1;
+                cartItem.setQuantity(newQuantity);
+                holder.tv_count.setText(String.valueOf(newQuantity));
+
+                if (actionListener != null) {
+                    actionListener.onQuantityChanged(cartItem, newQuantity);
+                }
+            } else {
+                Toast.makeText(view.getContext(), "Số lượng tối thiểu là 1", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        holder.btn_add.setOnClickListener(view -> {
+            int newQuantity = cartItem.getQuantity() + 1;
+            cartItem.setQuantity(newQuantity);
+            holder.tv_count.setText(String.valueOf(newQuantity));
+
+            if (actionListener != null) {
+                actionListener.onQuantityChanged(cartItem, newQuantity);
+            }
         });
     }
 
@@ -91,15 +112,20 @@ public class ItemCartAdapter extends RecyclerView.Adapter<ItemCartAdapter.ItemCa
         return list.size();
     }
 
-    public class ItemCartAdapterViewHolder extends RecyclerView.ViewHolder {
+    public static class ItemCartAdapterViewHolder extends RecyclerView.ViewHolder {
         ImageButton btn_delete, btn_minus, btn_add;
-        TextView tv_count;
+        TextView tv_count, tv_name, tv_price;
+        ImageView img_food;
+
         public ItemCartAdapterViewHolder(@NonNull View itemView) {
             super(itemView);
             btn_delete = itemView.findViewById(R.id.cart_btn_deleteItem);
             btn_minus = itemView.findViewById(R.id.cart_btn_minus);
             btn_add = itemView.findViewById(R.id.cart_tv_add);
             tv_count = itemView.findViewById(R.id.cart_tv_count);
+            tv_name = itemView.findViewById(R.id.cart_tv_foodName);
+            tv_price = itemView.findViewById(R.id.cart_tv_price);
+            img_food = itemView.findViewById(R.id.item_cart_img_food);
         }
     }
 }
