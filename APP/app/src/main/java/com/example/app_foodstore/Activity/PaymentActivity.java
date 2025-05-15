@@ -242,7 +242,7 @@ public class PaymentActivity extends AppCompatActivity {
                     case 1:
                         CreateOrder orderApi = new CreateOrder();
                         try {
-                            JSONObject data = orderApi.createOrder("100000");
+                            JSONObject data = orderApi.createOrder("1000000");
                             String code = data.getString("return_code");
                             Toast.makeText(getApplicationContext(), "return_code: " + code, Toast.LENGTH_LONG).show();
 
