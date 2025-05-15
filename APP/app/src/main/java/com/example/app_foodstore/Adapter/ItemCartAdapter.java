@@ -27,17 +27,24 @@ public class ItemCartAdapter extends RecyclerView.Adapter<ItemCartAdapter.ItemCa
         void onQuantityChanged(CartModel cartItem, int newQuantity);
         void onDeleteItem(CartModel cartItem);
     }
+    private OnItemChangeListener onItemChangeListener;
 
+    // Định nghĩa Interface ngay trong Adapter
+    public interface OnItemChangeListener {
+        void onItemChanged();
+    }
     private Context context;
     private List<CartModel> list;
     private boolean isEditing = false;
     private OnCartItemActionListener actionListener;
 
     // Constructor mới dùng listener mở rộng
-    public ItemCartAdapter(Context context, List<CartModel> list, OnCartItemActionListener listener) {
+    public ItemCartAdapter(Context context, List<CartModel> list, OnCartItemActionListener listener
+    , OnItemChangeListener listener1) {
         this.context = context;
         this.list = list != null ? list : new ArrayList<>();
         this.actionListener = listener;
+        this.onItemChangeListener = listener1;
     }
 
     public void setEditMode(boolean isEditing) {
@@ -79,6 +86,9 @@ public class ItemCartAdapter extends RecyclerView.Adapter<ItemCartAdapter.ItemCa
             if (actionListener != null) {
                 actionListener.onDeleteItem(cartItem); // Gọi callback xử lý API
             }
+            if (onItemChangeListener != null) {
+                onItemChangeListener.onItemChanged();
+            }
         });
 
         holder.btn_minus.setOnClickListener(view -> {
@@ -94,6 +104,9 @@ public class ItemCartAdapter extends RecyclerView.Adapter<ItemCartAdapter.ItemCa
             } else {
                 Toast.makeText(view.getContext(), "Số lượng tối thiểu là 1", Toast.LENGTH_SHORT).show();
             }
+            if (onItemChangeListener != null) {
+                onItemChangeListener.onItemChanged();
+            }
         });
 
         holder.btn_add.setOnClickListener(view -> {
@@ -103,6 +116,9 @@ public class ItemCartAdapter extends RecyclerView.Adapter<ItemCartAdapter.ItemCa
 
             if (actionListener != null) {
                 actionListener.onQuantityChanged(cartItem, newQuantity);
+            }
+            if (onItemChangeListener != null) {
+                onItemChangeListener.onItemChanged();
             }
         });
     }

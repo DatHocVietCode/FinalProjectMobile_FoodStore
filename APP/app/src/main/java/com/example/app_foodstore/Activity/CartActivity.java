@@ -166,6 +166,14 @@ public class CartActivity extends AppCompatActivity {
                     }
                 });
             }
+        }, new ItemCartAdapter.OnItemChangeListener() {
+            @Override
+            public void onItemChanged() {
+                if (bottomSheetBehavior != null) {
+                    // bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                }
+            }
         });
 
         rc_cart.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));

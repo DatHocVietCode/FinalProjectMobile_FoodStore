@@ -163,6 +163,7 @@ public class FoodDetailActivity extends AppCompatActivity {
             count[0]++;
             tv_count.setText(String.valueOf(count[0]));
             tv_price.setText(String.valueOf(pricePerItem * count[0]));
+            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
         });
 
         btn_minus.setOnClickListener(view -> {
@@ -171,6 +172,7 @@ public class FoodDetailActivity extends AppCompatActivity {
                 tv_count.setText(String.valueOf(count[0]));
                 tv_price.setText(String.valueOf(pricePerItem * count[0]));
             }
+            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
         });
 
         btn_addCart.setOnClickListener(view -> addToCart());
