@@ -4,6 +4,8 @@ import static com.example.app_foodstore.APIService.Constant.IMG_URL;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -24,6 +26,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.app_foodstore.Adapter.CategoryAdapter;
+import com.example.app_foodstore.CustomView.MovableFloatingActionButton;
 import com.example.app_foodstore.Fragment.Fragment_BottomNavigation;
 import com.example.app_foodstore.Fragment.Fragment_SearchBar;
 import com.example.app_foodstore.Fragment.Fragment_btn_cart;
@@ -50,6 +53,7 @@ public class HomeScreenActivity extends AppCompatActivity {
     CircleImageView ms_header_avatar;
     List<FoodModel> newFood;
     List<CategoryModel> categoryModels;
+    MovableFloatingActionButton fabLogin;
     UserViewModel userViewModel;
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -81,6 +85,23 @@ public class HomeScreenActivity extends AppCompatActivity {
         setupScrollView();
         setupAvatar();
         setupSeeAll();
+        setupFabLogin();
+    }
+
+    private void setupFabLogin() {
+        fabLogin = findViewById(R.id.fab_login);
+        // Tự xử nha Kịt
+        /*if (user đã login gì gì đó)
+        {
+            fabLogin.setVisibility(View.GONE);
+        }*/
+        fabLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HomeScreenActivity.this, LoginActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void iniViewModel() {

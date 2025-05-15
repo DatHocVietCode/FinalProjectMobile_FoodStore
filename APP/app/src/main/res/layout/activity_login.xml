@@ -1,17 +1,18 @@
-<?xml version="1.0" encoding="utf-8"?>
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/login">
-    
+
+    <!-- Phần nền mờ -->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:alpha="0.7"/>
 
+    <!-- Phần chứa tiêu đề -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -28,91 +29,95 @@
             android:textStyle="bold" />
     </LinearLayout>
 
+    <!-- Phần CardView với form đăng nhập -->
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         app:cardCornerRadius="28dp"
         android:layout_marginBottom="-20dp"
-        android:id="@+id/card_view"
-        >
+        android:id="@+id/card_view">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="28dp">
+            <!-- Tiêu đề và hướng dẫn -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Welcome"
                 android:textColor="#FF7622"
                 android:textSize="32sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:fontFamily="@font/sen"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Please login with your information"
-                android:alpha="0.7"/>
+                android:alpha="0.7"
+                android:fontFamily="@font/sen"
+                android:layout_marginTop="8dp"
+                />
 
-            <View
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"/>
+            <!-- Các trường thông tin đăng nhập -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Email Address"
                 android:alpha="0.7"
-                android:textStyle="bold"/>
-
+                android:textStyle="bold"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/sen"/>
             <EditText
                 android:id="@+id/username_login"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"
-                android:drawableEnd="@drawable/done_icon"/>
+                android:drawableEnd="@drawable/done_icon"
+                android:fontFamily="@font/sen"/>
 
-            <View
-                android:layout_width="wrap_content"
-                android:layout_height="20dp"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Password"
                 android:alpha="0.7"
-                android:textStyle="bold"/>
-
+                android:textStyle="bold"
+                android:fontFamily="@font/sen"/>
             <EditText
                 android:id="@+id/password_login"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
-                android:drawableEnd="@drawable/password_icon"/>
+                android:drawableEnd="@drawable/password_icon"
+                android:fontFamily="@font/sen"/>
 
+            <!-- Checkbox và link quên mật khẩu -->
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-
                 <CheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Remember me"
                     android:layout_centerVertical="true"
-                    android:alpha="0.7"/>
+                    android:alpha="0.7"
+                    android:fontFamily="@font/sen"/>
 
                 <TextView
+                    android:id="@+id/login_tv_forgot_password"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="I forgot my password"
                     android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="0dp"
+                    android:text="I forgot my password"
+                    android:fontFamily="@font/sen"
                     android:layout_centerVertical="true"/>
-
             </RelativeLayout>
-            <View
-                android:layout_width="wrap_content"
-                android:layout_height="10dp"/>
 
+            <!-- Nút đăng nhập -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_login"
                 android:layout_width="match_parent"
@@ -121,22 +126,22 @@
                 app:backgroundTint="#FF7622"
                 app:cornerRadius="32dp"/>
 
-            <View
-                android:layout_width="wrap_content"
-                android:layout_height="10dp"/>
+            <!-- Dòng "Hoặc đăng nhập với" -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Or Login with"
                 android:layout_gravity="center"
-                android:alpha="0.7"/>
+                android:alpha="0.7"
+                android:fontFamily="@font/sen"
+                android:layout_marginTop="4dp"/>
 
+            <!-- Các biểu tượng mạng xã hội -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="center">
-
                 <ImageView
                     android:layout_width="40dp"
                     android:layout_height="40dp"
@@ -147,17 +152,19 @@
                     android:layout_height="40dp"
                     android:layout_margin="12dp"
                     android:background="@drawable/google"/>
-
-
             </LinearLayout>
 
-
+            <!-- Thêm TextView "Chưa có tài khoản?" -->
+            <TextView
+                android:id="@+id/tv_register"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Chưa có tài khoản? Đăng ký ngay!"
+                android:textColor="#FF7622"
+                android:textSize="16sp"
+                android:gravity="center"
+                android:fontFamily="@font/sen"
+                android:layout_gravity="center"/>
         </LinearLayout>
-
-
     </androidx.cardview.widget.CardView>
-
-
-
-
 </RelativeLayout>
