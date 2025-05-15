@@ -75,7 +75,6 @@ public class SearchActivity extends AppCompatActivity {
         setupRcPopularFood();
         setupRcSuggestedFood();
         setupBtnCart();
-
     }
 
     private void setupBtnCart() {
@@ -141,10 +140,10 @@ public class SearchActivity extends AppCompatActivity {
     private void setupRcKeyword() {
         rc_recent_keyword = findViewById(R.id.ss_rc_recent_keyword);
         recentKeywords = new ArrayList<>();
-        recentKeywords.add(new SearchKeywordModel("Bánh canh"));
-        recentKeywords.add(new SearchKeywordModel("Hủ tiếu"));
-        recentKeywords.add(new SearchKeywordModel("Nước ngọt"));
-        recentKeywords.add(new SearchKeywordModel("Bún chả"));
+        recentKeywords.add(new SearchKeywordModel("Burger"));
+        recentKeywords.add(new SearchKeywordModel("Pizza"));
+        recentKeywords.add(new SearchKeywordModel("Juice"));
+        recentKeywords.add(new SearchKeywordModel("Pasta"));
         SearchKeywordAdapter rc_adapter = new SearchKeywordAdapter(this, recentKeywords);
         rc_recent_keyword.setAdapter(rc_adapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);

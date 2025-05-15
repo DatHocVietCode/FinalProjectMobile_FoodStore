@@ -218,7 +218,7 @@ public class HomeScreenActivity extends AppCompatActivity {
         Fragment_btn_cart btn_cart = new Fragment_btn_cart();
         transaction.replace(R.id.ms_fragment_container_btn_cart, btn_cart);
         transaction.commit();
-        int cart_count = 3; // Lấy số sản phẩm trong giỏ hàng từ api
+        int cart_count = 0; // Lấy số sản phẩm trong giỏ hàng từ api
         if (btn_cart != null) {
             new Handler(Looper.getMainLooper()).post(() -> {
                 btn_cart.updateCartNotify(cart_count);

@@ -49,19 +49,19 @@ public class NotificationActivity extends AppCompatActivity {
         // Thêm 5 thông báo với các khoảng thời gian khác nhau:
         // 5 phút trước
         calendar.add(Calendar.MINUTE, -5);
-        list.add(new NotificationModel("ORD123", 0, "Your order is being processed", calendar.getTime()));
+        list.add(new NotificationModel("ORD123", 0, "Your order is being processed", calendar.getTime(), R.drawable.cheeseburger));
 
         // 2 giờ trước
         calendar = Calendar.getInstance();
         calendar.add(Calendar.HOUR, -2);
-        list.add(new NotificationModel("ORD124", 1, "Your order has been delivered", calendar.getTime()));
+        list.add(new NotificationModel("ORD124", 1, "Your order has been delivered", calendar.getTime(), R.drawable.cocktail));
 
         // 1 ngày trước
         calendar = Calendar.getInstance();
         calendar.add(Calendar.DAY_OF_MONTH, -1);
-        list.add(new NotificationModel("ORD125", 2, "Your order was canceled", calendar.getTime()));
+        list.add(new NotificationModel("ORD125", 2, "Your order was canceled", calendar.getTime(), R.drawable.cheesesandwich));
 
-        // 3 ngày trước
+        /*// 3 ngày trước
         calendar = Calendar.getInstance();
         calendar.add(Calendar.DAY_OF_MONTH, -3);
         list.add(new NotificationModel("ORD126", 0, "Your order is being processed", calendar.getTime()));
@@ -70,6 +70,6 @@ public class NotificationActivity extends AppCompatActivity {
         calendar = Calendar.getInstance();
         calendar.add(Calendar.DAY_OF_MONTH, -7);
         list.add(new NotificationModel("ORD127", 1, "Your order has been delivered", calendar.getTime()));
-
+*/
     }
 }

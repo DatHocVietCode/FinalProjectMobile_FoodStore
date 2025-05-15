@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -51,19 +53,21 @@ public class FoodDetailActivity extends AppCompatActivity {
     private TextView tv_noComments, tv_count, tv_price;
     private static final int LOAD_COUNT = 5;
     private int currentLoaded = 0;
-    private Runnable runnable = () -> {
-        if (viewPager2.getCurrentItem() == imagesList.size() - 1) {
-            viewPager2.setCurrentItem(0);
-        } else {
-            viewPager2.setCurrentItem(viewPager2.getCurrentItem() + 1);
+    /*private Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            if (viewPager2.getCurrentItem() == imagesList.size() - 1) {
+                viewPager2.setCurrentItem(0);
+            } else {
+                viewPager2.setCurrentItem(viewPager2.getCurrentItem() + 1);
+            }
         }
-    };
+    };*/
     private ImageButton btn_Favorite;
     private FoodModel foodModel;
 
     Button btn_addCart;
     ImageButton btn_add, btn_minus;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,9 +83,9 @@ public class FoodDetailActivity extends AppCompatActivity {
     }
 
     private void AnhXa() {
+        setupBottomCard();
         setupViewPager2();
         setupBtnFavorite();
-        setupBottomCard();
         loadData();
         loadAllComments();
         setupComments();
@@ -177,7 +181,123 @@ public class FoodDetailActivity extends AppCompatActivity {
 
         btn_addCart.setOnClickListener(view -> addToCart());
     }
+    /*private void setupBottomCard() {
+        CardView bottomCard = findViewById(R.id.foodDetail_cardView_bottomSheet);
+        toggleButton = findViewById(R.id.foodDetail_cardView_bottomSheet_expandbtn);
+        btn_add = findViewById(R.id.foodDetail_btn_plus);
+        btn_minus = findViewById(R.id.foodDetail_btn_minus);
+        tv_count = findViewById(R.id.foodDetail_tv_count);
+        btn_addCart = findViewById(R.id.foodDetail_btn_addToCart);
+        tv_price = findViewById(R.id.foodDetail_tv_total_price);
+        // Khởi tạo behavior từ CardView
+        bottomSheetBehavior = BottomSheetBehavior.from(bottomCard);
+        // Trạng thái ban đầu (ẩn hoặc collapsed)
+        bottomCard.post(() -> {
+            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+            bottomSheetBehavior.setHideable(false);
+            int peekDp = 30; // dp bạn muốn
+            float density = getResources().getDisplayMetrics().density;
+            int peekPx = (int) (peekDp * density);
+            bottomSheetBehavior.setPeekHeight(peekPx);
+        });
 
+        Log.d("STate", "Current: " + bottomSheetBehavior.getState());
+        Log.d("STate", "Peek height: " + bottomSheetBehavior.getPeekHeight());
+        Log.d("STate", "Is Hideable: " + bottomSheetBehavior.isHideable());
+
+        // Xử lý toggle khi nhấn nút
+        toggleButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("STate", "onClick: " + bottomSheetBehavior.getState());
+
+                int currentState = bottomSheetBehavior.getState();
+
+                // Kiểm tra xem BottomSheet có đang trong trạng thái Settling không
+                if (currentState != BottomSheetBehavior.STATE_SETTLING) {
+                    if (currentState == BottomSheetBehavior.STATE_EXPANDED) {
+                        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                        //toggleButton.setImageResource(R.drawable.expand_up);
+                        bottomSheetBehavior.setHideable(false);
+                        int peekDp = 30; // dp bạn muốn
+                        float density = getResources().getDisplayMetrics().density;
+                        int peekPx = (int) (peekDp * density);
+                        bottomSheetBehavior.setPeekHeight(peekPx);
+                    } else {
+                        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                        //toggleButton.setImageResource(R.drawable.expand_down);
+                    }
+                } else {
+                    Log.d("STate", "BottomSheet is settling, cannot change state");
+                }
+            }
+        });
+        // Khởi tạo giá trị ban đầu
+        int[] count = {2}; // Đặt trong mảng để có thể thay đổi giá trị bên trong Lambda
+
+        tv_count.setText(String.valueOf(count[0]));
+
+        // Xử lý sự kiện khi bấm nút "+"
+        btn_add.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("WrongConstant")
+            @Override
+            public void onClick(View view) {
+                // Lấy giá trị hiện tại của TextView và chuyển thành số
+                int count = Integer.parseInt(tv_count.getText().toString());
+
+                // Tăng giá trị
+                count++;
+
+                // Lấy trạng thái hiện tại của BottomSheet trước khi thay đổi
+                int currentState = bottomSheetBehavior.getState();
+
+                // Cập nhật lại TextView
+                tv_count.setText(String.valueOf(count));
+                tv_price.setText(String.valueOf(count * 100)); // Chỉnh lại logic
+                // Nếu cần, thiết lập lại BottomSheetBehavior với trạng thái cũ
+                bottomSheetBehavior.setState(currentState);
+
+                // Debug log để kiểm tra
+                Log.d("DEBUG", "Current BottomSheet State: " + currentState);
+            }
+        });
+
+        // Xử lý sự kiện khi bấm nút "-"
+        btn_minus.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("WrongConstant")
+            @Override
+            public void onClick(View view) {
+                // Lấy giá trị hiện tại của TextView và chuyển thành số
+                int count = Integer.parseInt(tv_count.getText().toString());
+
+                // Giảm giá trị nếu count > 1
+                if (count > 1) {
+                    count--;
+                }
+
+                // Lấy trạng thái hiện tại của BottomSheet trước khi thay đổi
+                int currentState = bottomSheetBehavior.getState();
+
+                // Cập nhật lại TextView
+                tv_count.setText(String.valueOf(count));
+                tv_price.setText(String.valueOf(count * 100)); // Chỉnh lại logic
+                // Nếu cần, thiết lập lại BottomSheetBehavior với trạng thái cũ
+                bottomSheetBehavior.setState(currentState);
+
+                // Debug log để kiểm tra
+                Log.d("DEBUG", "Current BottomSheet State: " + currentState);
+            }
+        });
+
+
+        btn_addCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("DEBUG", "onClick: " + bottomSheetBehavior.getState());
+                Toast.makeText(view.getContext(), "Success", Toast.LENGTH_SHORT).show();  // Sửa tại đây
+            }
+        });
+    }*/
     private void addToCart() {
         int quantity = Integer.parseInt(tv_count.getText().toString());
         Long productId = foodModel.getId();
@@ -213,15 +333,17 @@ public class FoodDetailActivity extends AppCompatActivity {
         circleIndicator3 = findViewById(R.id.foodDetail_circle_indicator3);
         imagesList = foodModel.getProduct_images();
 
-        ImageViewPager2Adapter adapter = new ImageViewPager2Adapter(imagesList);
+        ImageViewPager2Adapter adapter = new ImageViewPager2Adapter(imagesList, bottomSheetBehavior);
         viewPager2.setAdapter(adapter);
         circleIndicator3.setViewPager(viewPager2);
 
         viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageSelected(int position) {
-                handler.removeCallbacks(runnable);
-                handler.postDelayed(runnable, 3000);
+//                handler.removeCallbacks(runnable);
+//                handler.postDelayed(runnable, 3000);
+//                // Nếu BottomSheet bị collapse, mở lại
+                bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
             }
         });
 
@@ -248,12 +370,12 @@ public class FoodDetailActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        handler.removeCallbacks(runnable);
+        //handler.removeCallbacks(runnable);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        handler.postDelayed(runnable, 1000);
+        //handler.postDelayed(runnable, 1000);
     }
 }

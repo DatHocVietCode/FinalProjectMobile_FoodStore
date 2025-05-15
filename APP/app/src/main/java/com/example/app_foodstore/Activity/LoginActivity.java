@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -43,6 +44,15 @@ public class LoginActivity extends AppCompatActivity {
                 }
             });
         });
+
+        findViewById(R.id.tv_guest).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LoginActivity.this, HomeScreenActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
     private void saveLogin(UserLoginRes res) {
         SharedPreferences sharedPreferences = getSharedPreferences("user_prefs", MODE_PRIVATE);
