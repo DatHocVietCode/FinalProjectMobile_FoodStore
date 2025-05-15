@@ -90,11 +90,10 @@ public class HomeScreenActivity extends AppCompatActivity {
 
     private void setupFabLogin() {
         fabLogin = findViewById(R.id.fab_login);
-        // Tự xử nha Kịt
-        /*if (user đã login gì gì đó)
+        if(UserUtils.checkUser(this))
         {
             fabLogin.setVisibility(View.GONE);
-        }*/
+        }
         fabLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
