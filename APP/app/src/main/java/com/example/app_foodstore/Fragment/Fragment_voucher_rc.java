@@ -60,8 +60,32 @@ public class Fragment_voucher_rc extends Fragment {
         binding = FragmentRcVoucherDisplayBinding.inflate(inflater, container, false);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         binding.fragmentVoucherDisplayRc.setLayoutManager(layoutManager);
-        adapter = new VoucherAdapter(getContext(), new ArrayList<>(), tabNum);
+        adapter = new VoucherAdapter(getContext(), new ArrayList<>(), tabNum, voucherId -> {
+            String token = getTokenFromPreferences();
+            voucherViewModel.toggleUserVoucher(voucherId, token);
+        });
         binding.fragmentVoucherDisplayRc.setAdapter(adapter);
+    }
+    public void reloadData() {
+        String token = getTokenFromPreferences();
+        LiveData<List<VoucherModel>> voucherLiveData;
+
+        if (tabNum == 0) {
+            voucherLiveData = voucherViewModel.getMyVouchers(token);
+        } else {
+            voucherLiveData = voucherViewModel.getAvailableVouchers(token);
+        }
+
+        voucherLiveData.observe(getViewLifecycleOwner(), vouchers -> {
+            if (vouchers != null && !vouchers.isEmpty()) {
+                adapter.updateVoucherList(vouchers);
+                binding.fragmentVoucherDisplayRc.setVisibility(View.VISIBLE);
+                binding.fragmentVoucherDisplayTvNoVoucher.setVisibility(View.GONE);
+            } else {
+                binding.fragmentVoucherDisplayRc.setVisibility(View.GONE);
+                binding.fragmentVoucherDisplayTvNoVoucher.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
     private void initObservers() {

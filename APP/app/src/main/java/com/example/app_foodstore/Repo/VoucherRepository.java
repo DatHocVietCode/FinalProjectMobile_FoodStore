@@ -78,4 +78,24 @@ public class VoucherRepository {
 
         return voucherData;
     }
+
+    public void toggleUserVoucher(Long voucherId, String token) {
+        String bearerToken = "Bearer " + token;
+        apiService.toggleUserVoucher(voucherId, bearerToken)
+                .enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        if (response.isSuccessful()) {
+                            Log.d("VoucherRepo", "Voucher updated successfully");
+                        } else {
+                            Log.e("VoucherRepo", "API failed with code: " + response.code());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
+                        Log.e("VoucherRepo", "Network error: " + t.getMessage());
+                    }
+                });
+    }
 }

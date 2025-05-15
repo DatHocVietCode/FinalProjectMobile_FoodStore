@@ -5,7 +5,7 @@ import androidx.annotation.NonNull;
 import java.io.Serializable;
 
 public class VoucherModel {
-    private int id;
+    private Long id;
     private String code;
     private String name;
     private int minAmount;  // CamelCase cho trường min_amount
@@ -13,11 +13,12 @@ public class VoucherModel {
 
     // Getters và setters
 
-    public int getId() {
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

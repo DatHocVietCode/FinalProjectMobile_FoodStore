@@ -148,7 +148,6 @@ public class HomeScreenActivity extends AppCompatActivity {
                                 .into(ms_header_avatar);
                         TextView usernameTextView = findViewById(R.id.ms_header_tv_username);
                         usernameTextView.setText(userRes.getFullname());
-                        Log.d("Hello123", userRes.getProfile_image());
 
                     } else {
                         Toast.makeText(HomeScreenActivity.this, "Không lấy được dữ liệu người dùng", Toast.LENGTH_SHORT).show();
@@ -222,7 +221,6 @@ public class HomeScreenActivity extends AppCompatActivity {
                 String name = firstFood.getName();
                 Float price = firstFood.getPrice();
                 Long cateId = firstFood.getCategory_id();
-
                 if (cateId != null) {
                     cateViewModel.getCateById(cateId).observe(this, category -> {
                         if (category != null) {
@@ -232,8 +230,10 @@ public class HomeScreenActivity extends AppCompatActivity {
                             bundle.putString("food_id", id != null ? id.toString() : "default_value");
                             bundle.putString("food_name", name);
                             bundle.putFloat("food_price", price);
-                            bundle.putString("food_cateId", cateId.toString());
-                            bundle.putString("food_cateName", category.get(0).getName()); // hoặc thông tin khác từ Category
+                            bundle.putString("thumbnail", firstFood.getThumbnail());
+                            bundle.putString("average_rating", firstFood.getAverage_rating().toString());
+                            bundle.putString("category_name", firstFood.getCategory_name());
+                            bundle.putString("food_cateId", cateId.toString());// hoặc thông tin khác từ Category
 
                             fragment.setArguments(bundle);
 
@@ -262,18 +262,19 @@ public class HomeScreenActivity extends AppCompatActivity {
                 String name = firstFood.getName();
                 Float price = firstFood.getPrice();
                 Long cateId = firstFood.getCategory_id();
-                Log.d("category", "includeBestSellerFood: " + cateId + name);
                 if (cateId != null) {
                     cateViewModel.getCateById(cateId).observe(this, category -> {
                         if (category != null) {
-                            Log.d("category", "includeBestSellerFood: " + category.get(0).getName());
+                            // Chuẩn bị Bundle
                             Fragment_foodDisplay1 fragment = new Fragment_foodDisplay1();
                             Bundle bundle = new Bundle();
                             bundle.putString("food_id", id != null ? id.toString() : "default_value");
                             bundle.putString("food_name", name);
                             bundle.putFloat("food_price", price);
-                            bundle.putString("food_cateId", cateId.toString());
-                            bundle.putString("food_cateName", category.get(0).getName());
+                            bundle.putString("thumbnail", firstFood.getThumbnail());
+                            bundle.putString("average_rating", firstFood.getAverage_rating().toString());
+                            bundle.putString("category_name", firstFood.getCategory_name());
+                            bundle.putString("food_cateId", cateId.toString());// hoặc thông tin khác từ Category
 
                             fragment.setArguments(bundle);
 

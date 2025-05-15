@@ -7,7 +7,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
 import java.util.List;
 
-// Chưa có avatar nha
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class FoodModel implements Serializable {
     public FoodModel() {
@@ -48,9 +47,6 @@ public class FoodModel implements Serializable {
         this.comments = comments;
     }
 
-    public void setCategory_id(Long category_id) {
-        this.category_id = category_id;
-    }
 
     public void setThumbnail(String thumbnail) {
         this.thumbnail = thumbnail;
@@ -118,10 +114,6 @@ public class FoodModel implements Serializable {
         this.id = id;
     }
 
-    public Long getCategory_id() {
-        return category_id;
-    }
-
     public Float getPrice() {
         return price;
     }
@@ -136,6 +128,14 @@ public class FoodModel implements Serializable {
 
     public Long getSold() {
         return sold;
+    }
+
+    public Long getCategory_id() {
+        return category_id;
+    }
+
+    public void setCategory_id(Long category_id) {
+        this.category_id = category_id;
     }
 
     public List<FoodImage> getProduct_images() {

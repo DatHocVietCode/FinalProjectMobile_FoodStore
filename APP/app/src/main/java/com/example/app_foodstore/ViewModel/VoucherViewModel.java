@@ -19,4 +19,9 @@ public class VoucherViewModel extends ViewModel {
     public LiveData<List<VoucherModel>> getAvailableVouchers(String token) {
         return repository.getAvailableVouchers(token);
     }
+
+    public void toggleUserVoucher(Long voucherId, String token) {
+       repository.toggleUserVoucher(voucherId, token);
+    }
+
 }

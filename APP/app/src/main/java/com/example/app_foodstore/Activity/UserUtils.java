@@ -2,6 +2,7 @@ package com.example.app_foodstore.Activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 
@@ -28,5 +29,9 @@ public class UserUtils {
         }
 
         return true;
+    }
+   public static String getTokenFromPreferences(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("user_prefs", Context.MODE_PRIVATE);
+        return sharedPreferences.getString("access_token", "");
     }
 }
