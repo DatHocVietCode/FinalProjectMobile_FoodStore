@@ -134,7 +134,7 @@ public class CartActivity extends AppCompatActivity {
         });
     }
 
-    private void setupRcCart() {
+    private void setupRcCart()  {
         rc_cart = findViewById(R.id.cart_rc_items);
 
         cartAdapter = new ItemCartAdapter(this, list, new ItemCartAdapter.OnCartItemActionListener() {
