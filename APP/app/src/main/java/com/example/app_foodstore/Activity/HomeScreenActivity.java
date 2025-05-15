@@ -3,6 +3,7 @@ package com.example.app_foodstore.Activity;
 import static com.example.app_foodstore.APIService.Constant.IMG_URL;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -53,6 +54,7 @@ public class HomeScreenActivity extends AppCompatActivity {
     List<FoodModel> newFood;
     List<CategoryModel> categoryModels;
     MovableFloatingActionButton fabLogin;
+    UserViewModel userViewModel;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -10,9 +10,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
 import com.example.app_foodstore.R;
-
-import vn.zalopay.sdk.ZaloPaySDK;
-
 public class MainActivity extends AppCompatActivity {
 
     @Override

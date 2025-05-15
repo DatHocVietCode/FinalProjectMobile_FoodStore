@@ -163,7 +163,6 @@
                 android:textColor="#FF7622"
                 android:textSize="16sp"
                 android:gravity="center"
-                android:onClick="onRegisterClick"
                 android:fontFamily="@font/sen"
                 android:layout_gravity="center"/>
         </LinearLayout>
