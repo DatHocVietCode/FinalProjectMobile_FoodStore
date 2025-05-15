@@ -2,7 +2,6 @@ package com.example.app_foodstore.Model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.google.gson.JsonObject;
 
 import java.io.Serializable;
 @JsonIgnoreProperties(ignoreUnknown = true)

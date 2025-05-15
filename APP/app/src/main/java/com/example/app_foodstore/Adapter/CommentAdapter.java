@@ -1,5 +1,7 @@
 package com.example.app_foodstore.Adapter;
 
+import static com.example.app_foodstore.APIService.Constant.IMG_URL;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,20 +36,18 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CommentAdapter.CommentViewHolder holder, int position) {
-        // Lấy đối tượng CommentModel từ danh sách
+    public void onBindViewHolder(@NonNull CommentViewHolder holder, int position) {
         CommentModel comment = commentList.get(position);
 
-        // Gán dữ liệu vào các views trong ViewHolder
-        holder.name.setText(comment.getName());
-        holder.date.setText(comment.getDateCreated().toString());
-        holder.comment.setText(comment.getContent());
-        holder.rating.setText(String.valueOf(comment.getRating()));
+        holder.name.setText(comment.getName() != null ? comment.getName() : "Ẩn danh");
+        holder.date.setText(comment.getCreated_at() != null ? comment.getCreated_at() : "Không rõ ngày");
+        holder.comment.setText(comment.getContent() != null ? comment.getContent() : "Không có nội dung");
+        holder.rating.setText(comment.getRating() != null ? String.valueOf(comment.getRating()) : "0");
 
-        // Nếu bạn có một URL avatar hoặc drawable, bạn sẽ cần tải vào CircleImageView
-        // Ví dụ nếu bạn sử dụng Glide để tải hình ảnh
         Glide.with(context)
-                .load(comment.getAvatar())  // Giả sử bạn có phương thức getAvatarUrl trong CommentModel
+                .load(IMG_URL + comment.getAvatar_user())
+                .placeholder(R.drawable.personal_info)  // ảnh mặc định khi đang load
+                .error(R.drawable.personal_info)              // ảnh nếu lỗi
                 .into(holder.avatar);
     }
 

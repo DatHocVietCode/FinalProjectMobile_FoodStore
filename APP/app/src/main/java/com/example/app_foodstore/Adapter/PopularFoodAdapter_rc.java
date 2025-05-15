@@ -54,7 +54,7 @@ public class PopularFoodAdapter_rc extends RecyclerView.Adapter<PopularFoodAdapt
     public void onBindViewHolder(@NonNull PopularFoodAdapter_rc.ViewHolder holder, int position) {
         FoodModel food = listFood.get(position);
         holder.tv_name.setText(food.getName());
-        holder.tv_cate.setText(food.getCategoryName());
+        holder.tv_cate.setText(food.getCategory_name());
 
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, FoodDetailActivity.class);

@@ -13,8 +13,10 @@ import androidx.fragment.app.Fragment;
 
 import com.example.app_foodstore.Activity.HomeScreenActivity;
 import com.example.app_foodstore.Activity.OrderScreenActivity;
+import com.example.app_foodstore.Activity.PersonalInfoActivity;
 import com.example.app_foodstore.Activity.ReservateScreenActivity;
 import com.example.app_foodstore.Activity.SettingActivity;
+import com.example.app_foodstore.Activity.UserUtils;
 import com.example.app_foodstore.Activity.VoucherActivity;
 import com.example.app_foodstore.R;
 import com.google.android.material.bottomappbar.BottomAppBar;
@@ -44,21 +46,31 @@ public class Fragment_BottomNavigation extends Fragment {
         });
 
         view.findViewById(R.id.bottomNavigation_btnMyOrders).setOnClickListener(v -> {
-            startActivity(new Intent(getContext(), OrderScreenActivity.class));
+            if (UserUtils.checkUser(requireActivity())) {
+                Intent intent = new Intent(requireActivity(), OrderScreenActivity.class);
+                startActivity(intent);
+            }
         });
         view.findViewById(R.id.bottomNavigation_btnVoucher).setOnClickListener(v -> {
-            startActivity(new Intent(getContext(), VoucherActivity.class));
+            if (UserUtils.checkUser(requireActivity())) {
+                Intent intent = new Intent(requireActivity(), VoucherActivity.class);
+                startActivity(intent);
+            }
         });
 
         view.findViewById(R.id.fabAdd).setOnClickListener(
                 v -> {
-                    Intent intent = new Intent(getContext(), ReservateScreenActivity.class);
-                    //intent.putExtra("isReservate", true);
-                    startActivity(intent);
+                    if (UserUtils.checkUser(requireActivity())) {
+                        Intent intent = new Intent(requireActivity(), ReservateScreenActivity.class);
+                        startActivity(intent);
+                    }
                 }
         );
         view.findViewById(R.id.bottomNavigation_settingBtn).setOnClickListener(v -> {
-            startActivity(new Intent(getContext(), SettingActivity.class));
+            if (UserUtils.checkUser(requireActivity())) {
+                Intent intent = new Intent(requireActivity(), SettingActivity.class);
+                startActivity(intent);
+            }
         });
     }
 

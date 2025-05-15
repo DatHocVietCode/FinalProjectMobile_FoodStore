@@ -72,6 +72,7 @@
                 android:layout_marginTop="8dp"
                 android:fontFamily="@font/sen"/>
             <EditText
+                android:id="@+id/username_login"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"
@@ -86,6 +87,7 @@
                 android:textStyle="bold"
                 android:fontFamily="@font/sen"/>
             <EditText
+                android:id="@+id/password_login"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
@@ -117,6 +119,7 @@
 
             <!-- Nút đăng nhập -->
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_login"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:text="Login"

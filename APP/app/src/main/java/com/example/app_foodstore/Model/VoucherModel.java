@@ -4,17 +4,38 @@ import androidx.annotation.NonNull;
 
 import java.io.Serializable;
 
-public class VoucherModel implements Serializable {
-    private String voucherName;
-    private int discount;
-    private int minAmount;
+public class VoucherModel {
+    private Long id;
+    private String code;
+    private String name;
+    private int minAmount;  // CamelCase cho trường min_amount
+    private Integer discount;  // Sử dụng Integer để có thể chứa null
 
-    public int getDiscount() {
-        return discount;
+    // Getters và setters
+
+
+    public Long getId() {
+        return id;
     }
 
-    public void setDiscount(int discount) {
-        this.discount = discount;
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getMinAmount() {
@@ -25,26 +46,11 @@ public class VoucherModel implements Serializable {
         this.minAmount = minAmount;
     }
 
-    public VoucherModel(String voucherName, int discount, int minAmount) {
-        this.voucherName = voucherName;
+    public Integer getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(Integer discount) {
         this.discount = discount;
-        this.minAmount = minAmount;
-    }
-
-    public VoucherModel(String voucherName) {
-        this.voucherName = voucherName;
-    }
-
-    public String getVoucherName() {
-        return voucherName;
-    }
-
-    public void setVoucherName(String voucherName) {
-        this.voucherName = voucherName;
-    }
-    @NonNull
-    @Override
-    public String toString() {
-        return voucherName; // đây là text hiển thị trên Spinner khi collapsed
     }
 }

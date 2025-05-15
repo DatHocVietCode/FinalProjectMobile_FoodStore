@@ -45,6 +45,7 @@
             android:layout_marginTop="4dp"
             android:textSize="16dp"/>
         <include layout="@layout/fragment_food_rating_delivery_mins"
+            android:id="@+id/include_food_rating"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"/>
