@@ -146,9 +146,18 @@ public class CartActivity extends AppCompatActivity {
     }
     private void setupRcCart() {
         rc_cart = findViewById(R.id.cart_rc_items);
-        cartAdapter = new ItemCartAdapter(this, list);
+        cartAdapter = new ItemCartAdapter(this, list, new ItemCartAdapter.OnItemChangeListener() {
+            @Override
+            public void onItemChanged() {
+                if (bottomSheetBehavior != null) {
+                    // bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                }
+            }
+        });
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         rc_cart.setLayoutManager(linearLayoutManager);
         rc_cart.setAdapter(cartAdapter);
     }
+
 }

@@ -19,10 +19,16 @@ import java.util.List;
 public class ItemCartAdapter extends RecyclerView.Adapter<ItemCartAdapter.ItemCartAdapterViewHolder> {
     Context context;
     List<CartModel> list;
+    private OnItemChangeListener onItemChangeListener;
 
-    public ItemCartAdapter(Context context, List<CartModel> list) {
+    // Định nghĩa Interface ngay trong Adapter
+    public interface OnItemChangeListener {
+        void onItemChanged();
+    }
+    public ItemCartAdapter(Context context, List<CartModel> list, OnItemChangeListener onItemChangeListener) {
         this.context = context;
         this.list = list;
+        this.onItemChangeListener = onItemChangeListener;
     }
 
     public interface OnEditModeChangeListener {
@@ -33,8 +39,9 @@ public class ItemCartAdapter extends RecyclerView.Adapter<ItemCartAdapter.ItemCa
         notifyDataSetChanged(); // Cập nhật giao diện
     }
     private boolean isEditing = false;
-    public ItemCartAdapter(Context context) {
+    public ItemCartAdapter(Context context, OnItemChangeListener onItemChangeListener) {
         this.context = context;
+        this.onItemChangeListener = onItemChangeListener;
     }
 
     @NonNull
@@ -73,6 +80,9 @@ public class ItemCartAdapter extends RecyclerView.Adapter<ItemCartAdapter.ItemCa
             } else {
                 Toast.makeText(view.getContext(), "Minimum quantity reached", Toast.LENGTH_SHORT).show();
             }
+            if (onItemChangeListener != null) {
+                onItemChangeListener.onItemChanged();
+            }
         });
 
         // ================================
@@ -83,6 +93,9 @@ public class ItemCartAdapter extends RecyclerView.Adapter<ItemCartAdapter.ItemCa
             currentQuantity++;
             cartItem.setQuantity(currentQuantity);
             holder.tv_count.setText(String.valueOf(currentQuantity));
+            if (onItemChangeListener != null) {
+                onItemChangeListener.onItemChanged();
+            }
         });
     }
 
