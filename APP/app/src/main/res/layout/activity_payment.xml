@@ -199,7 +199,7 @@
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
-                        <TextView
+                    <!--    <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Taxes"
@@ -207,8 +207,8 @@
                             android:textSize="20sp"
                             android:textColor="#6B6E82"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"/>
-                        <TextView
+                            app:layout_constraintTop_toTopOf="parent"/>-->
+                        <!--<TextView
                             android:id="@+id/payment_ordersummary_taxes"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -217,7 +217,7 @@
                             android:textSize="20sp"
                             android:textColor="#6B6E82"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"/>
+                            app:layout_constraintTop_toTopOf="parent"/>-->
                     </androidx.constraintlayout.widget.ConstraintLayout>
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"

@@ -11,6 +11,7 @@ import com.example.app_foodstore.Model.CartModel;
 import com.example.app_foodstore.Model.request.UpdateCartRequest;
 import com.example.app_foodstore.Model.response.BaseResponse;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -93,20 +94,43 @@ public class CartRepository {
 
         UpdateCartRequest request = new UpdateCartRequest(productId, quantity);
 
+        Log.d("DEBUG", "Bearer Token: " + bearerToken);
+        Log.d("DEBUG", "Product ID: " + productId);
+        Log.d("DEBUG", "Quantity: " + quantity);
+
         apiService.addCart(bearerToken, request).enqueue(new Callback<BaseResponse<Void>>() {
             @Override
             public void onResponse(Call<BaseResponse<Void>> call, Response<BaseResponse<Void>> response) {
-                resultLiveData.setValue(response.isSuccessful());
+                if (response.isSuccessful()) {
+                    Log.d("DEBUG", "Add to cart success!");
+                    resultLiveData.setValue(true);
+                } else {
+                    Log.e("ERROR", "Response failed with status code: " + response.code());
+
+                    // Nếu server có trả về lỗi chi tiết:
+                    if (response.errorBody() != null) {
+                        try {
+                            String errorBody = response.errorBody().string();
+                            Log.e("ERROR", "Error body: " + errorBody);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    resultLiveData.setValue(false);
+                }
             }
 
             @Override
             public void onFailure(Call<BaseResponse<Void>> call, Throwable t) {
+                Log.e("ERROR", "API call failed: " + t.getMessage());
                 resultLiveData.setValue(false);
             }
         });
 
         return resultLiveData;
     }
+
 
 
 }
