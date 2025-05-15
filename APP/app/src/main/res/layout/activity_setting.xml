@@ -325,7 +325,7 @@
                             android:layout_marginEnd="8dp"/>
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </LinearLayout>
-                <LinearLayout
+                <!--<LinearLayout
                     android:id="@+id/setting_screen_ln_paymentMethod"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -361,7 +361,7 @@
                             android:background="@drawable/circle_bg_ecf0f4"
                             android:layout_marginEnd="8dp"/>
                     </androidx.constraintlayout.widget.ConstraintLayout>
-                </LinearLayout>
+                </LinearLayout>-->
             </LinearLayout>
         </androidx.cardview.widget.CardView>
         <androidx.cardview.widget.CardView

@@ -27,6 +27,8 @@ public class BreakDownOrderActivity extends AppCompatActivity {
     List<OrderDetailModel> listOrder;
     TextView btnToggleOrderInfo;
     LinearLayout cardOrderInfo;
+    TextView tvTransactionStatus;
+    int statusId;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,9 +38,35 @@ public class BreakDownOrderActivity extends AppCompatActivity {
     }
 
     private void AnhXa() {
+        getArgument();
         getOrder();
+        setupTransactionStatus();
         setupRc();
         setupToggleBtn();
+    }
+
+    private void getArgument() {
+        if (getIntent().getExtras() != null) {
+            statusId = getIntent().getIntExtra("statusId", 0);
+        }
+    }
+
+    private void setupTransactionStatus() {
+        tvTransactionStatus = findViewById(R.id.breakdownScreen_tvTransactionStatus);
+        switch (statusId) {
+            case 0:
+                tvTransactionStatus.setText("Ongoing");
+                tvTransactionStatus.setTextColor(getResources().getColor(R.color.onGoing));
+                break;
+            case 1:
+                tvTransactionStatus.setText("Completed");
+                tvTransactionStatus.setTextColor(getResources().getColor(R.color.completed));
+                break;
+            case 2:
+                tvTransactionStatus.setText("Canceled");
+                tvTransactionStatus.setTextColor(getResources().getColor(R.color.canceled));
+                break;
+        }
     }
 
     private void setupToggleBtn() {
@@ -83,7 +111,7 @@ public class BreakDownOrderActivity extends AppCompatActivity {
 
     private void setupRc() {
         rcOrderDetail = findViewById(R.id.trackOrder_rc_orderDetail);
-        OrderDetailAdapter adapter = new OrderDetailAdapter(this, listOrder);
+        OrderDetailAdapter adapter = new OrderDetailAdapter(this, listOrder, false);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         rcOrderDetail.setAdapter(adapter);
         rcOrderDetail.setLayoutManager(linearLayoutManager);
