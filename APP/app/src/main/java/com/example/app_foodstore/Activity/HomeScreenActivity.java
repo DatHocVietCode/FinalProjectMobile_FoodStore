@@ -214,39 +214,16 @@ public class HomeScreenActivity extends AppCompatActivity {
     private void includeNewFood() {
         foodViewModel.getNewFoodList("", null, "", "").observe(this, foodList -> {
             if (foodList != null && !foodList.isEmpty()) {
-                newFood = foodList;
+                FoodModel firstFood = foodList.get(0);
 
-                FoodModel firstFood = newFood.get(0);
-                Long id = firstFood.getId();
-                String name = firstFood.getName();
-                Float price = firstFood.getPrice();
-                Long cateId = firstFood.getCategory_id();
-                if (cateId != null) {
-                    cateViewModel.getCateById(cateId).observe(this, category -> {
-                        if (category != null) {
-                            // Chuẩn bị Bundle
-                            Fragment_foodDisplay1 fragment = new Fragment_foodDisplay1();
-                            Bundle bundle = new Bundle();
-                            bundle.putString("food_id", id != null ? id.toString() : "default_value");
-                            bundle.putString("food_name", name);
-                            bundle.putFloat("food_price", price);
-                            bundle.putString("thumbnail", firstFood.getThumbnail());
-                            bundle.putString("average_rating", firstFood.getAverage_rating().toString());
-                            bundle.putString("category_name", firstFood.getCategory_name());
-                            bundle.putString("food_cateId", cateId.toString());// hoặc thông tin khác từ Category
+                Fragment_foodDisplay1 fragment = new Fragment_foodDisplay1();
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("food_model", firstFood);
+                fragment.setArguments(bundle);
 
-                            fragment.setArguments(bundle);
-
-                            getSupportFragmentManager().beginTransaction()
-                                    .replace(R.id.ms_newFood, fragment)
-                                    .commit();
-                        } else {
-                            Log.w("includeNewFood", "Category is null");
-                        }
-                    });
-                } else {
-                    Log.w("includeNewFood", "CateId is null");
-                }
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.ms_newFood, fragment)
+                        .commit();
             } else {
                 Log.w("includeNewFood", "Food list is null or empty");
             }
@@ -256,38 +233,16 @@ public class HomeScreenActivity extends AppCompatActivity {
     private void includeBestSellerFood() {
         foodViewModel.getBestSellerFoodList("", null, "", "").observe(this, foodList -> {
             if (foodList != null && !foodList.isEmpty()) {
-                newFood = foodList;
-                FoodModel firstFood = newFood.get(0);
-                Long id = firstFood.getId();
-                String name = firstFood.getName();
-                Float price = firstFood.getPrice();
-                Long cateId = firstFood.getCategory_id();
-                if (cateId != null) {
-                    cateViewModel.getCateById(cateId).observe(this, category -> {
-                        if (category != null) {
-                            // Chuẩn bị Bundle
-                            Fragment_foodDisplay1 fragment = new Fragment_foodDisplay1();
-                            Bundle bundle = new Bundle();
-                            bundle.putString("food_id", id != null ? id.toString() : "default_value");
-                            bundle.putString("food_name", name);
-                            bundle.putFloat("food_price", price);
-                            bundle.putString("thumbnail", firstFood.getThumbnail());
-                            bundle.putString("average_rating", firstFood.getAverage_rating().toString());
-                            bundle.putString("category_name", firstFood.getCategory_name());
-                            bundle.putString("food_cateId", cateId.toString());// hoặc thông tin khác từ Category
+                FoodModel firstFood = foodList.get(0);
 
-                            fragment.setArguments(bundle);
+                Fragment_foodDisplay1 fragment = new Fragment_foodDisplay1();
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("food_model", firstFood);
+                fragment.setArguments(bundle);
 
-                            getSupportFragmentManager().beginTransaction()
-                                    .replace(R.id.ms_bestSellerFood, fragment)
-                                    .commit();
-                        } else {
-                            Log.w("includeBestSellerFood", "Category is null");
-                        }
-                    });
-                } else {
-                    Log.w("includeBestSellerFood", "CateId is null");
-                }
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.ms_bestSellerFood, fragment)
+                        .commit();
             } else {
                 Log.w("includeBestSellerFood", "Food list is null or empty");
             }

@@ -1,8 +1,6 @@
 package com.example.app_foodstore.Activity;
 
-
 import android.annotation.SuppressLint;
-
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -38,7 +36,6 @@ import me.relex.circleindicator.CircleIndicator3;
 public class FoodDetailActivity extends AppCompatActivity {
     private ViewPager2 viewPager2;
     private CircleIndicator3 circleIndicator3;
-    private List<ImageModel> imagesList;
     private List<FoodImage> imagesList;
     private Handler handler = new Handler();
     private BottomSheetBehavior<CardView> bottomSheetBehavior;
@@ -48,7 +45,6 @@ public class FoodDetailActivity extends AppCompatActivity {
     private List<CommentModel> allComments;
     private List<CommentModel> visibleComments;
     private Button btnLoadMore;
-    private TextView tv_noComments;
     private TextView tv_noComments, tv_count, tv_price;
     private static final int LOAD_COUNT = 5;
     private int currentLoaded = 0;
@@ -104,7 +100,6 @@ public class FoodDetailActivity extends AppCompatActivity {
         visibleComments = new ArrayList<>();
         btnLoadMore = findViewById(R.id.foodDetail_btn_moreComments);
         rc_comments = findViewById(R.id.foodDetail_rc_Comments);
-        if (allComments.isEmpty()) {
         tv_noComments = findViewById(R.id.foodDetail_tv_noComments);
 
         // LẤY DANH SÁCH TẤT CẢ BÌNH LUẬN TRƯỚC
@@ -112,17 +107,13 @@ public class FoodDetailActivity extends AppCompatActivity {
 
         if (allComments == null || allComments.isEmpty()) {
             rc_comments.setVisibility(View.GONE);
-            tv_noComments = findViewById(R.id.foodDetail_tv_noComments);
             tv_noComments.setVisibility(View.VISIBLE);
             btnLoadMore.setVisibility(View.GONE);
         } else {
             // Thiết lập adapter với danh sách rỗng ban đầu (visibleComments)
             commentAdapter = new CommentAdapter(visibleComments, FoodDetailActivity.this);
-            LinearLayoutManager layoutManager = new LinearLayoutManager(FoodDetailActivity.this, LinearLayoutManager.VERTICAL, false);
             rc_comments.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
             rc_comments.setAdapter(commentAdapter);
-            rc_comments.setLayoutManager(layoutManager);
-            commentAdapter.notifyDataSetChanged();
 
             tv_noComments.setVisibility(View.GONE);
             rc_comments.setVisibility(View.VISIBLE);
@@ -139,14 +130,6 @@ public class FoodDetailActivity extends AppCompatActivity {
                 }
             });
         }
-        loadMoreComments(); // load 5 bình luận đầu tiên
-
-        btnLoadMore.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loadMoreComments();
-            }
-        });
     }
 
 //    private void setupBottomCard() {
@@ -337,7 +320,6 @@ public class FoodDetailActivity extends AppCompatActivity {
     private void setupViewPager2() {
         viewPager2 = findViewById(R.id.foodDetail_viewpager2);
         circleIndicator3 = findViewById(R.id.foodDetail_circle_indicator3);
-        imagesList = getImagesList();
         imagesList = foodModel.getProduct_images();
         ImageViewPager2Adapter imageViewPager2Adapter = new ImageViewPager2Adapter(imagesList);
         viewPager2.setAdapter(imageViewPager2Adapter);
@@ -384,38 +366,6 @@ public class FoodDetailActivity extends AppCompatActivity {
         }
     }
     private void loadAllComments() {
-        allComments = new ArrayList<>();
-        // Tạo một vài bình luận giả
-        allComments.add(new CommentModel(1, R.drawable.baseline_account_circle_24, "Nguyen Van A",
-                "Món ăn ngon, tôi rất thích!", 4.5, new Date()));
-        allComments.add(new CommentModel(2, R.drawable.baseline_account_circle_24, "Le Thi B",
-                "Món ăn khá ổn, nhưng có thể cải thiện chút nữa.", 3.7, new Date()));
-        allComments.add(new CommentModel(3, R.drawable.baseline_account_circle_24, "Tran Thi C",
-                "Không ngon như tôi mong đợi, tôi thất vọng.", 2.0, new Date()));
-        allComments.add(new CommentModel(4, R.drawable.baseline_account_circle_24, "Pham Minh D",
-                "Món ăn tuyệt vời, sẽ quay lại lần sau!", 5.0, new Date()));
-        allComments.add(new CommentModel(5, R.drawable.baseline_account_circle_24, "Nguyen Thi E",
-                "Giá cả hơi cao nhưng chất lượng tốt.", 4.0, new Date()));
-        allComments.add(new CommentModel(6, R.drawable.baseline_account_circle_24, "Nguyen Van A",
-                "Món ăn ngon, tôi rất thích!", 4.5, new Date()));
-        allComments.add(new CommentModel(7, R.drawable.baseline_account_circle_24, "Le Thi B",
-                "Món ăn khá ổn, nhưng có thể cải thiện chút nữa.", 3.7, new Date()));
-        allComments.add(new CommentModel(8, R.drawable.baseline_account_circle_24, "Tran Thi C",
-                "Không ngon như tôi mong đợi, tôi thất vọng.", 2.0, new Date()));
-        allComments.add(new CommentModel(9, R.drawable.baseline_account_circle_24, "Pham Minh D",
-                "Món ăn tuyệt vời, sẽ quay lại lần sau!", 5.0, new Date()));
-        allComments.add(new CommentModel(10, R.drawable.baseline_account_circle_24, "Nguyen Thi E",
-                "Giá cả hơi cao nhưng chất lượng tốt.", 4.0, new Date()));
-        allComments.add(new CommentModel(11, R.drawable.baseline_account_circle_24, "Nguyen Van A",
-                "Món ăn ngon, tôi rất thích!", 4.5, new Date()));
-        allComments.add(new CommentModel(12, R.drawable.baseline_account_circle_24, "Le Thi B",
-                "Món ăn khá ổn, nhưng có thể cải thiện chút nữa.", 3.7, new Date()));
-        allComments.add(new CommentModel(13, R.drawable.baseline_account_circle_24, "Tran Thi C",
-                "Không ngon như tôi mong đợi, tôi thất vọng.", 2.0, new Date()));
-        allComments.add(new CommentModel(14, R.drawable.baseline_account_circle_24, "Pham Minh D",
-                "Món ăn tuyệt vời, sẽ quay lại lần sau!", 5.0, new Date()));
-        allComments.add(new CommentModel(15, R.drawable.baseline_account_circle_24, "Nguyen Thi E",
-                "Giá cả hơi cao nhưng chất lượng tốt.", 4.0, new Date()));
 
     }
 
@@ -431,12 +381,4 @@ public class FoodDetailActivity extends AppCompatActivity {
         handler.postDelayed(runnable, 1000);
     }
 
-    private List<ImageModel> getImagesList() {
-        List<ImageModel> list = new ArrayList<>();
-        list.add(new ImageModel(R.drawable.quangcao));
-        list.add(new ImageModel(R.drawable.coffee));
-        list.add(new ImageModel(R.drawable.companypizza));
-        list.add(new ImageModel(R.drawable.food_sample));
-        return list;
-    }
 }
