@@ -128,7 +128,7 @@
                         android:id="@+id/radioPriceStandard"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Standard (0 VND)"
+                        android:text="Standard (10000 VND)"
                         android:checked="true"
                         app:buttonTint="#FF7622"
                         android:textSize="20sp"

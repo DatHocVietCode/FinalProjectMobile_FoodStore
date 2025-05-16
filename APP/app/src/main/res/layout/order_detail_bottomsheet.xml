@@ -20,7 +20,61 @@
             android:textColor="#ff7622"
             android:layout_gravity="center"
             android:fontFamily="@font/sen"/>
-
+        <LinearLayout
+            android:id="@+id/cart_ln_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:gravity="center_vertical"
+            android:layout_marginTop="24dp">
+            <TextView
+                android:id="@+id/orderDetailBottomSheet_tv_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:text="DELIVERY ADDRESS"
+                android:fontFamily="@font/sen"
+                android:textSize="12sp"
+                android:textColor="#A0A5BA"
+                android:layout_marginStart="16dp"/>
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+            <TextView
+                android:id="@+id/orderDetailBottomSheet_tv_editAdress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:text="@string/Edit_Profile"
+                android:fontFamily="@font/sen"
+                android:textSize="14sp"
+                android:textColor="#FF7622"
+                android:layout_marginEnd="16dp"/>
+        </LinearLayout>
+        <EditText
+            android:id="@+id/orderDetailBottomSheet_et_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:fontFamily="@font/sen"
+            android:singleLine="true"
+            android:text="Đại học sư phạm kỹ thuật thành phố Hồ Chí Minh"
+            android:background="@drawable/rectangle_corner_radius_bg_f6f6f6"
+            android:padding="16sp"
+            android:backgroundTint="#F0F5FA"
+            android:textColor="#91959C"
+            android:ellipsize="end"
+            app:layout_constraintTop_toBottomOf="@+id/cart_ln_title"
+            android:clickable="false"
+            android:focusable="false"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginTop="12dp"/>
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_order_detail"
             android:layout_width="match_parent"

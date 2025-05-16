@@ -1,6 +1,8 @@
 package com.example.app_foodstore.Model;
 
-public class ProductInOrderDTO {
+import java.io.Serializable;
+
+public class ProductInOrderDTO implements Serializable {
     private Long idProduct;
     private String foodName;
     private String category;
@@ -20,12 +22,13 @@ public class ProductInOrderDTO {
         this.price = price;
     }
 
-    public ProductInOrderDTO(Long idProduct, String foodName, String thumbnail, int quantity, String category) {
+    public ProductInOrderDTO(Long idProduct, String foodName, String thumbnail, int quantity, String category, Float price) {
         this.idProduct = idProduct;
         this.foodName = foodName;
         this.thumbnail = thumbnail;
         this.quantity = quantity;
         this.category = category;
+        this.price = price;
     }
 
     public Long getIdProduct() {

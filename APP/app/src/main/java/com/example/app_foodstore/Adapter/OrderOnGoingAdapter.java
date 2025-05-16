@@ -67,7 +67,15 @@ public class OrderOnGoingAdapter extends RecyclerView.Adapter<OrderOnGoingAdapte
             holder.imgFood.setImageResource(R.drawable.food_sample);
         }
 
-        holder.tvToio.setText(order.getStatus() != null ? order.getStatus() : "Unknown");
+        if (order.getStatus() != null && (order.getStatus().equals("0") || order.getStatus().equals("1") || order.getStatus().equals("2") || order.getStatus().equals("3"))) {
+            holder.tvToio.setText("Ongoing");
+            holder.tvToio.setTextColor(holder.itemView.getContext().getResources().getColor(R.color.onGoing));
+        } else {
+            holder.tvToio.setText(order.getStatus() != null ? order.getStatus() : "Unknown");
+        }
+
+
+
         holder.tvFoodId.setText(order.getIdOrder() != null ? "#" + order.getIdOrder() : "#N/A");
         holder.tvPrice.setText(order.getTotalPrice() != null ? String.valueOf(order.getTotalPrice()) : "0");
 

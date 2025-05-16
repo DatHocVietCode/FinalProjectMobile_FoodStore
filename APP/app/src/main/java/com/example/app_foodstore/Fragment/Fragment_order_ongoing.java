@@ -1,5 +1,6 @@
 package com.example.app_foodstore.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.example.app_foodstore.Activity.TrackOrderActivity;
 import com.example.app_foodstore.Adapter.OrderOnGoingAdapter;
 import com.example.app_foodstore.Activity.UserUtils;
 import com.example.app_foodstore.Model.MyOrderPendingDTO;
@@ -45,6 +47,10 @@ public class Fragment_order_ongoing extends Fragment {
             @Override
             public void onTrackClicked(MyOrderPendingDTO order) {
                 // TODO: Xử lý khi người dùng bấm Track
+                // Ví dụ: Chuyển hướng đến màn hình theo dõi đơn hàng
+                Intent intent = new Intent(requireContext(), TrackOrderActivity.class);
+                intent.putExtra("order", order);
+                startActivity(intent);
             }
 
             @Override
