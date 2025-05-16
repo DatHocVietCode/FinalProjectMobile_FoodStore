@@ -182,7 +182,8 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
             Intent intent = new Intent(context, PaymentActivity.class);
             intent.putExtra("idAddress", idAddress);
             intent.putExtra("order", orderList.get(pos).getTotalPrice());
-
+            intent.putExtra("re-order",true);
+            intent.putExtra("idOrder",orderList.get(pos).getIdOrder());
             context.startActivity(intent);
             bottomSheetDialog.dismiss();
         });

@@ -37,6 +37,7 @@ import com.example.app_foodstore.Interface.PaymentCallBack;
 import com.example.app_foodstore.Model.OrderDetailModel;
 import com.example.app_foodstore.Model.PaymentInterfaceModel;
 import com.example.app_foodstore.Model.VoucherModel;
+import com.example.app_foodstore.Model.request.PaymentReOrderReq;
 import com.example.app_foodstore.Model.request.PaymentRequest;
 import com.example.app_foodstore.R;
 import com.example.app_foodstore.ViewModel.PaymentViewModel;
@@ -66,6 +67,7 @@ public class PaymentActivity extends AppCompatActivity implements PaymentCallBac
     private String token;
     private PaymentViewModel paymentViewModel;
     private Long idAddress;
+    private Boolean reOrder;
     private RadioGroup radioGroupPrice;
     double totalAmount;
     String order,delivery,discount;
@@ -73,6 +75,8 @@ public class PaymentActivity extends AppCompatActivity implements PaymentCallBac
     PaymentRequest paymentRequest;
     String paymentMethod, shippingMethodName;
     Long idVoucher;
+    PaymentReOrderReq paymentReOrderReq;
+    Long idOrder;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -159,7 +163,13 @@ public class PaymentActivity extends AppCompatActivity implements PaymentCallBac
     private void initPayment() {
         // 🔸 Tạo PaymentRequest
         Log.d("Payment", "initPayment: " + idAddress + paymentMethod + shippingMethodName + idVoucher);
-        paymentRequest = new PaymentRequest(paymentMethod, shippingMethodName, idVoucher, idAddress);
+        if(reOrder){
+            idOrder = getIntent().getLongExtra("idOrder",0L);
+            paymentReOrderReq = new PaymentReOrderReq(paymentMethod, idOrder,idVoucher,shippingMethodName,idAddress);
+        }else{
+            paymentRequest = new PaymentRequest(paymentMethod, shippingMethodName, idVoucher, idAddress);
+        }
+
     }
 
     private void setupRadioTransport() {
@@ -190,6 +200,7 @@ public class PaymentActivity extends AppCompatActivity implements PaymentCallBac
         // Lấy idAddress từ Intent
         idAddress = getIntent().getLongExtra("idAddress", -1L);
         order = String.valueOf(getIntent().getDoubleExtra("order", 0.0));
+        reOrder = getIntent().getBooleanExtra("re-order",false);
 
         if (idAddress != -1L) {
             Log.d("PaymentActivity", "idAddress: " + idAddress);
@@ -274,6 +285,8 @@ public class PaymentActivity extends AppCompatActivity implements PaymentCallBac
 
                             // Thanh toán ZaloPay
                             ZaloPaySDK.getInstance().payOrder(PaymentActivity.this, token, "demozpdk://payment", listener);
+//                            initPayment();
+//                            callPayment();
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -315,8 +328,28 @@ public class PaymentActivity extends AppCompatActivity implements PaymentCallBac
                     Toast.makeText(this, "Payment Failed", Toast.LENGTH_SHORT).show();
                 }
             });
-        }
-        else
+        } else if (paymentReOrderReq!=null) {
+            paymentViewModel.reOrder(token, paymentReOrderReq).observe(PaymentActivity.this, isSuccess -> {
+                if (isSuccess) {
+                    //Toast.makeText(this, "Thanh toán thành công!", Toast.LENGTH_SHORT).show();
+
+                    // Xóa toàn bộ stack và chuyển về HomeScreen
+                    Intent homeIntent = new Intent(PaymentActivity.this, HomeScreenActivity.class);
+                    homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(homeIntent);
+
+                    // Sau đó gọi TrackOrder
+                    Intent notificationPayment = new Intent(PaymentActivity.this, PaymentNotificationActivity.class);
+                    startActivity(notificationPayment);
+
+                    // Kết thúc PaymentActivity
+                    finish();
+                } else {
+                    Toast.makeText(this, "Payment Failed", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+        } else
         {
             Toast.makeText(this, "Payment Request has not been initialized!", Toast.LENGTH_SHORT).show();
         }

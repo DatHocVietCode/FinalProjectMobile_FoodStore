@@ -49,7 +49,7 @@ dependencies {
         "exclude" to listOf("")
     )))*/
     implementation(fileTree(mapOf(
-        "dir" to "D:\\University\\Nam3\\2stSemester\\Mobile\\FinalProject\\zalopay",
+        "dir" to "D:\\FinalProject\\zalopay",
         "include" to listOf("*.aar", "*.jar"),
         "exclude" to listOf("")
     )))
