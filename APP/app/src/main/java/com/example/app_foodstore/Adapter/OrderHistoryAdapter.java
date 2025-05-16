@@ -1,7 +1,10 @@
 package com.example.app_foodstore.Adapter;
 
+import static android.app.Activity.RESULT_OK;
+import static androidx.activity.result.ActivityResultCallerKt.registerForActivityResult;
 import static com.example.app_foodstore.APIService.Constant.IMG_URL;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -11,7 +14,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
@@ -24,7 +30,9 @@ import com.example.app_foodstore.Activity.AddressActivity;
 import com.example.app_foodstore.Activity.CartActivity;
 import com.example.app_foodstore.Activity.PaymentActivity;
 import com.example.app_foodstore.Activity.UserUtils;
+import com.example.app_foodstore.Interface.AddressSelectionListener;
 import com.example.app_foodstore.Model.MyOrderPendingDTO;
+import com.example.app_foodstore.Model.response.AddressResponse;
 import com.example.app_foodstore.R;
 import com.example.app_foodstore.ViewModel.AddressViewModel;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -39,11 +47,15 @@ import java.util.List;
 
 public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapter.OrderHistoryViewHolder> {
     Context context;
+    Activity activity;
+    AddressSelectionListener listener;
     private List<MyOrderPendingDTO> orderList = new ArrayList<>();
 
-    public OrderHistoryAdapter(Context context, List<MyOrderPendingDTO> orderList) {
+    public OrderHistoryAdapter(Context context, List<MyOrderPendingDTO> orderList,  AddressSelectionListener listener) {
         this.context = context;
         this.orderList = orderList;
+        this.listener = listener;
+
     }
 
     AddressViewModel addressViewModel;
@@ -104,6 +116,9 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
         });
 
         btn_rating = holder.itemView.findViewById(R.id.fragment_order_item_history_btn_rate);
+        if(status.equals("CANCEL")){
+            btn_rating.setVisibility(View.INVISIBLE);
+        }
         btn_rating.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -111,66 +126,6 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
             }
         });
     }
-//    private void callBottomSheet(boolean isRating)
-//    {
-//
-//        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(context);
-//        View sheetView = View.inflate(context, R.layout.order_detail_bottomsheet, null);
-//
-//
-//        tvEditAddress = sheetView.findViewById(R.id.orderDetailBottomSheet_tv_editAdress);
-//        etAddtess = sheetView.findViewById(R.id.orderDetailBottomSheet_et_address);
-//
-//        // Ánh xạ RecyclerView và Button
-//        RecyclerView recyclerView = sheetView.findViewById(R.id.recycler_order_detail);
-//        MaterialButton btnReOrder = sheetView.findViewById(R.id.btn_reorder);
-//        MaterialButton btnCancel = sheetView.findViewById(R.id.btn_cancel);
-//
-//        *//*//*/ Tạo dữ liệu giả để test giao diện
-//        List<OrderDetailModel> mockOrderDetails = new ArrayList<>();
-//        mockOrderDetails.add(new OrderDetailModel(1, "Pizza Margherita", 100000, 2));
-//        mockOrderDetails.add(new OrderDetailModel(2, "Spaghetti Bolognese", 75000, 1));
-//        mockOrderDetails.add(new OrderDetailModel(3, "Caesar Salad", 50000, 3));
-//        mockOrderDetails.add(new OrderDetailModel(4, "Garlic Bread", 30000, 2));*//*
-//
-//        // Cấu hình RecyclerView với Adapter
-//        OrderDetailAdapter adapter = new OrderDetailAdapter(context,orderList.get(pos).getProducts(), isRating);
-//        LinearLayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
-//        recyclerView.setLayoutManager(layoutManager);
-//        recyclerView.setAdapter(adapter);
-//
-//        if (isRating)
-//        {
-//            btnReOrder.setVisibility(View.GONE);
-//            btnCancel.setVisibility(View.GONE);
-//        }
-//        // Sự kiện khi nhấn nút ReOrder
-//        btnReOrder.setOnClickListener(v -> {
-//            Intent intent = new Intent(context, PaymentActivity.class);
-//            context.startActivity(intent);
-//            bottomSheetDialog.dismiss();
-//        });
-//
-//        // Sự kiện khi nhấn nút Cancel
-//        btnCancel.setOnClickListener(v -> {
-//            bottomSheetDialog.dismiss();
-//        });
-//
-//        // Hiển thị BottomSheetDialog
-//        bottomSheetDialog.show();
-//
-//        addressViewModel = new ViewModelProvider((ViewModelStoreOwner) context).get(AddressViewModel.class);
-//        String token = UserUtils.getTokenFromPreferences(context);
-//
-//        addressViewModel.getDefaultAddress(token).observe((LifecycleOwner) context, addressModel -> {
-//            if (addressModel != null) {
-//                idAddress = addressModel.getId();
-//                etAddtess.setText(addressModel.getAddress());
-//            } else {
-//                etAddtess.setText("Không có địa chỉ mặc định");
-//            }
-//        });
-//    }
     private void callBottomSheet(boolean isRating, int pos)
     {
         BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(context);
@@ -219,13 +174,15 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
         tvEditAddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, AddressActivity.class);
-                context.startActivity(intent);
+                listener.onAddressEditClicked(etAddress);
             }
         });
         // Sự kiện khi nhấn nút ReOrder
         btnReOrder.setOnClickListener(v -> {
             Intent intent = new Intent(context, PaymentActivity.class);
+            intent.putExtra("idAddress", idAddress);
+            intent.putExtra("order", orderList.get(pos).getTotalPrice());
+
             context.startActivity(intent);
             bottomSheetDialog.dismiss();
         });
