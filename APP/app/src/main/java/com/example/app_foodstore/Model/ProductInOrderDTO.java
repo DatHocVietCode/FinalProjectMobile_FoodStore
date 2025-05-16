@@ -7,8 +7,18 @@ public class ProductInOrderDTO {
     private int quantity;
     private String thumbnail;
 
+    private Float price;
+
     // getters, setters, builder
 
+
+    public Float getPrice() {
+        return price;
+    }
+
+    public void setPrice(Float price) {
+        this.price = price;
+    }
 
     public ProductInOrderDTO(Long idProduct, String foodName, String thumbnail, int quantity, String category) {
         this.idProduct = idProduct;

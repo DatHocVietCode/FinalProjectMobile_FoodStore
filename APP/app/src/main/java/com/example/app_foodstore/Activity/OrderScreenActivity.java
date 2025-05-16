@@ -129,19 +129,17 @@ public class OrderScreenActivity extends AppCompatActivity {
             }
         }).get(OrderViewModel.class);
 
-        // Quan sát dữ liệu ongoing
-        orderViewModel.getOngoingOrders().observe(this, ongoingOrders -> {
-            List<MyOrderPendingDTO> historyOrders = orderViewModel.getHistoryOrders().getValue();
-            // Cẩn thận kiểm tra null trước khi set data
-            adapter.setData(ongoingOrders != null ? ongoingOrders : List.of(),
-                    historyOrders != null ? historyOrders : List.of());
-        });
+        // Quan sát dữ liệu
+        orderViewModel.getOngoingOrders().observe(this, data -> updateAdapter());
+        orderViewModel.getHistoryOrders().observe(this, data -> updateAdapter());
+    }
 
-        // Quan sát dữ liệu history
-        orderViewModel.getHistoryOrders().observe(this, historyOrders -> {
-            List<MyOrderPendingDTO> ongoingOrders = orderViewModel.getOngoingOrders().getValue();
-            adapter.setData(ongoingOrders != null ? ongoingOrders : List.of(),
-                    historyOrders != null ? historyOrders : List.of());
-        });
+    private void updateAdapter() {
+        List<MyOrderPendingDTO> ongoingOrders = orderViewModel.getOngoingOrders().getValue();
+        List<MyOrderPendingDTO> historyOrders = orderViewModel.getHistoryOrders().getValue();
+
+        if (ongoingOrders != null && historyOrders != null) {
+            adapter.setData(ongoingOrders, historyOrders);
+        }
     }
 }

@@ -11,6 +11,16 @@ public class MyOrderPendingDTO {
     private String created;
     private String status;
 
+    private String paymentMethod;
+
+    public String getPaymentMethod() {
+        return paymentMethod;
+    }
+
+    public void setPaymentMethod(String paymentMethod) {
+        this.paymentMethod = paymentMethod;
+    }
+
     public MyOrderPendingDTO(Long idOrder, Double totalPrice, List<ProductInOrderDTO> products, String created, String status) {
         this.idOrder = idOrder;
         this.totalPrice = totalPrice;

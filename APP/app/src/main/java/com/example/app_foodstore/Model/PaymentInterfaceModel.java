@@ -6,6 +6,7 @@ public class PaymentInterfaceModel {
     private String name_method;
     private boolean isChecked;
 
+
     public int getImg_method_selected() {
         return img_method_selected;
     }
