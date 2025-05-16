@@ -47,8 +47,6 @@ public class ImageViewPager2Adapter extends RecyclerView.Adapter<ImageViewPager2
 
         Glide.with(holder.itemView.getContext())
                 .load(IMG_URL + foodImage.getImage_url())
-                .placeholder(R.drawable.coffee)
-                .error(R.drawable.coffee)
                 .listener(new RequestListener<Drawable>() {
                     @Override
                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {

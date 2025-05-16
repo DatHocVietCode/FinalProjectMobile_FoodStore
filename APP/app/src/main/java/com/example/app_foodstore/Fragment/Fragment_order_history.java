@@ -40,7 +40,7 @@ public class Fragment_order_history extends Fragment {
         binding.fragmentOrderHistoryRc.setLayoutManager(layoutManager);
 
         OrderHistoryAdapter adapter = new OrderHistoryAdapter();
-        binding.fragmentOrderHistoryRc.setAdapter(adapter);
+
 
         String token = "Bearer " + UserUtils.getTokenFromPreferences(requireContext());
         orderViewModel.loadCompleteOrders(token);
@@ -48,6 +48,8 @@ public class Fragment_order_history extends Fragment {
         // Quan sát dữ liệu từ ViewModel
         orderViewModel.getHistoryOrders().observe(getViewLifecycleOwner(), orders -> {
             adapter.setData(orders);
+            binding.fragmentOrderHistoryRc.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
             Log.d("OrderHistory", "OrderHistory observe được dữ liệu mới ");
         });
 

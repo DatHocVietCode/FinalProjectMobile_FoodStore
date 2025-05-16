@@ -38,7 +38,7 @@ public class Fragment_order_ongoing extends Fragment {
 
         binding.fragmentOrderOngoingRc.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new OrderOnGoingAdapter();
-        binding.fragmentOrderOngoingRc.setAdapter(adapter);
+
 
         // ✅ Lấy token và truyền vào ViewModel để gọi API
         String token = "Bearer " + UserUtils.getTokenFromPreferences(requireContext());
@@ -48,6 +48,8 @@ public class Fragment_order_ongoing extends Fragment {
         orderViewModel.getOngoingOrders().observe(getViewLifecycleOwner(), orders -> {
             if (orders != null) {
                 adapter.setData(orders);
+                binding.fragmentOrderOngoingRc.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
             }
         });
 

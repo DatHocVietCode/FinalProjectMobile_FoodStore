@@ -1,5 +1,7 @@
 package com.example.app_foodstore.Adapter;
 
+import static com.example.app_foodstore.APIService.Constant.IMG_URL;
+
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -11,6 +13,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.app_foodstore.Activity.FoodDetailActivity;
 import com.example.app_foodstore.Model.FoodModel;
 import com.example.app_foodstore.R;
@@ -37,11 +40,14 @@ public class SuggestedFoodAdapter extends RecyclerView.Adapter<SuggestedFoodAdap
     @Override
     public void onBindViewHolder(@NonNull SuggestedFoodAdapter.SuggestedFoodViewHolder holder, int position) {
         FoodModel food = listFood.get(position);
+        Glide.with(context).load(IMG_URL + food.getThumbnail()).into(holder.imgFood);
+        holder.tvFoodName.setText(food.getName());
+        holder.tvRating.setText(String.valueOf(food.getAverage_rating()));
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, FoodDetailActivity.class);
-                intent.putExtra("food_id", food.getId());
+                intent.putExtra("foodModel", food);
                 context.startActivity(intent);
             }
         });
@@ -49,7 +55,7 @@ public class SuggestedFoodAdapter extends RecyclerView.Adapter<SuggestedFoodAdap
 
     @Override
     public int getItemCount() {
-        return listFood.size();
+        return 3;
     }
 
     public static class SuggestedFoodViewHolder extends RecyclerView.ViewHolder {

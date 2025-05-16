@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.PagerSnapHelper;
@@ -27,6 +28,7 @@ import com.example.app_foodstore.Indicator.DotPagerIndicatorDecoration;
 import com.example.app_foodstore.Model.FoodModel;
 import com.example.app_foodstore.Model.SearchKeywordModel;
 import com.example.app_foodstore.R;
+import com.example.app_foodstore.ViewModel.FoodViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +42,7 @@ public class SearchActivity extends AppCompatActivity {
     List<FoodModel> foods;
     PopularFoodAdapter_rc gv_adapter;
     NestedScrollView nestedScrollView;
+    FoodViewModel foodViewModel;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,10 +74,15 @@ public class SearchActivity extends AppCompatActivity {
         AnhXa();
     }
     private void AnhXa() {
+        initViewModel();
         setupRcKeyword();
         setupRcPopularFood();
         setupRcSuggestedFood();
         setupBtnCart();
+    }
+
+    private void initViewModel() {
+        foodViewModel = new ViewModelProvider(this).get(FoodViewModel.class);
     }
 
     private void setupBtnCart() {
@@ -93,35 +101,37 @@ public class SearchActivity extends AppCompatActivity {
 
     private void setupRcSuggestedFood() {
         rc_suggestedFood = findViewById(R.id.ss_rc_suggestedFood);
-        List<FoodModel> suggestedFoods = new ArrayList<>();
-        suggestedFoods.add(new FoodModel("Cate 1", "Món ăn 1",1L));
-        suggestedFoods.add(new FoodModel("Cate 2", "Món ăn 2",2L));
-        suggestedFoods.add(new FoodModel("Cate 3", "Món ăn 3",3L));
-        SuggestedFoodAdapter adapter = new SuggestedFoodAdapter(this, suggestedFoods);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        rc_suggestedFood.setLayoutManager(layoutManager);
-        rc_suggestedFood.setAdapter(adapter);
+        foodViewModel.getNewFoodList("", null
+        ,null, null).observe(this, foods->
+        {
+            if (foods != null) {
+                SuggestedFoodAdapter adapter = new SuggestedFoodAdapter(this, foods);
+                rc_suggestedFood.setAdapter(adapter);
+                LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+                rc_suggestedFood.setLayoutManager(layoutManager);
+                rc_suggestedFood.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
+            }
+        });
+
+
     }
 
     private void setupRcPopularFood() {
         rc_popularFood = findViewById(R.id.ss_rv_popularFoods);
-        foods = new ArrayList<>();
-        foods.add(new FoodModel("Cate 1", "Món ăn 1",1L));
-        foods.add(new FoodModel("Cate 2", "Món ăn 2",1L));
-        foods.add(new FoodModel("Cate 3", "Món ăn 3",1L));
-        foods.add(new FoodModel("Cate 4", "Món ăn 4",1L));
-        foods.add(new FoodModel("Cate 5", "Món ăn 5",1L));
-        foods.add(new FoodModel("Cate 6", "Món ăn 6",1L));
-        foods.add(new FoodModel("Cate 7", "Món ăn 7",1L));
-        foods.add(new FoodModel("Cate 8", "Món ăn 8",1L));
-
-        gv_adapter = new PopularFoodAdapter_rc(this, foods);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(this,
-                2, GridLayoutManager.HORIZONTAL, false);
-        rc_popularFood.setLayoutManager(gridLayoutManager);
-        rc_popularFood.setAdapter(gv_adapter);
-        rc_popularFood.addItemDecoration(new DotPagerIndicatorDecoration(this,4, RecyclerView.HORIZONTAL));
-
+        foodViewModel.getBestSellerFoodList("", null, null, null)
+                .observe(this, foods -> {
+                            if (foods != null) {
+                                gv_adapter = new PopularFoodAdapter_rc(this, foods);
+                                GridLayoutManager gridLayoutManager = new GridLayoutManager(this,
+                                        2, GridLayoutManager.HORIZONTAL, false);
+                                rc_popularFood.setLayoutManager(gridLayoutManager);
+                                rc_popularFood.setAdapter(gv_adapter);
+                                rc_popularFood.addItemDecoration(new DotPagerIndicatorDecoration(this,4, RecyclerView.HORIZONTAL));
+                                gv_adapter.notifyDataSetChanged();
+                            }
+                        }
+                );
         nestedScrollView = findViewById(R.id.ss_nestedScrollView);
         nestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             int previousScrollY = 0;
