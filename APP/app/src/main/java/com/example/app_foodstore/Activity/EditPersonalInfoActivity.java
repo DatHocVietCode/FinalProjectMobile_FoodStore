@@ -1,5 +1,7 @@
 package com.example.app_foodstore.Activity;
 
+import static com.example.app_foodstore.APIService.Constant.IMG_URL;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -9,6 +11,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
@@ -21,6 +24,8 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
+import com.example.app_foodstore.Model.response.UserRes;
 import com.example.app_foodstore.R;
 
 import java.io.IOException;
@@ -29,14 +34,42 @@ public class EditPersonalInfoActivity extends AppCompatActivity {
     ImageButton btnChooseImage;
     ImageView imgAvatar;
     Uri mUri;
+    UserRes user;
+    EditText etName, etEmail, etPhone, etBio;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_personal__info);
 
+        AnhXa();
+    }
+
+    private void AnhXa() {
+        getUser();
+        setupUser();
+        setupBtnChooseImage();
+    }
+
+    private void setupBtnChooseImage() {
         btnChooseImage = findViewById(R.id.edit_PI_btnChooseImage);
-        imgAvatar = findViewById(R.id.edit_PI_avatar);
         btnChooseImage.setOnClickListener(v -> CheckPermission());
+    }
+
+    private void setupUser() {
+        imgAvatar = findViewById(R.id.edit_PI_avatar);
+        Glide.with(this).load(IMG_URL + user.getProfile_image()).into(imgAvatar);
+        etName = findViewById(R.id.edit_PI_et_Name);
+        etName.setText(user.getFullname());
+        etEmail = findViewById(R.id.edit_PI_et_email);
+        etEmail.setText(user.getEmail());
+        etPhone = findViewById(R.id.edit_PI_et_phone);
+        etPhone.setText(user.getPhone_number());
+        etBio = findViewById(R.id.edit_PI_et_bio);
+        //etBio.setText(user.getBio());
+    }
+
+    private void getUser() {
+        user = (UserRes) getIntent().getSerializableExtra("user");
     }
 
     public static final int MY_REQUEST_CODE=100;
