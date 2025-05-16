@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.example.app_foodstore.Activity.UserUtils;
 import com.example.app_foodstore.Adapter.OrderHistoryAdapter;
 import com.example.app_foodstore.Model.OrderModel;
 import com.example.app_foodstore.ViewModel.OrderViewModel;
@@ -34,17 +35,23 @@ public class Fragment_order_history extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentOrderHistoryBinding.inflate(inflater, container, false);
+
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         binding.fragmentOrderHistoryRc.setLayoutManager(layoutManager);
 
-        OrderHistoryAdapter adapter = new OrderHistoryAdapter(getContext(), orderViewModel);
-
+        OrderHistoryAdapter adapter = new OrderHistoryAdapter();
         binding.fragmentOrderHistoryRc.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
+
+        String token = "Bearer " + UserUtils.getTokenFromPreferences(requireContext());
+        orderViewModel.loadCompleteOrders(token);
+
+        // Quan sát dữ liệu từ ViewModel
         orderViewModel.getHistoryOrders().observe(getViewLifecycleOwner(), orders -> {
-            adapter.notifyDataSetChanged();
+            adapter.setData(orders);
             Log.d("OrderHistory", "OrderHistory observe được dữ liệu mới ");
         });
+
         return binding.getRoot();
     }
+
 }

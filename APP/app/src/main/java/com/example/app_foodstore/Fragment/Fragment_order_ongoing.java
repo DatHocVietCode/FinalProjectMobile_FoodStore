@@ -12,15 +12,17 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.app_foodstore.Adapter.OrderOnGoingAdapter;
-import com.example.app_foodstore.Model.OrderModel;
+import com.example.app_foodstore.Activity.UserUtils;
 import com.example.app_foodstore.ViewModel.OrderViewModel;
 import com.example.app_foodstore.databinding.FragmentOrderOngoingBinding;
 
 public class Fragment_order_ongoing extends Fragment {
-    OrderViewModel orderViewModel;
-    FragmentOrderOngoingBinding binding;
-    public Fragment_order_ongoing() {
 
+    private OrderViewModel orderViewModel;
+    private FragmentOrderOngoingBinding binding;
+    private OrderOnGoingAdapter adapter;
+
+    public Fragment_order_ongoing() {
     }
 
     @Override
@@ -33,14 +35,22 @@ public class Fragment_order_ongoing extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentOrderOngoingBinding.inflate(inflater, container, false);
-        // Sau này chỉnh nữa
+
         binding.fragmentOrderOngoingRc.setLayoutManager(new LinearLayoutManager(getContext()));
-        OrderOnGoingAdapter adapter = new OrderOnGoingAdapter(getContext(), orderViewModel.getOngoingOrders().getValue());
+        adapter = new OrderOnGoingAdapter();
         binding.fragmentOrderOngoingRc.setAdapter(adapter);
+
+        // ✅ Lấy token và truyền vào ViewModel để gọi API
+        String token = "Bearer " + UserUtils.getTokenFromPreferences(requireContext());
+        orderViewModel.loadPendingOrders(token);
+
+        // Lắng nghe dữ liệu trả về từ API
         orderViewModel.getOngoingOrders().observe(getViewLifecycleOwner(), orders -> {
-            adapter.setListOrderOngoing(orders);
-            adapter.notifyDataSetChanged();
+            if (orders != null) {
+                adapter.setData(orders);
+            }
         });
+
         return binding.getRoot();
     }
 }
