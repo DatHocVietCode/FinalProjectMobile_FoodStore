@@ -12,8 +12,11 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.lifecycle.ViewModelProvider;
 
+import com.example.app_foodstore.Model.MyOrderPendingDTO;
 import com.example.app_foodstore.R;
+import com.example.app_foodstore.ViewModel.OrderViewModel;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
 import java.util.List;
@@ -25,6 +28,7 @@ public class TrackOrderActivity extends AppCompatActivity {
     List<ImageView> imageViewList;
     List<TextView> textViewList;
     TextView tv_breakdown;
+    MyOrderPendingDTO order;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,17 +38,22 @@ public class TrackOrderActivity extends AppCompatActivity {
     }
 
     private void AnhXa() {
+        getArguments();
         setupBottomCard();
         setupImg();
         setupStatus();
+    }
+
+    private void getArguments() {
+        Intent intent = getIntent();
+        order = (MyOrderPendingDTO) intent.getSerializableExtra("order");
     }
 
     private void setupStatus() {
         getViewList();
         getImageViewList();
         getTextViewList();
-
-        int currentState = 1; // Lấy từ API
+        int currentState = Integer.parseInt(order.getStatus()); // Lấy từ API
         for (int i = 0; i <= currentState; i++) {
             imageViewList.get(i).setImageResource(R.drawable.icon_check);
             textViewList.get(i).setTextColor(getResources().getColor(R.color.trackOrder_check));
@@ -141,6 +150,7 @@ public class TrackOrderActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(TrackOrderActivity.this, BreakDownOrderActivity.class);
+                intent.putExtra("order", order);
                 startActivity(intent);
             }
         });

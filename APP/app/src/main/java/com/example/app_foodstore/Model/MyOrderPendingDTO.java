@@ -1,9 +1,10 @@
 package com.example.app_foodstore.Model;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class MyOrderPendingDTO {
+public class MyOrderPendingDTO implements Serializable {
     private Long idOrder;
     private Double totalPrice;
     private List<ProductInOrderDTO> products;

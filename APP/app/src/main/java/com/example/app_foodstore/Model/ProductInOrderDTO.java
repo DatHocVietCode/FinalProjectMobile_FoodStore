@@ -1,21 +1,34 @@
 package com.example.app_foodstore.Model;
 
-public class ProductInOrderDTO {
+import java.io.Serializable;
+
+public class ProductInOrderDTO implements Serializable {
     private Long idProduct;
     private String foodName;
     private String category;
     private int quantity;
     private String thumbnail;
 
+    private Float price;
+
     // getters, setters, builder
 
 
-    public ProductInOrderDTO(Long idProduct, String foodName, String thumbnail, int quantity, String category) {
+    public Float getPrice() {
+        return price;
+    }
+
+    public void setPrice(Float price) {
+        this.price = price;
+    }
+
+    public ProductInOrderDTO(Long idProduct, String foodName, String thumbnail, int quantity, String category, Float price) {
         this.idProduct = idProduct;
         this.foodName = foodName;
         this.thumbnail = thumbnail;
         this.quantity = quantity;
         this.category = category;
+        this.price = price;
     }
 
     public Long getIdProduct() {
