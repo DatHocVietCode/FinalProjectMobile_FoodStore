@@ -1,6 +1,8 @@
 package com.example.app_foodstore.Model.response;
 
-public class UserRes {
+import java.io.Serializable;
+
+public class UserRes implements Serializable {
     private int id;
     private String fullname;
     private String phone_number;

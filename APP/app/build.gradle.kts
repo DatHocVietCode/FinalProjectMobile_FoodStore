@@ -43,16 +43,16 @@ dependencies {
     implementation(libs.circleimageview)
     implementation(libs.glide)
     implementation(libs.circleindicator)
-    /*implementation(fileTree(mapOf(
+    implementation(fileTree(mapOf(
         "dir" to "D:\\FinalProject\\zalopay",
         "include" to listOf("*.aar", "*.jar"),
         "exclude" to listOf("")
-    )))*/
-    implementation(fileTree(mapOf(
-        "dir" to "D:\\University\\Nam3\\2stSemester\\Mobile\\FinalProject\\zalopay",
-        "include" to listOf("*.aar", "*.jar"),
-        "exclude" to listOf("")
     )))
+//    implementation(fileTree(mapOf(
+//        "dir" to "D:\\University\\Nam3\\2stSemester\\Mobile\\FinalProject\\zalopay",
+//        "include" to listOf("*.aar", "*.jar"),
+//        "exclude" to listOf("")
+//    )))
     implementation("com.squareup.okhttp3:okhttp:4.9.3")
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")

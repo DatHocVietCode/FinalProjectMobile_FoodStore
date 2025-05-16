@@ -87,8 +87,13 @@ public class PersonalInfoActivity extends AppCompatActivity {
     private void AnhXa() {
         tv_edit = findViewById(R.id.PI_tv_edit);
         tv_edit.setOnClickListener(v -> {
-            Intent intent = new Intent(PersonalInfoActivity.this, EditPersonalInfoActivity.class);
-            startActivity(intent);
+            userViewModel.getUserProfileLiveData().observe(this, userRes ->
+            {
+                Intent intent = new Intent(PersonalInfoActivity.this, EditPersonalInfoActivity.class);
+                intent.putExtra("user", userRes);
+                startActivity(intent);
+            });
+
         });
     }
 }

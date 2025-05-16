@@ -65,6 +65,8 @@ public class Fragment_order_ongoing extends Fragment {
         orderViewModel.getOngoingOrders().observe(getViewLifecycleOwner(), orders -> {
             if (orders != null) {
                 adapter.setData(orders);
+                binding.fragmentOrderOngoingRc.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
             }
         });
 
