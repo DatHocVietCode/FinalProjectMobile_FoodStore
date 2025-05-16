@@ -19,6 +19,9 @@ import com.example.app_foodstore.R;
 import com.example.app_foodstore.ViewModel.OrderViewModel;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class TrackOrderActivity extends AppCompatActivity {
@@ -27,7 +30,7 @@ public class TrackOrderActivity extends AppCompatActivity {
     List<View> viewList;
     List<ImageView> imageViewList;
     List<TextView> textViewList;
-    TextView tv_breakdown;
+    TextView tv_breakdown, tv_OrderId, tv_orderDate;
     MyOrderPendingDTO order;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -154,6 +157,23 @@ public class TrackOrderActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        tv_OrderId = findViewById(R.id.trackOrder_tvOderId);
+        tv_orderDate = findViewById(R.id.trackOrder_tvOrderTime);
+        tv_OrderId.setText("#" + order.getIdOrder());
+
+        String originalDate = order.getCreated();
+        SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        SimpleDateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+
+        try {
+            Date date = inputFormat.parse(originalDate);
+            String formattedDate = outputFormat.format(date);
+            tv_orderDate.setText(formattedDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            tv_orderDate.setText("Invalid Date");
+        }
     }
 
 }

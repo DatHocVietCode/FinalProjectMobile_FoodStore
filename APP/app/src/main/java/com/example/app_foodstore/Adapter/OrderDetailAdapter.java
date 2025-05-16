@@ -20,7 +20,9 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.app_foodstore.Model.MyOrderPendingDTO;
 import com.example.app_foodstore.Model.OrderDetailModel;
+import com.example.app_foodstore.Model.ProductInOrderDTO;
 import com.example.app_foodstore.R;
 
 import java.util.ArrayList;
@@ -28,12 +30,12 @@ import java.util.List;
 
 public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.OrderDetailViewHolder> {
     Context context;
-    List<OrderDetailModel> orderDetailModelList;
+    List<ProductInOrderDTO> productInOrderDTOList;
     boolean isRating = false;
 
-    public OrderDetailAdapter(Context context, List<OrderDetailModel> orderDetailModelList, boolean isRating) {
+    public OrderDetailAdapter(Context context, List<ProductInOrderDTO> productInOrderDTOList, boolean isRating) {
         this.context = context;
-        this.orderDetailModelList = orderDetailModelList;
+        this.productInOrderDTOList = productInOrderDTOList;
         this.isRating = isRating;
     }
 
@@ -46,9 +48,9 @@ public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull OrderDetailAdapter.OrderDetailViewHolder holder, int position) {
-        holder.tvFoodName.setText(orderDetailModelList.get(position).getFoodName());
-        holder.tvNumber.setText("x" + orderDetailModelList.get(position).getNumber());
-        holder.tvPrice.setText("$" + orderDetailModelList.get(position).getPrice());
+        holder.tvFoodName.setText(productInOrderDTOList.get(position).getFoodName());
+        holder.tvNumber.setText("x" + productInOrderDTOList.get(position).getQuantity());
+        holder.tvPrice.setText(productInOrderDTOList.get(position).getPrice() + "VND");
         if (isRating)
         {
             holder.img_Rate.setVisibility(View.VISIBLE);
@@ -149,7 +151,7 @@ public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.
     }
     @Override
     public int getItemCount() {
-        return orderDetailModelList.size();
+        return productInOrderDTOList.size();
     }
 
     public static class OrderDetailViewHolder extends RecyclerView.ViewHolder {

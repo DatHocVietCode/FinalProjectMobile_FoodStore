@@ -108,16 +108,17 @@
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
+
                         <TextView
                             android:id="@+id/breakdownScreen_tvTransactionTime"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="12/05/2025 14:30"
                             android:fontFamily="@font/sen"
+                            android:text="12/05/2025 14:30"
                             android:textSize="16sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent" />
+                            app:layout_constraintTop_toTopOf="parent" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </LinearLayout>
 

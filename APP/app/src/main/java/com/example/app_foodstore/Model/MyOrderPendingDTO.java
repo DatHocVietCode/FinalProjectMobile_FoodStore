@@ -8,16 +8,45 @@ public class MyOrderPendingDTO implements Serializable {
     private Long idOrder;
     private Double totalPrice;
     private List<ProductInOrderDTO> products;
-
     private String created;
     private String status;
+    private String paymentMethod;
+    private Float deliveryFee;
+    private Integer voucher;
 
-    public MyOrderPendingDTO(Long idOrder, Double totalPrice, List<ProductInOrderDTO> products, String created, String status) {
+    public Float getDeliveryFee() {
+        return deliveryFee;
+    }
+
+    public void setDeliveryFee(Float deliveryFee) {
+        this.deliveryFee = deliveryFee;
+    }
+
+    public String getPaymentMethod() {
+        return paymentMethod;
+    }
+
+    public void setPaymentMethod(String paymentMethod) {
+        this.paymentMethod = paymentMethod;
+    }
+
+    public MyOrderPendingDTO(Long idOrder, Double totalPrice, List<ProductInOrderDTO> products, String created, String status, String paymentMethod, Float deliveryFee, Integer voucher) {
         this.idOrder = idOrder;
         this.totalPrice = totalPrice;
         this.products = products;
         this.created = created;
         this.status = status;
+        this.paymentMethod = paymentMethod;
+        this.deliveryFee = deliveryFee;
+        this.voucher = voucher;
+    }
+
+    public Integer getVoucher() {
+        return voucher;
+    }
+
+    public void setVoucher(Integer voucher) {
+        this.voucher = voucher;
     }
 
     public String getCreated() {

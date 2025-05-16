@@ -18,6 +18,8 @@ import com.example.app_foodstore.Model.OrderDetailModel;
 import com.example.app_foodstore.Model.OrderModel;
 import com.example.app_foodstore.R;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -25,12 +27,14 @@ import java.util.List;
 public class BreakDownOrderActivity extends AppCompatActivity {
     RecyclerView rcOrderDetail;
     OrderModel orderModel;
-    List<OrderDetailModel> listOrder;
-    TextView btnToggleOrderInfo;
+    List<MyOrderPendingDTO> listOrder;
+    TextView btnToggleOrderInfo, tvOrderId, tvOrderDate, tvPaymentMethod, tvTotalAmount
+            , tvDeliverty, tvVoucher;
     LinearLayout cardOrderInfo;
     TextView tvTransactionStatus;
     MyOrderPendingDTO order;
     int statusId;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,8 +47,41 @@ public class BreakDownOrderActivity extends AppCompatActivity {
         getArgument();
         //getOrder();
         setupTransactionStatus();
+        setupGeneralInformation();
+        setupOtherInformation();
         setupRc();
         setupToggleBtn();
+    }
+
+    private void setupOtherInformation() {
+        tvDeliverty = findViewById(R.id.tvDeliveryFee);
+        tvVoucher = findViewById(R.id.tvVoucher);
+
+        tvDeliverty.setText(order.getDeliveryFee() + " VND");
+        tvVoucher.setText(order.getVoucher() + "VND");
+    }
+
+    private void setupGeneralInformation() {
+        tvOrderId = findViewById(R.id.breakdownScreen_tvOrderId);
+        tvOrderDate = findViewById(R.id.breakdownScreen_tvTransactionTime);
+        tvPaymentMethod = findViewById(R.id.breakdownScreen_tvPaymentMethod);
+        tvTotalAmount = findViewById(R.id.breakdownScreen_tvTotalAmount);
+
+        tvOrderId.setText("#" + order.getIdOrder());
+        String originalDate = order.getCreated();
+        SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        SimpleDateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+
+        try {
+            Date date = inputFormat.parse(originalDate);
+            String formattedDate = outputFormat.format(date);
+            tvOrderDate.setText(formattedDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            tvOrderDate.setText("Invalid Date");
+        }
+        tvPaymentMethod.setText(order.getPaymentMethod());
+        tvTotalAmount.setText(order.getTotalPrice() + "VND");
     }
 
     private void getArgument() {
@@ -126,8 +163,8 @@ public class BreakDownOrderActivity extends AppCompatActivity {
         listOrder.add(new OrderDetailModel(4, "French Fries", 30000, 2));
 
 
-    }
-*/  /*private void getOrder() {
+    }*/
+     /*private void getOrder() {
             if (order != null) {
                 int idPaymentMethod;
                 switch (order.getPaymentMethod()) {
@@ -142,14 +179,6 @@ public class BreakDownOrderActivity extends AppCompatActivity {
                         break;
                 }
                 // Lấy thông tin từ đối tượng order
-                orderModel = new OrderModel(
-                        "COMPLETED".equals(order.getStatus()),  // isCompleted
-                        order.getCreated(),                  // orderDate
-                        order.getIdOrder(),   // Chuyển sang int
-                        idPaymentMethod,               // paymentMethod
-                        statusId,                               // orderStatus
-                        order.getTotalPrice()                   // totalAmount
-                );
                 listOrder = new ArrayList<>();
                 // Duyệt qua danh sách sản phẩm trong order
                 if (order.getProducts() != null) {
@@ -165,11 +194,9 @@ public class BreakDownOrderActivity extends AppCompatActivity {
             }
         }*/
 
-
-
     private void setupRc() {
         rcOrderDetail = findViewById(R.id.trackOrder_rc_orderDetail);
-        OrderDetailAdapter adapter = new OrderDetailAdapter(this, listOrder, false);
+        OrderDetailAdapter adapter = new OrderDetailAdapter(this, order.getProducts(), false);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         rcOrderDetail.setAdapter(adapter);
         rcOrderDetail.setLayoutManager(linearLayoutManager);
