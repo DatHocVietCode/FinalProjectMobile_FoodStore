@@ -36,7 +36,7 @@
         android:id="@+id/edit_PI_avatar"
         android:layout_width="176dp"
         android:layout_height="176dp"
-        android:src="@drawable/user_avatar_sample"
+        android:src="@drawable/user1"
         android:scaleType="centerCrop"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

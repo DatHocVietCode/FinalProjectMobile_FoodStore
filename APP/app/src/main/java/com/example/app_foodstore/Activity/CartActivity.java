@@ -43,7 +43,7 @@
         CartViewModel cartViewModel;
         TextView tv_totalPrice;
         AddressViewModel addressViewModel;
-
+        double total = 0.0;
         AddressResponse addressResponse;
         Long idAddress;
         EditText et_address;
@@ -108,9 +108,8 @@
             });
         }
         private void updateTotalPrice(List<CartModel> cartItems) {
-            double total = 0.0;
             for (CartModel item : cartItems) {
-                total += item.getPrice() * item.getQuantity();
+                total = item.getPrice() * item.getQuantity();
             }
             String formatted = String.format("%,.0f", total);
             tv_totalPrice.setText(formatted + "đ");
@@ -121,7 +120,7 @@
             btn_placeOrder = findViewById(R.id.cart_btn_placeOrder);
             btn_placeOrder.setOnClickListener(view -> {
                 Intent intent = new Intent(CartActivity.this, PaymentActivity.class);
-                intent.putExtra("order",tv_totalPrice.getText());
+                intent.putExtra("order",total);
                 intent.putExtra("idAddress", idAddress); // Truyền địa chỉ vào intent
                 startActivity(intent);
             });

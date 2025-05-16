@@ -31,10 +31,12 @@ import com.example.app_foodstore.Fragment.Fragment_BottomNavigation;
 import com.example.app_foodstore.Fragment.Fragment_SearchBar;
 import com.example.app_foodstore.Fragment.Fragment_btn_cart;
 import com.example.app_foodstore.Fragment.Fragment_foodDisplay1;
+import com.example.app_foodstore.Model.CartModel;
 import com.example.app_foodstore.Model.CategoryModel;
 import com.example.app_foodstore.Model.FoodModel;
 import com.example.app_foodstore.Model.response.UserRes;
 import com.example.app_foodstore.R;
+import com.example.app_foodstore.ViewModel.CartViewModel;
 import com.example.app_foodstore.ViewModel.CateViewModel;
 import com.example.app_foodstore.ViewModel.FoodViewModel;
 import com.example.app_foodstore.ViewModel.UserViewModel;
@@ -55,6 +57,7 @@ public class HomeScreenActivity extends AppCompatActivity {
     List<CategoryModel> categoryModels;
     MovableFloatingActionButton fabLogin;
     UserViewModel userViewModel;
+    CartViewModel cartViewModel;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -107,6 +110,7 @@ public class HomeScreenActivity extends AppCompatActivity {
         foodViewModel = new ViewModelProvider(this).get(FoodViewModel.class);
         cateViewModel = new ViewModelProvider(this).get(CateViewModel.class);
         userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
+        cartViewModel = new ViewModelProvider(this).get(CartViewModel.class);
     }
 
     private void setupSeeAll() {
@@ -218,12 +222,23 @@ public class HomeScreenActivity extends AppCompatActivity {
         Fragment_btn_cart btn_cart = new Fragment_btn_cart();
         transaction.replace(R.id.ms_fragment_container_btn_cart, btn_cart);
         transaction.commit();
-        int cart_count = 0; // Lấy số sản phẩm trong giỏ hàng từ api
-        if (btn_cart != null) {
-            new Handler(Looper.getMainLooper()).post(() -> {
-                btn_cart.updateCartNotify(cart_count);
-            });
+
+        if (UserUtils.checkUser(this)) {
+            cartViewModel.getMyCart(UserUtils.getTokenFromPreferences(this))
+                    .observe(this, myCart -> {
+                        int numCart;
+                        if (myCart != null) {
+                            numCart = myCart.size();
+                        } else {
+                            numCart = 0;
+                        }
+
+                        if (btn_cart != null) {
+                            btn_cart.updateCartNotify(numCart);
+                        }
+                    });
         }
+
     }
 
     private void includeFragments() {

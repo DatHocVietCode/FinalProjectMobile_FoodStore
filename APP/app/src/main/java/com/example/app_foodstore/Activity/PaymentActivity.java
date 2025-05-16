@@ -33,6 +33,7 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.example.app_foodstore.Adapter.PaymentMethodAdapter;
 import com.example.app_foodstore.Adapter.ViewPagerPaymentMethodAdapter;
 import com.example.app_foodstore.Adapter.VoucherSpinnerAdapter;
+import com.example.app_foodstore.Interface.PaymentCallBack;
 import com.example.app_foodstore.Model.OrderDetailModel;
 import com.example.app_foodstore.Model.PaymentInterfaceModel;
 import com.example.app_foodstore.Model.VoucherModel;
@@ -40,6 +41,7 @@ import com.example.app_foodstore.Model.request.PaymentRequest;
 import com.example.app_foodstore.R;
 import com.example.app_foodstore.ViewModel.PaymentViewModel;
 import com.example.app_foodstore.ViewModel.VoucherViewModel;
+import com.example.app_foodstore.ZaloPay.Api.CreateOrder;
 
 import org.json.JSONObject;
 
@@ -52,7 +54,7 @@ import vn.zalopay.sdk.ZaloPayError;
 import vn.zalopay.sdk.ZaloPaySDK;
 import vn.zalopay.sdk.listeners.PayOrderListener;
 
-public class PaymentActivity extends AppCompatActivity {
+public class PaymentActivity extends AppCompatActivity implements PaymentCallBack {
 
     private ViewPager2 viewPager2;
     private VoucherViewModel voucherViewModel;
@@ -65,29 +67,20 @@ public class PaymentActivity extends AppCompatActivity {
     private PaymentViewModel paymentViewModel;
     private Long idAddress;
     private RadioGroup radioGroupPrice;
+    double totalAmount;
     String order,delivery,discount;
     TextView tvDeliveryFee,tvVoucher,tvOrderPrice;
-
+    PaymentRequest paymentRequest;
+    String paymentMethod, shippingMethodName;
+    Long idVoucher;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment);
-        tvDeliveryFee = findViewById(R.id.payment_ordersummary_DeliveryFee);
-        tvVoucher = findViewById(R.id.payment_ordersummary_voucher);
-        tvOrderPrice = findViewById(R.id.payment_ordersummary_order_price);
 
-        // Lấy idAddress từ Intent
-       Long idAddress = getIntent().getLongExtra("idAddress", -1L);
-       order = getIntent().getStringExtra("order");
-
-        if (idAddress != -1L) {
-            Log.d("PaymentActivity", "idAddress: " + idAddress);
-        } else {
-            Log.d("PaymentActivity", "idAddress không được truyền hoặc có giá trị không hợp lệ");
-        }
-        paymentViewModel = new ViewModelProvider(this).get(PaymentViewModel.class);
         ZaloPaySDK.init(APP_ID, Environment.SANDBOX);
         token = UserUtils.getTokenFromPreferences(this);
+
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
@@ -111,17 +104,19 @@ public class PaymentActivity extends AppCompatActivity {
     // Listener for ZaloPay payment result
     private static class MyZaloPayListener implements PayOrderListener {
         private final PaymentActivity activity;
-
-        public MyZaloPayListener(PaymentActivity activity) {
+        private final PaymentCallBack callback;
+        public MyZaloPayListener(PaymentActivity activity, PaymentCallBack paymentCallback) {
             this.activity = activity;
+            this.callback = paymentCallback;
         }
 
         @Override
         public void onPaymentSucceeded(final String transactionId, final String transToken, final String appTransID) {
             activity.runOnUiThread(() -> {
-                Log.d("ZaloPay", "Onpayment Success Triggered");
+              /*  Log.d("ZaloPay", "Onpayment Success Triggered");
                 Intent intent = new Intent(activity, PaymentNotificationActivity.class);
-                activity.startActivity(intent);
+                activity.startActivity(intent);*/
+                callback.onPaymentSuccess();
             });
         }
 
@@ -141,7 +136,7 @@ public class PaymentActivity extends AppCompatActivity {
         public void onPaymentError(ZaloPayError zaloPayError, String zpTransToken, String appTransID) {
             activity.runOnUiThread(() -> {
                 AlertDialog dialog = new AlertDialog.Builder(activity)
-                        .setTitle("Payment Failed")
+                        .setTitle("ZaloPay Payment Failed")
                         .setMessage(String.format("Error: %s\nTransaction Token: %s", zaloPayError.toString(), zpTransToken))
                         .setPositiveButton("OK", null)
                         .show();
@@ -151,11 +146,62 @@ public class PaymentActivity extends AppCompatActivity {
     }
 
     private void AnhXa() {
-        radioGroupPrice = findViewById(R.id.radioGroupPrice);
+        getArguments();
+        initViewModel();
+        setupRadioTransport();
+        setupTextView();
         setupVoucher();
         setupViewPager();
         setupRecyclerViewMethod();
         setupbtnPay();
+    }
+
+    private void initPayment() {
+        // 🔸 Tạo PaymentRequest
+        Log.d("Payment", "initPayment: " + idAddress + paymentMethod + shippingMethodName + idVoucher);
+        paymentRequest = new PaymentRequest(paymentMethod, shippingMethodName, idVoucher, idAddress);
+    }
+
+    private void setupRadioTransport() {
+        radioGroupPrice = findViewById(R.id.radioGroupTypeOfTransport);
+        delivery = "10000";
+        radioGroupPrice.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                if(i == R.id.radioPriceStandard)
+                {
+                    delivery = "10000";
+                    tvDeliveryFee.setText(delivery + "VND");
+                }
+                else
+                {
+                    delivery = "20000";
+                    tvDeliveryFee.setText(delivery + "VND");
+                }
+            }
+        });
+    }
+
+    private void initViewModel() {
+        paymentViewModel = new ViewModelProvider(this).get(PaymentViewModel.class);
+    }
+
+    private void getArguments() {
+        // Lấy idAddress từ Intent
+        idAddress = getIntent().getLongExtra("idAddress", -1L);
+        order = String.valueOf(getIntent().getDoubleExtra("order", 0.0));
+
+        if (idAddress != -1L) {
+            Log.d("PaymentActivity", "idAddress: " + idAddress);
+        } else {
+            Log.d("PaymentActivity", "idAddress không được truyền hoặc có giá trị không hợp lệ");
+        }
+    }
+
+    private void setupTextView() {
+        tvDeliveryFee = findViewById(R.id.payment_ordersummary_DeliveryFee);
+        tvVoucher = findViewById(R.id.payment_ordersummary_voucher);
+        tvOrderPrice = findViewById(R.id.payment_ordersummary_order_price);
 
         tvDeliveryFee.setText(delivery);
         tvVoucher.setText(discount);
@@ -167,69 +213,114 @@ public class PaymentActivity extends AppCompatActivity {
         btn_pay.setOnClickListener(v -> {
             // Lấy phương thức thanh toán đang chọn (tương ứng với ViewPager2)
             int currentMethodPosition = viewPager2.getCurrentItem();
-            String paymentMethod = null;
-            switch (currentMethodPosition) {
-                case 0: paymentMethod = "Cash"; break;
-                case 1: paymentMethod = "ZaloPay"; break;
-                case 2: paymentMethod = "VNPay"; break;
-                case 3: paymentMethod = "Visa"; break;
-                case 4: paymentMethod = "MasterCard"; break;
-                case 5: paymentMethod = "Paypal"; break;
-            }
-
+            int currentShippingMethodId = radioGroupPrice.getCheckedRadioButtonId();
             // 🔸 Lấy shippingMethod từ RadioGroup
             int selectedShippingId = radioGroupPrice.getCheckedRadioButtonId();
             if (selectedShippingId == -1) {
                 Toast.makeText(this, "Vui lòng chọn phương thức vận chuyển!", Toast.LENGTH_SHORT).show();
                 return;
             }
-            radioGroupPrice.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                    if(i == 0){
-                        delivery = "10000VND";
-                        tvDeliveryFee.setText(delivery);
-                    }
-                    else{
-                        delivery = "20000VND";
-                        tvDeliveryFee.setText(delivery);
-                    }
-                }
-            });
-
-            RadioButton selectedShippingButton = findViewById(selectedShippingId);
-            String shippingMethod = selectedShippingButton.getText().toString();
-            String[] parts = shippingMethod.split(" \\("); // Tách lấy tên
-            String shippingMethodName = parts[0]; // Ví dụ: "Standard" hoặc "Express"
+            if (currentShippingMethodId == R.id.radioPriceStandard)
+            {
+                shippingMethodName = "Standard";
+            }
+            else
+            {
+                shippingMethodName = "Express";
+            }
+            /*RadioButton selectedShippingButton = findViewById(selectedShippingId);
+            shippingMethodName = selectedShippingButton.getText().toString();
+            String[] parts = shippingMethodName.split(" \\("); // Tách lấy tên
+            //String shippingMethodName = parts[0]; // Ví dụ: "Standard" hoặc "Express"*/
 
             // 🔸 Lấy voucher đang chọn từ spinner
             VoucherModel selectedVoucher = (VoucherModel) spinnerVouchers.getSelectedItem();
 
-            Long idVoucher = selectedVoucher != null ? selectedVoucher.getId() : null;
+            idVoucher = selectedVoucher != null ? selectedVoucher.getId() : null;
             if(selectedVoucher == null){
                 discount = "0";
             }
             else{
                 discount = selectedVoucher.getDiscount().toString();
             }
+            Log.d("Payment", "setupbtnPay: " + order);
+            double orderValue = Double.parseDouble(order);
+            double discountValue = Double.parseDouble(discount);
+            double deliveryValue = Double.parseDouble(delivery);
 
-                    // 🔸 Tạo PaymentRequest
-            PaymentRequest paymentRequest = new PaymentRequest(paymentMethod, shippingMethodName, idVoucher, idAddress);
+            // Tính tổng
+            totalAmount = orderValue - discountValue + deliveryValue;
+            paymentMethod = null;
+            switch (currentMethodPosition) {
+                case 0:
+                    paymentMethod = "Cash";
+                    initPayment();
+                    callPayment();
+                    break;
+                case 1:
+                    paymentMethod = "ZaloPay";
+                    CreateOrder orderApi = new CreateOrder();
+                    try {
+                        String money = String.valueOf((int) totalAmount);
+                        JSONObject data = orderApi.createOrder(money);
+                        String code = data.getString("return_code");
+                        Toast.makeText(getApplicationContext(), "return_code: " + code, Toast.LENGTH_LONG).show();
 
-            // 🔸 Gọi ViewModel để thanh toán
-            paymentViewModel.makePayment(token, paymentRequest).observe(PaymentActivity.this, isSuccess -> {
-                if (isSuccess) {
-                    Toast.makeText(this, "Thanh toán thành công!", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(PaymentActivity.this, PaymentNotificationActivity.class);
-                    startActivity(intent);
-                } else {
-                    Toast.makeText(this, "Thanh toán thất bại!", Toast.LENGTH_SHORT).show();
-                }
-            });
+                        if (code.equals("1")) {
+                            String token = data.getString("zp_trans_token");
+
+                            // Khởi tạo listener với context của Activity
+                            MyZaloPayListener listener = new MyZaloPayListener(PaymentActivity.this, this);
+
+                            // Thanh toán ZaloPay
+                            ZaloPaySDK.getInstance().payOrder(PaymentActivity.this, token, "demozpdk://payment", listener);
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                case 2: paymentMethod = "VNPay"; break;
+                case 3: paymentMethod = "Visa"; break;
+                case 4: paymentMethod = "MasterCard"; break;
+                case 5: paymentMethod = "Paypal"; break;
+            }
+
         });
 
     }
+    @Override
+    public void onPaymentSuccess() {
+        initPayment();
+        callPayment();
+    }
+    private void callPayment()
+    {
+        if (paymentRequest != null) {
+            paymentViewModel.makePayment(token, paymentRequest).observe(PaymentActivity.this, isSuccess -> {
+                if (isSuccess) {
+                    //Toast.makeText(this, "Thanh toán thành công!", Toast.LENGTH_SHORT).show();
 
+                    // Xóa toàn bộ stack và chuyển về HomeScreen
+                    Intent homeIntent = new Intent(PaymentActivity.this, HomeScreenActivity.class);
+                    homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(homeIntent);
+
+                    // Sau đó gọi TrackOrder
+                    Intent notificationPayment = new Intent(PaymentActivity.this, PaymentNotificationActivity.class);
+                    startActivity(notificationPayment);
+
+                    // Kết thúc PaymentActivity
+                    finish();
+                } else {
+                    Toast.makeText(this, "Payment Failed", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+        else
+        {
+            Toast.makeText(this, "Payment Request has not been initialized!", Toast.LENGTH_SHORT).show();
+        }
+    }
     private void setupRecyclerViewMethod() {
         rc_methods = findViewById(R.id.payment_rc_methods);
         List<PaymentInterfaceModel> paymentInterfaceModelList = GetPaymentMethod();

@@ -43,8 +43,13 @@ dependencies {
     implementation(libs.circleimageview)
     implementation(libs.glide)
     implementation(libs.circleindicator)
-    implementation(fileTree(mapOf(
+    /*implementation(fileTree(mapOf(
         "dir" to "D:\\FinalProject\\zalopay",
+        "include" to listOf("*.aar", "*.jar"),
+        "exclude" to listOf("")
+    )))*/
+    implementation(fileTree(mapOf(
+        "dir" to "D:\\University\\Nam3\\2stSemester\\Mobile\\FinalProject\\zalopay",
         "include" to listOf("*.aar", "*.jar"),
         "exclude" to listOf("")
     )))
