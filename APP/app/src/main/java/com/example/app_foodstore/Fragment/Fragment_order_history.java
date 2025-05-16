@@ -61,7 +61,7 @@ public class Fragment_order_history extends Fragment implements AddressSelection
         orderViewModel.getHistoryOrders().observe(getViewLifecycleOwner(), orders -> {
             if (orders != null)
             {
-                OrderHistoryAdapter adapter = new OrderHistoryAdapter(this.getContext(), orders, this);
+                OrderHistoryAdapter adapter = new OrderHistoryAdapter(requireActivity(), orders, this);
                 binding.fragmentOrderHistoryRc.setAdapter(adapter);
                 adapter.setData(orders);
                 Log.d("OrderHistory", "OrderHistory observe được dữ liệu mới ");
