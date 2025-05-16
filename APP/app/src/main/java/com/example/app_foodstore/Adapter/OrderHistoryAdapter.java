@@ -1,256 +1,114 @@
 package com.example.app_foodstore.Adapter;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.drawable.ColorDrawable;
-import android.view.Gravity;
+import static com.example.app_foodstore.APIService.Constant.IMG_URL;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.app_foodstore.Activity.PaymentActivity;
-import com.example.app_foodstore.Model.OrderDetailModel;
-import com.example.app_foodstore.Model.OrderModel;
+import com.bumptech.glide.Glide;
+import com.example.app_foodstore.Model.MyOrderPendingDTO;
 import com.example.app_foodstore.R;
-import com.example.app_foodstore.ViewModel.OrderViewModel;
-import com.google.android.material.bottomsheet.BottomSheetDialog;
-import com.google.android.material.button.MaterialButton;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapter.OrderHistoryViewHolder> {
-    Context context;
-    OrderViewModel orderViewModel;
 
-    public OrderHistoryAdapter(Context context, OrderViewModel orderViewModel) {
-        this.context = context;
-        this.orderViewModel = orderViewModel;
-    }
+    private List<MyOrderPendingDTO> orderList = new ArrayList<>();
 
     @NonNull
     @Override
-    public OrderHistoryAdapter.OrderHistoryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_order_item_history, parent, false);
+    public OrderHistoryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.fragment_order_item_history, parent, false);
         return new OrderHistoryViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull OrderHistoryAdapter.OrderHistoryViewHolder holder, int position) {
-        OrderModel orderModel = orderViewModel.getHistoryOrders().getValue().get(position);
-        //holder.tv_orderDate.setText(new SimpleDateFormat("dd-MM-yyyy HH:mm").format(orderModel.getOrderDate()));
-        holder.tv_orderDate.setText("01-01-2025 12:00"); // Giá trị cứng
-        if (orderModel.isCompleted())
-        {
-            holder.tv_orderCompleted.setVisibility(View.VISIBLE);
+    public void onBindViewHolder(@NonNull OrderHistoryViewHolder holder, int position) {
+        MyOrderPendingDTO order = orderList.get(position);
+
+        String createdDate = order.getCreated();
+        String formattedDate = formatDateString(createdDate);
+        holder.tv_orderDate.setText(formattedDate);
+
+        // Set status visibility
+        String status = order.getStatus();
+        if (status != null) {
+            if ("COMPLETED".equalsIgnoreCase(status)) {
+                holder.tv_orderCompleted.setVisibility(View.VISIBLE);
+                holder.tv_orderCanceled.setVisibility(View.GONE);
+            } else if ("CANCELLED".equalsIgnoreCase(status)) {
+                holder.tv_orderCompleted.setVisibility(View.GONE);
+                holder.tv_orderCanceled.setVisibility(View.VISIBLE);
+            } else {
+                holder.tv_orderCompleted.setVisibility(View.GONE);
+                holder.tv_orderCanceled.setVisibility(View.GONE);
+            }
+        } else {
+            holder.tv_orderCompleted.setVisibility(View.GONE);
             holder.tv_orderCanceled.setVisibility(View.GONE);
         }
-        else
-        {
-            holder.tv_orderCompleted.setVisibility(View.GONE);
-            holder.tv_orderCanceled.setVisibility(View.VISIBLE);
-        }
-        holder.tv_foodId.setText("#123");
-        holder.tv_foodId.setPaintFlags(holder.tv_foodId.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-        holder.btn_rate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                /*// Tạo Dialog
-                Dialog dialog = new Dialog(view.getContext());
 
-                // Gán layout cho Dialog
-                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                dialog.setContentView(R.layout.dialog_rating);
-                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-                lp.copyFrom(dialog.getWindow().getAttributes());
-                lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-                lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
-                lp.gravity = Gravity.CENTER;
-
-                dialog.getWindow().setAttributes(lp);
-                // Ánh xạ các thành phần trong Dialog
-                EditText edtComment = dialog.findViewById(R.id.dialog_rating_et_comment);
-                Button btnCancel = dialog.findViewById(R.id.dialog_rating_btnCancel);
-                Button btnOK = dialog.findViewById(R.id.dialog_rating_btnOK);
-                List<ImageView> listStar = new ArrayList<>();
-                listStar.add(dialog.findViewById(R.id.dialog_rating_star1));
-                listStar.add(dialog.findViewById(R.id.dialog_rating_star2));
-                listStar.add(dialog.findViewById(R.id.dialog_rating_star3));
-                listStar.add(dialog.findViewById(R.id.dialog_rating_star4));
-                listStar.add(dialog.findViewById(R.id.dialog_rating_star5));
-
-                // Drawable cho ngôi sao (đã điền và chưa điền)
-                int filledStar = R.drawable.i_star_filled;
-                int unfilledStar = R.drawable.i_star;
-
-                // Hàm cập nhật trạng thái ngôi sao
-                View.OnClickListener starClickListener = new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        int position = listStar.indexOf(v); // Lấy vị trí của ngôi sao được click
-                        rotateStar(position, listStar);
-                        // Cập nhật trạng thái ngôi sao
-                        for (int i = 0; i < listStar.size(); i++) {
-                            if (i <= position) {
-                                listStar.get(i).setImageResource(filledStar);
-                            } else {
-                                listStar.get(i).setImageResource(unfilledStar);
-                            }
-                        }
-
-                        // In ra điểm được chọn (1-5)
-                        Toast.makeText(view.getContext(), "Rating: " + (position + 1), Toast.LENGTH_SHORT).show();
-                    }
-                };
-
-                // Gán sự kiện click cho từng ngôi sao
-                for (ImageView star : listStar) {
-                    star.setOnClickListener(starClickListener);
-                }
-
-                // Bắt sự kiện Cancel
-                btnCancel.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.dismiss(); // Đóng dialog khi bấm Cancel
-                    }
-                });
-
-                // Bắt sự kiện OK
-                btnOK.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        String comment = edtComment.getText().toString().trim();
-                        Toast.makeText(view.getContext(), "Comment: " + comment, Toast.LENGTH_SHORT).show();
-                        dialog.dismiss(); // Đóng dialog sau khi nhấn OK
-                    }
-                });
-
-                // Hiển thị Dialog
-                dialog.show();*/
-                callBottomSheet(true);
-            }
-        });
-        holder.btn_reOrder.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                /*// Khởi tạo BottomSheetDialog
-                BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(context);
-                View sheetView = View.inflate(context, R.layout.order_detail_bottomsheet, null);
-                bottomSheetDialog.setContentView(sheetView);
-
-                // Ánh xạ RecyclerView và Button
-                RecyclerView recyclerView = sheetView.findViewById(R.id.recycler_order_detail);
-                MaterialButton btnReOrder = sheetView.findViewById(R.id.btn_reorder);
-                MaterialButton btnCancel = sheetView.findViewById(R.id.btn_cancel);
-
-                // Tạo dữ liệu giả để test giao diện
-                List<OrderDetailModel> mockOrderDetails = new ArrayList<>();
-                mockOrderDetails.add(new OrderDetailModel(1, "Pizza Margherita", 100000, 2));
-                mockOrderDetails.add(new OrderDetailModel(2, "Spaghetti Bolognese", 75000, 1));
-                mockOrderDetails.add(new OrderDetailModel(3, "Caesar Salad", 50000, 3));
-                mockOrderDetails.add(new OrderDetailModel(4, "Garlic Bread", 30000, 2));
-
-                // Cấu hình RecyclerView với Adapter
-                OrderDetailAdapter adapter = new OrderDetailAdapter(context, mockOrderDetails, false);
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-                recyclerView.setAdapter(adapter);
-
-                // Sự kiện khi nhấn nút ReOrder
-                btnReOrder.setOnClickListener(v -> {
-                    Intent intent = new Intent(context, PaymentActivity.class);
-                    context.startActivity(intent);
-                    bottomSheetDialog.dismiss();
-                });
-
-                // Sự kiện khi nhấn nút Cancel
-                btnCancel.setOnClickListener(v -> {
-                    bottomSheetDialog.dismiss();
-                });
-
-                // Hiển thị BottomSheetDialog
-                bottomSheetDialog.show();*/
-                callBottomSheet(false);
-            }
-        });
-    }
-    private void callBottomSheet(boolean isRating)
-    {
-        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(context);
-        View sheetView = View.inflate(context, R.layout.order_detail_bottomsheet, null);
-        bottomSheetDialog.setContentView(sheetView);
-
-        // Ánh xạ RecyclerView và Button
-        RecyclerView recyclerView = sheetView.findViewById(R.id.recycler_order_detail);
-        MaterialButton btnReOrder = sheetView.findViewById(R.id.btn_reorder);
-        MaterialButton btnCancel = sheetView.findViewById(R.id.btn_cancel);
-
-        // Tạo dữ liệu giả để test giao diện
-        List<OrderDetailModel> mockOrderDetails = new ArrayList<>();
-        mockOrderDetails.add(new OrderDetailModel(1, "Pizza Margherita", 100000, 2));
-        mockOrderDetails.add(new OrderDetailModel(2, "Spaghetti Bolognese", 75000, 1));
-        mockOrderDetails.add(new OrderDetailModel(3, "Caesar Salad", 50000, 3));
-        mockOrderDetails.add(new OrderDetailModel(4, "Garlic Bread", 30000, 2));
-
-        // Cấu hình RecyclerView với Adapter
-        OrderDetailAdapter adapter = new OrderDetailAdapter(context, mockOrderDetails, isRating);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(adapter);
-
-        if (isRating)
-        {
-            btnReOrder.setVisibility(View.GONE);
-            btnCancel.setVisibility(View.GONE);
-        }
-        // Sự kiện khi nhấn nút ReOrder
-        btnReOrder.setOnClickListener(v -> {
-            Intent intent = new Intent(context, PaymentActivity.class);
-            context.startActivity(intent);
-            bottomSheetDialog.dismiss();
-        });
-
-        // Sự kiện khi nhấn nút Cancel
-        btnCancel.setOnClickListener(v -> {
-            bottomSheetDialog.dismiss();
-        });
-
-        // Hiển thị BottomSheetDialog
-        bottomSheetDialog.show();
+        // Set other fields
+        holder.tv_orderId.setText("#" + (order.getIdOrder() != null ? order.getIdOrder() : ""));
+        holder.tv_foodName.setText(order.getProducts().get(0).getFoodName());
+        holder.tv_totalprice.setText(String.valueOf(order.getTotalPrice()));
+        holder.tv_category.setText((order.getProducts().get(0).getCategory()));
+        holder.tv_items.setText(String.valueOf(order.getProducts().size()));
+        Glide.with(holder.img_food.getContext()).load(IMG_URL + order.getProducts().get(0).getThumbnail()).into(holder.img_food);
     }
 
     @Override
     public int getItemCount() {
-        return orderViewModel.getHistoryOrders().getValue().size();
+        return orderList != null ? orderList.size() : 0;
     }
 
-    public static class OrderHistoryViewHolder extends RecyclerView.ViewHolder {
-        TextView tv_orderDate, tv_orderCompleted, tv_orderCanceled, tv_foodId;
-        Button btn_rate, btn_reOrder;
+    public void setData(List<MyOrderPendingDTO> data) {
+        this.orderList = data != null ? data : new ArrayList<>();
+        notifyDataSetChanged();
+    }
+
+    private String formatDateString(String isoDate) {
+        if (isoDate == null) return "";
+        try {
+            // ISO 8601 format example: "2024-05-15T13:45:00"
+            SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+            SimpleDateFormat outputFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+            Date date = inputFormat.parse(isoDate);
+            return outputFormat.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return isoDate; // Nếu lỗi thì hiển thị nguyên bản
+        }
+    }
+
+    static class OrderHistoryViewHolder extends RecyclerView.ViewHolder {
+
+        TextView tv_orderDate, tv_orderCompleted, tv_orderCanceled, tv_orderId,tv_foodName,tv_category,tv_items,tv_totalprice;
+        ImageView img_food;
+
         public OrderHistoryViewHolder(@NonNull View itemView) {
             super(itemView);
             tv_orderDate = itemView.findViewById(R.id.fragment_order_item_history_tv_dateOrdered);
             tv_orderCompleted = itemView.findViewById(R.id.fragment_order_item_history_tv_status_completed);
             tv_orderCanceled = itemView.findViewById(R.id.fragment_order_item_history_tv_status_canceled);
-            tv_foodId = itemView.findViewById(R.id.fragment_order_item_history_tv_foodID);
-            btn_rate = itemView.findViewById(R.id.fragment_order_item_history_btn_rate);
-            btn_reOrder = itemView.findViewById(R.id.fragment_order_item_history_btn_reOrder);
+            tv_orderId = itemView.findViewById(R.id.fragment_order_item_history_tv_foodID);
+            tv_category = itemView.findViewById(R.id.fragment_order_item_history_tv_categoryName);
+            tv_foodName = itemView.findViewById(R.id.fragment_order_item_history_tv_foodName);
+            tv_items = itemView.findViewById(R.id.fragment_order_item_history_tv_itemCount);
+            tv_totalprice = itemView.findViewById(R.id.fragment_order_item_history_tv_price);
+            img_food = itemView.findViewById(R.id.fragment_order_item_history_img_food);
         }
     }
 }

@@ -8,6 +8,7 @@
     android:background="#FFFFFF"
     android:layout_marginTop="12dp"
     android:layout_marginBottom="12dp">
+
     <TextView
         android:id="@+id/fragment_order_item_ongoing_tv_categoryName"
         android:layout_width="wrap_content"
@@ -15,6 +16,18 @@
         android:textSize="16sp"
         android:fontFamily="@font/sen"
         android:text="CategoryName"/>
+
+    <!-- Toio TextView mới thêm -->
+    <TextView
+        android:id="@+id/fragment_order_item_ongoing_tv_toio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Toio"
+        android:textSize="16sp"
+        android:fontFamily="@font/sen"
+        android:textColor="#000000"
+        android:layout_marginTop="4dp"/>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
@@ -53,6 +66,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 android:layout_marginTop="8dp"
                 android:textStyle="bold"/>
+
             <TextView
                 android:id="@+id/fragment_order_item_ongoing_tv_foodID"
                 android:layout_width="wrap_content"

@@ -1,97 +1,94 @@
 package com.example.app_foodstore.Adapter;
 
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.Paint;
+import static com.example.app_foodstore.APIService.Constant.IMG_URL;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.app_foodstore.Activity.TrackOrderActivity;
-import com.example.app_foodstore.Model.OrderModel;
+import com.bumptech.glide.Glide;
+import com.example.app_foodstore.Model.MyOrderPendingDTO;
 import com.example.app_foodstore.R;
-import com.example.app_foodstore.ViewModel.OrderViewModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class OrderOnGoingAdapter extends RecyclerView.Adapter<OrderOnGoingAdapter.OrderOnGoingViewHolder> {
-    Context context;
-    // Tính tới cái model sau
-    OrderViewModel orderViewModel;
-    List<OrderModel> listOrderOngoing;
+public class OrderOnGoingAdapter extends RecyclerView.Adapter<OrderOnGoingAdapter.OrderViewHolder> {
 
-    public List<OrderModel> getListOrderOngoing() {
-        return listOrderOngoing;
-    }
+    private List<MyOrderPendingDTO> orderList = new ArrayList<>();
 
-    public void setListOrderOngoing(List<OrderModel> listOrderOngoing) {
-        this.listOrderOngoing = listOrderOngoing;
-    }
-
-    public OrderOnGoingAdapter(Context context, List<OrderModel> listOrderOngoing) {
-        this.context = context;
-        this.listOrderOngoing = listOrderOngoing;
-    }
-
-    //List<FoodModel> list;
     @NonNull
     @Override
-    public OrderOnGoingAdapter.OrderOnGoingViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_order_item_ongoing, parent, false);
-        return new OrderOnGoingViewHolder(view);
+    public OrderViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.fragment_order_item_ongoing, parent, false);
+        return new OrderViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull OrderOnGoingAdapter.OrderOnGoingViewHolder holder, int position) {
-        // Vẽ underline cho text
-        holder.tv_Foodid.setText("#123");
-        holder.tv_Foodid.setPaintFlags(holder.tv_Foodid.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-        holder.btn_cancel.setOnClickListener(v -> {
-            // Tạo AlertDialog
-            AlertDialog dialog = new AlertDialog.Builder(context)
-                    .setTitle("Xác nhận hủy")
-                    .setMessage("Bạn có chắc chắn muốn hủy đơn hàng này không?")
-                    .setPositiveButton("Yes", (dialog1, which) -> {
-                        listOrderOngoing.remove(position);
-                        notifyItemRemoved(position);
-                    })
-                    .setNegativeButton("No", (dialog12, which) -> {
-                        dialog12.dismiss();
-                    })
-                    .show();
-            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.parseColor("#FF7622"));
-            dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.parseColor("#FF7622"));
+    public void onBindViewHolder(@NonNull OrderViewHolder holder, int position) {
+        MyOrderPendingDTO order = orderList.get(position);
 
-        });
-        holder.btn_track.setOnClickListener(v -> {
-            Intent intent = new Intent(context, TrackOrderActivity.class);
-            context.startActivity(intent);
-        });
+        // Set tên category (ví dụ lấy từ order.getCategoryName())
+        holder.tvCategoryName.setText(order.getProducts().get(0).getCategory() != null ? order.getProducts().get(0).getCategory() : "Unknown Category");
 
+        // Set "Toio" TextView (nếu có logic thì bạn sửa lại, nếu chỉ text tĩnh thì có thể bỏ hoặc giữ nguyên)
+        holder.tvToio.setText(order.getStatus());
+
+        // Set tên món ăn
+        holder.tvFoodName.setText(order.getProducts().get(0).getFoodName() != null ? order.getProducts().get(0).getFoodName() : "Unknown Food");
+
+        // Set ID món ăn (ví dụ order.getFoodId())
+        holder.tvFoodId.setText(order.getIdOrder() != null ? "#" + order.getIdOrder() : "#N/A");
+
+        // Set giá món (giá ở dạng số hoặc String, bạn convert nếu cần)
+        holder.tvPrice.setText(order.getTotalPrice() != null ? String.valueOf(order.getTotalPrice()) : "0");
+
+        // Set số lượng món
+        holder.tvItemCount.setText(order.getProducts() != null ? String.valueOf(order.getProducts().size()) : "0");
+        Glide.with(holder.imgFood.getContext()).load(IMG_URL + order.getProducts().get(0).getThumbnail()).into(holder.imgFood);
+        // Nếu bạn muốn hiển thị ảnh món ăn thì cần load hình từ url hoặc resource:
+        // Ví dụ dùng Glide hoặc Picasso:
+
+
+        // Hiện tại bạn có thể giữ mặc định hoặc set ảnh tĩnh nếu không có hình
+        // holder.imgFood.setImageResource(R.drawable.food_sample);
     }
 
     @Override
     public int getItemCount() {
-        return listOrderOngoing.size();
+        return orderList.size();
     }
 
+    public void setData(List<MyOrderPendingDTO> data) {
+        this.orderList = data;
+        notifyDataSetChanged();
+    }
 
-    public class OrderOnGoingViewHolder extends RecyclerView.ViewHolder {
-        // Tính tới cái model sau
-        TextView tv_Foodid;
-        Button btn_cancel, btn_track;
-        public OrderOnGoingViewHolder(@NonNull View itemView) {
+    static class OrderViewHolder extends RecyclerView.ViewHolder {
+
+        TextView tvCategoryName, tvToio, tvFoodName, tvFoodId, tvPrice, tvItemCount;
+        ImageView imgFood;
+        Button btnTrack, btnCancel;
+
+        public OrderViewHolder(@NonNull View itemView) {
             super(itemView);
-            tv_Foodid = itemView.findViewById(R.id.fragment_order_item_ongoing_tv_foodID);
-            btn_cancel = itemView.findViewById(R.id.fragment_order_item_ongoing_btn_cancel);
-            btn_track = itemView.findViewById(R.id.fragment_order_item_ongoing_btn_track);
+
+            tvCategoryName = itemView.findViewById(R.id.fragment_order_item_ongoing_tv_categoryName);
+            tvToio = itemView.findViewById(R.id.fragment_order_item_ongoing_tv_toio);
+            tvFoodName = itemView.findViewById(R.id.fragment_order_item_ongoing_tv_foodName);
+            tvFoodId = itemView.findViewById(R.id.fragment_order_item_ongoing_tv_foodID);
+            tvPrice = itemView.findViewById(R.id.fragment_order_item_ongoing_tv_price);
+            tvItemCount = itemView.findViewById(R.id.fragment_order_item_ongoing_tv_itemCount);
+            imgFood = itemView.findViewById(R.id.fragment_order_item_ongoing_imgFood);
+            btnTrack = itemView.findViewById(R.id.fragment_order_item_ongoing_btn_track);
+            btnCancel = itemView.findViewById(R.id.fragment_order_item_ongoing_btn_cancel);
         }
     }
 }
