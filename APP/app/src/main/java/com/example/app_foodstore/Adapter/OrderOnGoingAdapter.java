@@ -22,6 +22,16 @@ import java.util.List;
 public class OrderOnGoingAdapter extends RecyclerView.Adapter<OrderOnGoingAdapter.OrderViewHolder> {
 
     private List<MyOrderPendingDTO> orderList = new ArrayList<>();
+    private OnOrderClickListener listener;
+
+    public interface OnOrderClickListener {
+        void onTrackClicked(MyOrderPendingDTO order);
+        void onCancelClicked(MyOrderPendingDTO order);
+    }
+
+    public void setOnOrderClickListener(OnOrderClickListener listener) {
+        this.listener = listener;
+    }
 
     @NonNull
     @Override
@@ -35,30 +45,40 @@ public class OrderOnGoingAdapter extends RecyclerView.Adapter<OrderOnGoingAdapte
     public void onBindViewHolder(@NonNull OrderViewHolder holder, int position) {
         MyOrderPendingDTO order = orderList.get(position);
 
-        // Set tên category (ví dụ lấy từ order.getCategoryName())
-        holder.tvCategoryName.setText(order.getProducts().get(0).getCategory() != null ? order.getProducts().get(0).getCategory() : "Unknown Category");
+        if (order.getProducts() != null && !order.getProducts().isEmpty()) {
+            var product = order.getProducts().get(0);
+            holder.tvCategoryName.setText(product.getCategory() != null ? product.getCategory() : "Unknown Category");
+            holder.tvFoodName.setText(product.getFoodName() != null ? product.getFoodName() : "Unknown Food");
 
-        // Set "Toio" TextView (nếu có logic thì bạn sửa lại, nếu chỉ text tĩnh thì có thể bỏ hoặc giữ nguyên)
-        holder.tvToio.setText(order.getStatus());
+            String thumbnail = product.getThumbnail();
+            if (thumbnail != null && !thumbnail.isEmpty()) {
+                Glide.with(holder.imgFood.getContext())
+                        .load(IMG_URL + thumbnail)
+                        .into(holder.imgFood);
+            } else {
+                holder.imgFood.setImageResource(R.drawable.food_sample);
+            }
 
-        // Set tên món ăn
-        holder.tvFoodName.setText(order.getProducts().get(0).getFoodName() != null ? order.getProducts().get(0).getFoodName() : "Unknown Food");
+            holder.tvItemCount.setText(String.valueOf(order.getProducts().size()));
+        } else {
+            holder.tvCategoryName.setText("No Category");
+            holder.tvFoodName.setText("No Product");
+            holder.tvItemCount.setText("0");
+            holder.imgFood.setImageResource(R.drawable.food_sample);
+        }
 
-        // Set ID món ăn (ví dụ order.getFoodId())
+        holder.tvToio.setText(order.getStatus() != null ? order.getStatus() : "Unknown");
         holder.tvFoodId.setText(order.getIdOrder() != null ? "#" + order.getIdOrder() : "#N/A");
-
-        // Set giá món (giá ở dạng số hoặc String, bạn convert nếu cần)
         holder.tvPrice.setText(order.getTotalPrice() != null ? String.valueOf(order.getTotalPrice()) : "0");
 
-        // Set số lượng món
-        holder.tvItemCount.setText(order.getProducts() != null ? String.valueOf(order.getProducts().size()) : "0");
-        Glide.with(holder.imgFood.getContext()).load(IMG_URL + order.getProducts().get(0).getThumbnail()).into(holder.imgFood);
-        // Nếu bạn muốn hiển thị ảnh món ăn thì cần load hình từ url hoặc resource:
-        // Ví dụ dùng Glide hoặc Picasso:
+        // Handle button clicks
+        holder.btnTrack.setOnClickListener(v -> {
+            if (listener != null) listener.onTrackClicked(order);
+        });
 
-
-        // Hiện tại bạn có thể giữ mặc định hoặc set ảnh tĩnh nếu không có hình
-        // holder.imgFood.setImageResource(R.drawable.food_sample);
+        holder.btnCancel.setOnClickListener(v -> {
+            if (listener != null) listener.onCancelClicked(order);
+        });
     }
 
     @Override
@@ -67,7 +87,7 @@ public class OrderOnGoingAdapter extends RecyclerView.Adapter<OrderOnGoingAdapte
     }
 
     public void setData(List<MyOrderPendingDTO> data) {
-        this.orderList = data;
+        this.orderList = data != null ? data : new ArrayList<>();
         notifyDataSetChanged();
     }
 

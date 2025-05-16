@@ -48,7 +48,7 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
             if ("COMPLETED".equalsIgnoreCase(status)) {
                 holder.tv_orderCompleted.setVisibility(View.VISIBLE);
                 holder.tv_orderCanceled.setVisibility(View.GONE);
-            } else if ("CANCELLED".equalsIgnoreCase(status)) {
+            } else if ("CANCEL".equalsIgnoreCase(status)) {
                 holder.tv_orderCompleted.setVisibility(View.GONE);
                 holder.tv_orderCanceled.setVisibility(View.VISIBLE);
             } else {

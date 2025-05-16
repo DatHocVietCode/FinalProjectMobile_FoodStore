@@ -13,15 +13,14 @@ public class VoucherViewModel extends ViewModel {
     private final VoucherRepository repository = new VoucherRepository();
 
     public LiveData<List<VoucherModel>> getMyVouchers(String token) {
-        return repository.getMyVouchers(token);
+        return repository.getMyVouchers(token);  // Lấy các voucher đã sở hữu
     }
 
     public LiveData<List<VoucherModel>> getAvailableVouchers(String token) {
-        return repository.getAvailableVouchers(token);
+        return repository.getAvailableVouchers(token);  // Lấy voucher có thể nhận
     }
 
     public void toggleUserVoucher(Long voucherId, String token) {
-       repository.toggleUserVoucher(voucherId, token);
+        repository.toggleUserVoucher(voucherId, token);  // Nhận hoặc hủy nhận voucher
     }
-
 }

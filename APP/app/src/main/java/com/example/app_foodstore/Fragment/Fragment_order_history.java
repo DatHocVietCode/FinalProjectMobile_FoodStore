@@ -39,16 +39,21 @@ public class Fragment_order_history extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         binding.fragmentOrderHistoryRc.setLayoutManager(layoutManager);
 
-        OrderHistoryAdapter adapter = new OrderHistoryAdapter();
-        binding.fragmentOrderHistoryRc.setAdapter(adapter);
+
 
         String token = "Bearer " + UserUtils.getTokenFromPreferences(requireContext());
         orderViewModel.loadCompleteOrders(token);
 
         // Quan sát dữ liệu từ ViewModel
         orderViewModel.getHistoryOrders().observe(getViewLifecycleOwner(), orders -> {
-            adapter.setData(orders);
-            Log.d("OrderHistory", "OrderHistory observe được dữ liệu mới ");
+            if (orders != null)
+            {
+                OrderHistoryAdapter adapter = new OrderHistoryAdapter();
+                binding.fragmentOrderHistoryRc.setAdapter(adapter);
+                adapter.setData(orders);
+                Log.d("OrderHistory", "OrderHistory observe được dữ liệu mới ");
+            }
+
         });
 
         return binding.getRoot();

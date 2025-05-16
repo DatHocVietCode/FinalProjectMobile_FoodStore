@@ -55,4 +55,28 @@ public class OrderRepository {
             }
         });
     }
+
+    public void cancelOrder(String token, Long orderId, CancelCallback callback) {
+        apiServiceOrder.cancelOrder(token, orderId).enqueue(new Callback<BaseResponse<Void>>() {
+            @Override
+            public void onResponse(Call<BaseResponse<Void>> call, Response<BaseResponse<Void>> response) {
+                if (response.isSuccessful()) {
+                    callback.onCancelSuccess();
+                } else {
+                    callback.onCancelFailed("Cancel failed with code: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BaseResponse<Void>> call, Throwable t) {
+                callback.onCancelFailed(t.getMessage());
+            }
+        });
+    }
+
+    // Optional interface for cancel callback
+    public interface CancelCallback {
+        void onCancelSuccess();
+        void onCancelFailed(String errorMessage);
+    }
 }

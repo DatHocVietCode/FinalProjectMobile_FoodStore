@@ -8,11 +8,19 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.PUT;
+import retrofit2.http.Path;
 
 public interface APIServiceOrder {
-    @GET("/orders/my-orders/pending")
+    @GET("orders/my-orders/pending")
     Call<BaseResponse<List<MyOrderPendingDTO>>> getPendingOrders(@Header("Authorization") String token);
 
-    @GET("/orders/my-orders/history")
+    @GET("orders/my-orders/history")
     Call<BaseResponse<List<MyOrderPendingDTO>>> getCompleteOrders(@Header("Authorization") String token);
+    // PUT - Cancel order
+    @PUT("orders/cancel/{orderId}")
+    Call<BaseResponse<Void>> cancelOrder(@Header("Authorization") String token, @Path("orderId") Long orderId);
+
+    @GET("orders/track/{orderId}")
+    Call<BaseResponse<Void>> trackOrder(@Header("Authorization") String token, @Path("orderId") Long orderId);
 }
