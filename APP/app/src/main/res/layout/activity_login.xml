@@ -97,24 +97,20 @@
             <!-- Checkbox và link quên mật khẩu -->
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <CheckBox
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Remember me"
-                    android:layout_centerVertical="true"
-                    android:alpha="0.7"
-                    android:fontFamily="@font/sen"/>
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp">
 
                 <TextView
                     android:id="@+id/login_tv_forgot_password"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="0dp"
+                    android:paddingEnd="4dp"
                     android:text="I forgot my password"
                     android:fontFamily="@font/sen"
-                    android:layout_centerVertical="true"/>
+                    android:textStyle="normal"
+                    android:layout_centerVertical="true"
+                    />
             </RelativeLayout>
 
             <!-- Nút đăng nhập -->
