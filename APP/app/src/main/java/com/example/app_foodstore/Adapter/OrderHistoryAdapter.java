@@ -1,6 +1,5 @@
 package com.example.app_foodstore.Adapter;
 
-import static android.app.Activity.RESULT_OK;
 import static androidx.activity.result.ActivityResultCallerKt.registerForActivityResult;
 import static com.example.app_foodstore.APIService.Constant.IMG_URL;
 
@@ -14,10 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
@@ -26,13 +22,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.app_foodstore.Activity.AddressActivity;
-import com.example.app_foodstore.Activity.CartActivity;
 import com.example.app_foodstore.Activity.PaymentActivity;
-import com.example.app_foodstore.Activity.UserUtils;
+import com.example.app_foodstore.Utils.UserUtils;
 import com.example.app_foodstore.Interface.AddressSelectionListener;
 import com.example.app_foodstore.Model.MyOrderPendingDTO;
-import com.example.app_foodstore.Model.response.AddressResponse;
 import com.example.app_foodstore.R;
 import com.example.app_foodstore.ViewModel.AddressViewModel;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -40,7 +33,6 @@ import com.google.android.material.button.MaterialButton;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

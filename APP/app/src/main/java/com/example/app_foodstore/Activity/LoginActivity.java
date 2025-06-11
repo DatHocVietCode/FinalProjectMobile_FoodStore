@@ -25,8 +25,40 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
 
+        AnhXa();
+    }
+
+    private void AnhXa()
+    {
+        initViewModel();
+        setUpBtnLogin();
+        setUpBtnLoginAsGuest();
+        setUpBtnSignUp();
+    }
+
+    private void setUpBtnSignUp() {
+        findViewById(R.id.tv_register).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    private void setUpBtnLoginAsGuest() {
+        findViewById(R.id.tv_guest).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LoginActivity.this, HomeScreenActivity.class);
+                startActivity(intent);
+            }
+        });
+
+    }
+
+    private void setUpBtnLogin() {
         findViewById(R.id.btn_login).setOnClickListener(v -> {
             EditText usernameEditText = findViewById(R.id.username_login);
             EditText passwordEditText = findViewById(R.id.password_login);
@@ -46,16 +78,12 @@ public class LoginActivity extends AppCompatActivity {
                 }
             });
         });
-
-        findViewById(R.id.tv_guest).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(LoginActivity.this, HomeScreenActivity.class);
-                startActivity(intent);
-            }
-        });
-
     }
+
+    private void initViewModel() {
+        loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
+    }
+
     private void saveLogin(UserLoginRes res) {
         SharedPreferences sharedPreferences = getSharedPreferences("user_prefs", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();

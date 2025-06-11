@@ -5,15 +5,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.app_foodstore.Activity.CartActivity;
-import com.example.app_foodstore.Activity.HomeScreenActivity;
-import com.example.app_foodstore.Activity.UserUtils;
+import com.example.app_foodstore.Utils.UserUtils;
 import com.example.app_foodstore.databinding.FragmentBtnCartBinding;
 
 public class Fragment_btn_cart extends Fragment {
@@ -26,9 +24,13 @@ public class Fragment_btn_cart extends Fragment {
         binding.btnCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (UserUtils.checkUser(getActivity())) {
+                if (UserUtils.checkUser(requireActivity())) {
                     Intent intent = new Intent(getActivity(), CartActivity.class);
                     startActivity(intent);
+                }
+                else
+                {
+                    UserUtils.notifyLogin(requireActivity());
                 }
             }
         });

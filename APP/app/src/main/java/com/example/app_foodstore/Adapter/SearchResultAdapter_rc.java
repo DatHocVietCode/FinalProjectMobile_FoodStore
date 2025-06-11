@@ -4,7 +4,6 @@ import static com.example.app_foodstore.APIService.Constant.IMG_URL;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.app_foodstore.Activity.FoodDetailActivity;
-import com.example.app_foodstore.Activity.UserUtils;
+import com.example.app_foodstore.Utils.UserUtils;
 import com.example.app_foodstore.Model.FoodModel;
 import com.example.app_foodstore.R;
 import com.example.app_foodstore.ViewModel.CartViewModel;

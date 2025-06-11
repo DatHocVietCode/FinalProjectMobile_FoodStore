@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.app_foodstore.Activity.TrackOrderActivity;
 import com.example.app_foodstore.Adapter.OrderOnGoingAdapter;
-import com.example.app_foodstore.Activity.UserUtils;
+import com.example.app_foodstore.Utils.UserUtils;
 import com.example.app_foodstore.Model.MyOrderPendingDTO;
 import com.example.app_foodstore.ViewModel.OrderViewModel;
 import com.example.app_foodstore.databinding.FragmentOrderOngoingBinding;

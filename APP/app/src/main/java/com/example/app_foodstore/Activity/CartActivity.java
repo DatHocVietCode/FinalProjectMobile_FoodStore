@@ -23,7 +23,7 @@
     import com.example.app_foodstore.Model.CartModel;
     import com.example.app_foodstore.Model.response.AddressResponse;
     import com.example.app_foodstore.R;
-    import com.example.app_foodstore.Activity.UserUtils;
+    import com.example.app_foodstore.Utils.UserUtils;
     import com.example.app_foodstore.ViewModel.AddressViewModel;
     import com.example.app_foodstore.ViewModel.CartViewModel;
     import com.google.android.material.bottomsheet.BottomSheetBehavior;

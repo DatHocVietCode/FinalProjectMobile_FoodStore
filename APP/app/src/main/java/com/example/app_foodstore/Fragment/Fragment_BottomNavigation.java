@@ -13,10 +13,9 @@ import androidx.fragment.app.Fragment;
 
 import com.example.app_foodstore.Activity.HomeScreenActivity;
 import com.example.app_foodstore.Activity.OrderScreenActivity;
-import com.example.app_foodstore.Activity.PersonalInfoActivity;
 import com.example.app_foodstore.Activity.ReservateScreenActivity;
 import com.example.app_foodstore.Activity.SettingActivity;
-import com.example.app_foodstore.Activity.UserUtils;
+import com.example.app_foodstore.Utils.UserUtils;
 import com.example.app_foodstore.Activity.VoucherActivity;
 import com.example.app_foodstore.R;
 import com.google.android.material.bottomappbar.BottomAppBar;

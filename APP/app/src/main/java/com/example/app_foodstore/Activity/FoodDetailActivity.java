@@ -1,10 +1,8 @@
 package com.example.app_foodstore.Activity;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -14,7 +12,6 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -25,14 +22,13 @@ import com.example.app_foodstore.Adapter.ImageViewPager2Adapter;
 import com.example.app_foodstore.Model.CommentModel;
 import com.example.app_foodstore.Model.FoodImage;
 import com.example.app_foodstore.Model.FoodModel;
-import com.example.app_foodstore.Model.ImageModel;
 import com.example.app_foodstore.R;
 import com.example.app_foodstore.Transformer.ZoomOutPageTransformer;
+import com.example.app_foodstore.Utils.UserUtils;
 import com.example.app_foodstore.ViewModel.CartViewModel;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import me.relex.circleindicator.CircleIndicator3;

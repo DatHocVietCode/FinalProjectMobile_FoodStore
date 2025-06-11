@@ -2,29 +2,21 @@ package com.example.app_foodstore.Activity;
 
 import static com.example.app_foodstore.ZaloPay.Constant.AppInfo.APP_ID;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatSpinner;
-import androidx.cardview.widget.CardView;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -34,19 +26,18 @@ import com.example.app_foodstore.Adapter.PaymentMethodAdapter;
 import com.example.app_foodstore.Adapter.ViewPagerPaymentMethodAdapter;
 import com.example.app_foodstore.Adapter.VoucherSpinnerAdapter;
 import com.example.app_foodstore.Interface.PaymentCallBack;
-import com.example.app_foodstore.Model.OrderDetailModel;
 import com.example.app_foodstore.Model.PaymentInterfaceModel;
 import com.example.app_foodstore.Model.VoucherModel;
 import com.example.app_foodstore.Model.request.PaymentReOrderReq;
 import com.example.app_foodstore.Model.request.PaymentRequest;
 import com.example.app_foodstore.R;
+import com.example.app_foodstore.Utils.UserUtils;
 import com.example.app_foodstore.ViewModel.PaymentViewModel;
 import com.example.app_foodstore.ViewModel.VoucherViewModel;
 import com.example.app_foodstore.ZaloPay.Api.CreateOrder;
 
 import org.json.JSONObject;
 
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -1,6 +1,5 @@
 package com.example.app_foodstore.Activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.app_foodstore.Adapter.AddressLabelAdapter;
 import com.example.app_foodstore.Model.request.AddressRequest;
 import com.example.app_foodstore.R;
-import com.example.app_foodstore.Activity.UserUtils;
+import com.example.app_foodstore.Utils.UserUtils;
 import com.example.app_foodstore.ViewModel.AddressViewModel;
 
 import java.util.List;

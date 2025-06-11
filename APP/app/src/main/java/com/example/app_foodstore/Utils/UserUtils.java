@@ -1,4 +1,4 @@
-package com.example.app_foodstore.Activity;
+package com.example.app_foodstore.Utils;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -12,9 +12,19 @@ public class UserUtils {
     public static boolean checkUser(Activity activity) {
         SharedPreferences sharedPreferences = activity.getSharedPreferences("user_prefs", Activity.MODE_PRIVATE);
         boolean isLoggedIn = sharedPreferences.getBoolean("is_logged_in", false);
-
         if (!isLoggedIn) {
-            new AlertDialog.Builder(activity)
+            return false;
+        }
+        return true;
+    }
+    public static String getTokenFromPreferences(Context context) {
+         SharedPreferences sharedPreferences = context.getSharedPreferences("user_prefs", Context.MODE_PRIVATE);
+         return sharedPreferences.getString("access_token", "");
+    }
+
+    public static void notifyLogin(Activity activity)
+    {
+        new AlertDialog.Builder(activity)
                     .setTitle("Yêu cầu đăng nhập")
                     .setMessage("Bạn có muốn đăng nhập không?")
                     .setPositiveButton("Có", (dialog, which) -> {
@@ -25,13 +35,5 @@ public class UserUtils {
                     })
                     .setNegativeButton("Không", null)
                     .show();
-            return false;
-        }
-
-        return true;
-    }
-   public static String getTokenFromPreferences(Context context) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences("user_prefs", Context.MODE_PRIVATE);
-        return sharedPreferences.getString("access_token", "");
     }
 }

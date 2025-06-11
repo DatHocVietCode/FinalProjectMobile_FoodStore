@@ -4,11 +4,7 @@ import static com.example.app_foodstore.APIService.Constant.IMG_URL;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -31,11 +27,11 @@ import com.example.app_foodstore.Fragment.Fragment_BottomNavigation;
 import com.example.app_foodstore.Fragment.Fragment_SearchBar;
 import com.example.app_foodstore.Fragment.Fragment_btn_cart;
 import com.example.app_foodstore.Fragment.Fragment_foodDisplay1;
-import com.example.app_foodstore.Model.CartModel;
 import com.example.app_foodstore.Model.CategoryModel;
 import com.example.app_foodstore.Model.FoodModel;
 import com.example.app_foodstore.Model.response.UserRes;
 import com.example.app_foodstore.R;
+import com.example.app_foodstore.Utils.UserUtils;
 import com.example.app_foodstore.ViewModel.CartViewModel;
 import com.example.app_foodstore.ViewModel.CateViewModel;
 import com.example.app_foodstore.ViewModel.FoodViewModel;
@@ -153,13 +149,14 @@ public class HomeScreenActivity extends AppCompatActivity {
                     Intent intent = new Intent(HomeScreenActivity.this, PersonalInfoActivity.class);
                     startActivity(intent);
                 }
+                else {
+                    UserUtils.notifyLogin(HomeScreenActivity.this);
+                }
             }
         });
-        SharedPreferences sharedPreferences = getSharedPreferences("user_prefs", MODE_PRIVATE);
-        boolean isLoggedIn = sharedPreferences.getBoolean("is_logged_in", false);
-        if (isLoggedIn) {
+        if (UserUtils.checkUser(HomeScreenActivity.this)) {
             // Gọi ViewModel để lấy dữ liệu người dùng
-            String token = sharedPreferences.getString("access_token", "");
+            String token = UserUtils.getTokenFromPreferences(this);
             userViewModel.getUserProfile(token);
             // Quan sát dữ liệu thay đổi
             userViewModel.getUserProfileLiveData().observe(this, new Observer<UserRes>() {
@@ -222,7 +219,6 @@ public class HomeScreenActivity extends AppCompatActivity {
         Fragment_btn_cart btn_cart = new Fragment_btn_cart();
         transaction.replace(R.id.ms_fragment_container_btn_cart, btn_cart);
         transaction.commit();
-
         if (UserUtils.checkUser(this)) {
             cartViewModel.getMyCart(UserUtils.getTokenFromPreferences(this))
                     .observe(this, myCart -> {

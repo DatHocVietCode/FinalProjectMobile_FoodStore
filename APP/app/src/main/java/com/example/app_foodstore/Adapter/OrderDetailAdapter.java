@@ -25,9 +25,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.app_foodstore.Activity.UserUtils;
-import com.example.app_foodstore.Model.MyOrderPendingDTO;
-import com.example.app_foodstore.Model.OrderDetailModel;
+import com.example.app_foodstore.Utils.UserUtils;
 import com.example.app_foodstore.Model.ProductInOrderDTO;
 import com.example.app_foodstore.Model.request.CommentRequestDTO;
 import com.example.app_foodstore.Model.response.BaseResponse;
@@ -36,8 +34,6 @@ import com.example.app_foodstore.ViewModel.CommentViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import retrofit2.Call;
 
 public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.OrderDetailViewHolder> {
     Context context;

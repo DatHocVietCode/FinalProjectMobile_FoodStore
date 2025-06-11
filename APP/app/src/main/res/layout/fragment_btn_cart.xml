@@ -28,7 +28,7 @@
         android:layout_height="20dp"
         android:background="@drawable/circle_bg_ff7622"
         android:gravity="center"
-        android:visibility="visible"
+        android:visibility="gone"
         android:textStyle="bold"
         android:text="4"
         android:textColor="@android:color/white"

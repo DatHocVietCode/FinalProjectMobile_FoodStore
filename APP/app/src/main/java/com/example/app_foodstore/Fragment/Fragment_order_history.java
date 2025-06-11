@@ -20,10 +20,9 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.app_foodstore.Activity.AddressActivity;
-import com.example.app_foodstore.Activity.UserUtils;
+import com.example.app_foodstore.Utils.UserUtils;
 import com.example.app_foodstore.Adapter.OrderHistoryAdapter;
 import com.example.app_foodstore.Interface.AddressSelectionListener;
-import com.example.app_foodstore.Model.OrderModel;
 import com.example.app_foodstore.Model.response.AddressResponse;
 import com.example.app_foodstore.ViewModel.OrderViewModel;
 import com.example.app_foodstore.databinding.FragmentOrderHistoryBinding;

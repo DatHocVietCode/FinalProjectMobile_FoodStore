@@ -110,7 +110,8 @@
                     android:fontFamily="@font/sen"
                     android:textStyle="normal"
                     android:layout_centerVertical="true"
-                    />
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"/>
             </RelativeLayout>
 
             <!-- Nút đăng nhập -->
@@ -155,23 +156,27 @@
                 android:id="@+id/tv_register"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Not a member yet? Register now!"
+                android:text="Not a member yet? \nRegister now!"
                 android:textColor="#FF7622"
-                android:textSize="16sp"
+                android:textSize="24sp"
                 android:gravity="center"
                 android:fontFamily="@font/sen"
-                android:layout_gravity="center"/>
+                android:layout_gravity="center"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"/>
             <TextView
                 android:id="@+id/tv_guest"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Or continue like a guest"
-                android:textColor="#FF7622"
-                android:textSize="16sp"
+                android:textColor="#CCCCCC"
+                android:textSize="24sp"
                 android:textStyle="italic"
                 android:gravity="center"
                 android:fontFamily="@font/sen"
-                android:layout_gravity="center"/>
+                android:layout_gravity="center"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"/>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </RelativeLayout>

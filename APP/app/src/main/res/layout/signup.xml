@@ -50,6 +50,7 @@
                 android:textStyle="bold" />
 
             <EditText
+                android:id="@+id/signup_etUsername"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Enter your username"
@@ -68,6 +69,7 @@
                 android:textStyle="bold" />
 
             <EditText
+                android:id="@+id/signup_etEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"
@@ -87,6 +89,7 @@
                 android:textStyle="bold" />
 
             <EditText
+                android:id="@+id/signup_etPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
@@ -106,6 +109,7 @@
                 android:textStyle="bold" />
 
             <EditText
+                android:id="@+id/signup_etRePassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
@@ -129,13 +133,15 @@
                 android:layout_height="10dp" />
 
             <TextView
+                android:id="@+id/signup_tvLogin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Already have an account? Login"
                 android:layout_gravity="center"
                 android:textColor="#FF7622"
                 android:textStyle="bold"
-                android:paddingTop="10dp" />
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"/>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </RelativeLayout>

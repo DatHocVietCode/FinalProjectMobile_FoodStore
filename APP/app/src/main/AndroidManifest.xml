@@ -63,6 +63,7 @@
         <activity android:name=".Activity.FavoriteFoodActivity"/>
         <activity android:name=".Activity.PaymentNotificationActivity"/>
         <activity android:name=".Activity.NotificationActivity"/>
+        <activity android:name=".Activity.SignUpActivity"/>
     </application>
 
 </manifest>
