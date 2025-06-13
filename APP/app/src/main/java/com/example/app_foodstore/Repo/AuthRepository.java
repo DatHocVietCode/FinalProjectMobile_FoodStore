@@ -8,8 +8,10 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.app_foodstore.APIService.Constant;
 import com.example.app_foodstore.APIService.User.APIServiceAuth;
 import com.example.app_foodstore.Model.request.UserLoginReq;
+import com.example.app_foodstore.Model.request.UserSignUpRequest;
 import com.example.app_foodstore.Model.response.BaseResponse;
 import com.example.app_foodstore.Model.response.UserLoginRes;
+import com.example.app_foodstore.Model.response.UserSignUpResponse;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -51,5 +53,59 @@ public class AuthRepository {
         });
 
         return loginData;
+    }
+
+    public LiveData<UserSignUpResponse> signUp(UserSignUpRequest req) {
+        MutableLiveData<UserSignUpResponse> signUpData = new MutableLiveData<>();
+        Call<BaseResponse<UserSignUpResponse>> call = authService.signUp(req);
+        call.enqueue(new Callback<BaseResponse<UserSignUpResponse>>() {
+            @Override
+            public void onResponse(Call<BaseResponse<UserSignUpResponse>> call, Response<BaseResponse<UserSignUpResponse>> response) {
+                if (response.isSuccessful() && response.body() != null)
+                {
+                    if (response.body().getStatus() == 200)
+                    {
+                        signUpData.setValue(response.body().getData());
+                        Log.d("AuthRepo", "Sign up success!");
+                    }
+                    else
+                    {
+                        Log.d("AuthRepo", "Sign up failed with status != 200");
+                        signUpData.setValue(null);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BaseResponse<UserSignUpResponse>> call, Throwable t) {
+                Log.d("AuthRepo", "Sign up failed due to" + t.getMessage());
+                signUpData.setValue(null);
+            }
+        });
+        return signUpData;
+    }
+
+    public LiveData<String> resendOTP() {
+        MutableLiveData<String> resendOTPData = new MutableLiveData<>();
+        Call<BaseResponse<String>> call = authService.resendOTP();
+        call.enqueue(new Callback<BaseResponse<String>>() {
+            @Override
+            public void onResponse(Call<BaseResponse<String>> call, Response<BaseResponse<String>> response) {
+                if (response.isSuccessful() && response.body() != null)
+                {
+                    if (response.body().getStatus() == 200)
+                    {
+                        resendOTPData.setValue(response.body().getData());
+                        Log.d("AuthRepo", "Resend OTP success!");
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BaseResponse<String>> call, Throwable t) {
+
+            }
+        });
+        return resendOTPData;
     }
 }

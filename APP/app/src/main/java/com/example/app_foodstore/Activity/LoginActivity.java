@@ -3,9 +3,7 @@ package com.example.app_foodstore.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -16,10 +14,10 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.app_foodstore.Model.request.UserLoginReq;
 import com.example.app_foodstore.Model.response.UserLoginRes;
 import com.example.app_foodstore.R;
-import com.example.app_foodstore.ViewModel.LoginViewModel;
-import com.google.android.material.button.MaterialButton;
+import com.example.app_foodstore.ViewModel.AuthViewModel;
+
 public class LoginActivity extends AppCompatActivity {
-    private LoginViewModel loginViewModel;
+    private AuthViewModel authViewModel;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -67,7 +65,7 @@ public class LoginActivity extends AppCompatActivity {
             String password = passwordEditText.getText().toString().trim();
             UserLoginReq req = new UserLoginReq(username, password);
 
-            loginViewModel.login(req).observe(this, response -> {
+            authViewModel.login(req).observe(this, response -> {
                 if (response != null) {
                     saveLogin(response);
                     Toast.makeText(this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
@@ -81,7 +79,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void initViewModel() {
-        loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
+        authViewModel = new ViewModelProvider(this).get(AuthViewModel.class);
     }
 
     private void saveLogin(UserLoginRes res) {

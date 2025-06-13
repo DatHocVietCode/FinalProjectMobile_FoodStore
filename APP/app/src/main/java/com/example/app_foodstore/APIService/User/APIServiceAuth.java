@@ -18,5 +18,8 @@ public interface APIServiceAuth {
     Call<BaseResponse<UserLoginRes>> login(@Body UserLoginReq userLoginReq);
 
     @POST("/auth/signUp")
-    Call<BaseResponse<UserSignUpResponse>> signup(@Body UserSignUpRequest userSignUpRequest);
+    Call<BaseResponse<UserSignUpResponse>> signUp(@Body UserSignUpRequest userSignUpRequest);
+
+    @POST("/auth/resendOTP")
+    Call<BaseResponse<String>> resendOTP();
 }
