@@ -7,11 +7,16 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.app_foodstore.APIService.Constant;
 import com.example.app_foodstore.APIService.User.APIServiceAuth;
+import com.example.app_foodstore.Model.request.OTPRequestDTO;
 import com.example.app_foodstore.Model.request.UserLoginReq;
 import com.example.app_foodstore.Model.request.UserSignUpRequest;
 import com.example.app_foodstore.Model.response.BaseResponse;
 import com.example.app_foodstore.Model.response.UserLoginRes;
 import com.example.app_foodstore.Model.response.UserSignUpResponse;
+
+import org.json.JSONObject;
+
+import java.io.IOException;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -36,7 +41,7 @@ public class AuthRepository {
                         loginData.setValue(response.body().getData());
                         Log.d("AuthRepo", "Login success: " + response.body().getData().getAccessToken());
                     } else {
-                        Log.d("AuthRepo", "Login failed with status != 200");
+                        Log.d("AuthRepo", response.message());
                         loginData.setValue(null);
                     }
                 } else {
@@ -68,12 +73,22 @@ public class AuthRepository {
                         signUpData.setValue(response.body().getData());
                         Log.d("AuthRepo", "Sign up success!");
                     }
-                    else
-                    {
-                        Log.d("AuthRepo", "Sign up failed with status != 200");
-                        signUpData.setValue(null);
-                    }
                 }
+                else {
+                    try {
+                        String errorJson = response.errorBody().string();  // Lấy nội dung body khi lỗi
+                        JSONObject jsonObject = new JSONObject(errorJson);
+                        String message = jsonObject.getString("message");
+
+                        Log.d("AuthRepo", "Error message from server: " + message);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        Log.d("AuthRepo", "Error parsing error body");
+                    }
+
+                    signUpData.setValue(null);
+                }
+
             }
 
             @Override
@@ -108,4 +123,41 @@ public class AuthRepository {
         });
         return resendOTPData;
     }
+
+    public LiveData<String> verifyOTP(OTPRequestDTO otpRequestDTO)
+    {
+        MutableLiveData<String> verifyOTPData = new MutableLiveData<>();
+        Call<BaseResponse<String>> call = authService.verifyOTP(otpRequestDTO);
+        call.enqueue(new Callback<BaseResponse<String>>() {
+            @Override
+            public void onResponse(Call<BaseResponse<String>> call, Response<BaseResponse<String>> response) {
+                if (response.isSuccessful() && response.body() != null)
+                {
+                    BaseResponse<String> baseResponse = response.body();
+                    verifyOTPData.setValue(baseResponse.getMessage());
+                    Log.d("AuthRepo", "Verify OTP success: " + baseResponse.getMessage());
+                }
+                else
+                {
+                    if (response.errorBody() != null) {
+                        String error = response.errorBody().toString();
+                        Log.d("AuthRepo", "Error body: " + error);
+                        // Giải mã JSON nếu cần, hoặc dùng một thư viện như Gson để convert về BaseResponse
+                        verifyOTPData.setValue("OTP verification failed!");
+                    } else {
+                        verifyOTPData.setValue("Server returned no response!");
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BaseResponse<String>> call, Throwable t) {
+                Log.d("AuthRepo", "Verify OTP failed: " + t.getMessage());
+                verifyOTPData.setValue("Cannot connect to server.");
+            }
+        });
+
+        return verifyOTPData;
+    }
+
 }

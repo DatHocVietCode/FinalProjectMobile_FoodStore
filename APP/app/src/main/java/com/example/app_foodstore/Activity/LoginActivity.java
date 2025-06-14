@@ -68,11 +68,11 @@ public class LoginActivity extends AppCompatActivity {
             authViewModel.login(req).observe(this, response -> {
                 if (response != null) {
                     saveLogin(response);
-                    Toast.makeText(this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Successfully login!", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(this, HomeScreenActivity.class));
                     finish();
                 } else {
-                    Toast.makeText(this, "Tên đăng nhập hoặc mật khẩu sai!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Error occurred during login!", Toast.LENGTH_SHORT).show();
                 }
             });
         });

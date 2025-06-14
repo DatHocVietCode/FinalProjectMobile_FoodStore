@@ -3,6 +3,7 @@ package com.example.app_foodstore.ViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.app_foodstore.Model.request.OTPRequestDTO;
 import com.example.app_foodstore.Model.request.UserLoginReq;
 import com.example.app_foodstore.Model.request.UserSignUpRequest;
 import com.example.app_foodstore.Model.response.UserLoginRes;
@@ -21,6 +22,11 @@ public class AuthViewModel extends ViewModel {
     }
 
     public LiveData<String> resendOTP() {
-        return  repository.resendOTP();
+        return repository.resendOTP();
+    }
+
+    public LiveData<String> verifyOTP(OTPRequestDTO otpRequestDTO)
+    {
+        return repository.verifyOTP(otpRequestDTO);
     }
 }

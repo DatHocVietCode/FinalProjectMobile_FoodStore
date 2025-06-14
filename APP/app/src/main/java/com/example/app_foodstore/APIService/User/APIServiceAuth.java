@@ -1,5 +1,6 @@
 package com.example.app_foodstore.APIService.User;
 
+import com.example.app_foodstore.Model.request.OTPRequestDTO;
 import com.example.app_foodstore.Model.request.UserLoginReq;
 import com.example.app_foodstore.Model.request.UserSignUpRequest;
 import com.example.app_foodstore.Model.response.UserLoginRes;
@@ -22,4 +23,7 @@ public interface APIServiceAuth {
 
     @POST("/auth/resendOTP")
     Call<BaseResponse<String>> resendOTP();
+
+    @POST("/auth/verifyOTP")
+    Call<BaseResponse<String>> verifyOTP(@Body OTPRequestDTO otpRequestDTO);
 }
