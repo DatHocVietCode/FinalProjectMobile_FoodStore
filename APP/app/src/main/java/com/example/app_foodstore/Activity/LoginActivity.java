@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.app_foodstore.Constant.ConstantVariable;
 import com.example.app_foodstore.Model.request.UserLoginReq;
 import com.example.app_foodstore.Model.response.UserLoginRes;
 import com.example.app_foodstore.R;
@@ -86,7 +87,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void saveLogin(UserLoginRes res) {
-        SharedPreferences sharedPreferences = getSharedPreferences("user_prefs", MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences(ConstantVariable.SHARED_PREFS_NAME, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("access_token", res.getAccessToken());
         editor.putString("username", res.getUserLogin().getUsername());

@@ -1,6 +1,7 @@
 package com.example.app_foodstore.Activity;
 
-import static com.example.app_foodstore.APIService.Constant.IMG_URL;
+
+import static com.example.app_foodstore.Constant.ConstantVariable.IMG_URL;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -156,7 +157,7 @@ public class HomeScreenActivity extends AppCompatActivity {
         });
         if (UserUtils.checkUser(HomeScreenActivity.this)) {
             // Gọi ViewModel để lấy dữ liệu người dùng
-            String token = UserUtils.getTokenFromPreferences(this);
+            String token = UserUtils.getAccessToken(this);
             userViewModel.getUserProfile(token);
             // Quan sát dữ liệu thay đổi
             userViewModel.getUserProfileLiveData().observe(this, new Observer<UserRes>() {
@@ -220,7 +221,7 @@ public class HomeScreenActivity extends AppCompatActivity {
         transaction.replace(R.id.ms_fragment_container_btn_cart, btn_cart);
         transaction.commit();
         if (UserUtils.checkUser(this)) {
-            cartViewModel.getMyCart(UserUtils.getTokenFromPreferences(this))
+            cartViewModel.getMyCart(UserUtils.getAccessToken(this))
                     .observe(this, myCart -> {
                         int numCart;
                         if (myCart != null) {

@@ -55,7 +55,7 @@ public class Fragment_order_ongoing extends Fragment {
 
             @Override
             public void onCancelClicked(MyOrderPendingDTO order) {
-                String token = "Bearer " + UserUtils.getTokenFromPreferences(requireContext());
+                String token = "Bearer " + UserUtils.getAccessToken(requireContext());
                 // Gọi ViewModel hủy đơn hàng
                 orderViewModel.cancelOrder(token, order.getIdOrder());
             }
@@ -64,7 +64,7 @@ public class Fragment_order_ongoing extends Fragment {
         binding.fragmentOrderOngoingRc.setAdapter(adapter);
 
         // Lấy token và gọi API load đơn hàng đang xử lý
-        String token = "Bearer " + UserUtils.getTokenFromPreferences(requireContext());
+        String token = "Bearer " + UserUtils.getAccessToken(requireContext());
         orderViewModel.loadPendingOrders(token);
 
         // Lắng nghe dữ liệu trả về cập nhật adapter

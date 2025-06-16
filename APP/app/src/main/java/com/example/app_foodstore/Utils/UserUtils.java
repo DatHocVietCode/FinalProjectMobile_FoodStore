@@ -17,7 +17,7 @@ public class UserUtils {
         }
         return true;
     }
-    public static String getTokenFromPreferences(Context context) {
+    public static String getAccessToken(Context context) {
          SharedPreferences sharedPreferences = context.getSharedPreferences("user_prefs", Context.MODE_PRIVATE);
          return sharedPreferences.getString("access_token", "");
     }
@@ -25,15 +25,15 @@ public class UserUtils {
     public static void notifyLogin(Activity activity)
     {
         new AlertDialog.Builder(activity)
-                    .setTitle("Yêu cầu đăng nhập")
-                    .setMessage("Bạn có muốn đăng nhập không?")
-                    .setPositiveButton("Có", (dialog, which) -> {
+                    .setTitle("Login is requested!")
+                    .setMessage("Do you want to login")
+                    .setPositiveButton("Yes", (dialog, which) -> {
                         Intent intent = new Intent(activity, LoginActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         activity.startActivity(intent);
                         activity.finish();
                     })
-                    .setNegativeButton("Không", null)
+                    .setNegativeButton("No", null)
                     .show();
     }
 }

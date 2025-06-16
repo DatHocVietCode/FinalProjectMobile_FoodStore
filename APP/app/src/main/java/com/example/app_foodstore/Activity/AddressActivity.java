@@ -58,7 +58,7 @@ public class AddressActivity extends AppCompatActivity {
                 this,
                 addressList,
                 (addressId, position) -> {
-                    String token = UserUtils.getTokenFromPreferences(this);
+                    String token = UserUtils.getAccessToken(this);
                     addressViewModel.deleteAddress(token, addressId).observe(this, success -> {
                         if (success != null && success) {
                             adapter.removeItem(position);
@@ -87,7 +87,7 @@ public class AddressActivity extends AppCompatActivity {
     }
 
     private void loadAddressFromApi() {
-        String token = UserUtils.getTokenFromPreferences(this);
+        String token = UserUtils.getAccessToken(this);
         addressViewModel.getMyAddresses(token).observe(this, responses -> {
             if (responses != null) {
                 addressList.clear();

@@ -71,7 +71,7 @@ public class AddNewAddressActivity extends AppCompatActivity implements AddressL
 
             AddressRequest request = new AddressRequest(addressText, selectedLabel.trim(), isDefault);
 
-            String token = UserUtils.getTokenFromPreferences(this); // Lấy token người dùng
+            String token = UserUtils.getAccessToken(this); // Lấy token người dùng
 
             addressViewModel.addAddress(token, request).observe(this, success -> {
                 if (success != null && success) {

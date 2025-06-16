@@ -95,7 +95,7 @@
         }
 
         private void loadCartFromApi() {
-            String userToken = UserUtils.getTokenFromPreferences(this);
+            String userToken = UserUtils.getAccessToken(this);
             cartViewModel.getMyCart(userToken).observe(this, cartItems -> {
                 if (cartItems != null) {
                     list.clear();
@@ -173,7 +173,7 @@
         }
         private void loadDefaultAddress() {
             addressViewModel = new ViewModelProvider(this).get(AddressViewModel.class);
-            String token = UserUtils.getTokenFromPreferences(this);
+            String token = UserUtils.getAccessToken(this);
             et_address = findViewById(R.id.cart_et_address);
 
             addressViewModel.getDefaultAddress(token).observe(this, addressModel -> {
@@ -192,7 +192,7 @@
             cartAdapter = new ItemCartAdapter(this, list, new ItemCartAdapter.OnCartItemActionListener() {
                 @Override
                 public void onQuantityChanged(CartModel cartItem, int newQuantity) {
-                    String token = UserUtils.getTokenFromPreferences(CartActivity.this);
+                    String token = UserUtils.getAccessToken(CartActivity.this);
                     cartViewModel.updateCartItem(token, cartItem.getProductId(), newQuantity).observe(CartActivity.this, success -> {
                         if (success) {
                             cartItem.setQuantity(newQuantity); // Cập nhật local
@@ -206,7 +206,7 @@
 
                 @Override
                 public void onDeleteItem(CartModel cartItem) {
-                    String token = UserUtils.getTokenFromPreferences(CartActivity.this);
+                    String token = UserUtils.getAccessToken(CartActivity.this);
                     cartViewModel.deleteCartItem(token, cartItem.getProductId()).observe(CartActivity.this, success -> {
                         if (success) {
                             list.remove(cartItem);

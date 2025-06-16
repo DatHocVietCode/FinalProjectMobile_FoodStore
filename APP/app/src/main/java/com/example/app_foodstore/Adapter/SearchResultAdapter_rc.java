@@ -1,6 +1,6 @@
 package com.example.app_foodstore.Adapter;
 
-import static com.example.app_foodstore.APIService.Constant.IMG_URL;
+import static com.example.app_foodstore.Constant.ConstantVariable.IMG_URL;
 
 import android.content.Context;
 import android.content.Intent;
@@ -71,7 +71,7 @@ public class SearchResultAdapter_rc extends RecyclerView.Adapter<SearchResultAda
     private void addToCart(FoodModel foodModel) {
         int quantity = 1;
         Long productId = foodModel.getId();
-        String token = UserUtils.getTokenFromPreferences(context);
+        String token = UserUtils.getAccessToken(context);
 
         if (token == null || token.isEmpty()) {
             Toast.makeText(context, "Bạn cần đăng nhập để thêm vào giỏ hàng", Toast.LENGTH_SHORT).show();

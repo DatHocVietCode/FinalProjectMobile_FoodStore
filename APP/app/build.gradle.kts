@@ -59,6 +59,8 @@ dependencies {
     implementation("com.squareup.okhttp3:logging-interceptor:4.9.0")
     implementation("com.fasterxml.jackson.core:jackson-annotations:2.12.5")
     implementation("com.fasterxml.jackson.core:jackson-databind:2.12.5")
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")       // OkHttp core
+    implementation("com.squareup.okhttp3:logging-interceptor:4.12.0") // Optional: log request/response
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

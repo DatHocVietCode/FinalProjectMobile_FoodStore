@@ -1,7 +1,9 @@
 package com.example.app_foodstore.Adapter;
 
 import static androidx.activity.result.ActivityResultCallerKt.registerForActivityResult;
-import static com.example.app_foodstore.APIService.Constant.IMG_URL;
+
+
+import static com.example.app_foodstore.Constant.ConstantVariable.IMG_URL;
 
 import android.app.Activity;
 import android.content.Context;
@@ -134,7 +136,7 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
 
 
         addressViewModel = new ViewModelProvider((ViewModelStoreOwner) context).get(AddressViewModel.class);
-        String token = UserUtils.getTokenFromPreferences(context);
+        String token = UserUtils.getAccessToken(context);
 
         addressViewModel.getDefaultAddress(token).observe((LifecycleOwner) context, addressModel -> {
             if (addressModel != null) {

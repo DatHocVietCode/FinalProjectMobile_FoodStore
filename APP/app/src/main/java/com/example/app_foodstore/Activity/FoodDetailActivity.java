@@ -297,7 +297,7 @@ public class FoodDetailActivity extends AppCompatActivity {
     private void addToCart() {
         int quantity = Integer.parseInt(tv_count.getText().toString());
         Long productId = foodModel.getId();
-        String token = UserUtils.getTokenFromPreferences(this);
+        String token = UserUtils.getAccessToken(this);
 
         if (token == null || token.isEmpty()) {
             Toast.makeText(this, "Bạn cần đăng nhập để thêm vào giỏ hàng", Toast.LENGTH_SHORT).show();

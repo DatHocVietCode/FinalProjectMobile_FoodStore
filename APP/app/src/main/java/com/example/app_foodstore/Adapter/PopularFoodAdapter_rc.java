@@ -2,7 +2,8 @@ package com.example.app_foodstore.Adapter;
 
 import static androidx.core.content.ContextCompat.startActivity;
 
-import static com.example.app_foodstore.APIService.Constant.IMG_URL;
+
+import static com.example.app_foodstore.Constant.ConstantVariable.IMG_URL;
 
 import android.content.Context;
 import android.content.Intent;

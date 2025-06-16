@@ -74,7 +74,7 @@ public class PaymentActivity extends AppCompatActivity implements PaymentCallBac
         setContentView(R.layout.activity_payment);
 
         ZaloPaySDK.init(APP_ID, Environment.SANDBOX);
-        token = UserUtils.getTokenFromPreferences(this);
+        token = UserUtils.getAccessToken(this);
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);

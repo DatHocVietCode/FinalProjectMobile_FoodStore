@@ -53,7 +53,7 @@ public class Fragment_order_history extends Fragment implements AddressSelection
 
 
 
-        String token = "Bearer " + UserUtils.getTokenFromPreferences(requireContext());
+        String token = "Bearer " + UserUtils.getAccessToken(requireContext());
         orderViewModel.loadCompleteOrders(token);
 
         // Quan sát dữ liệu từ ViewModel

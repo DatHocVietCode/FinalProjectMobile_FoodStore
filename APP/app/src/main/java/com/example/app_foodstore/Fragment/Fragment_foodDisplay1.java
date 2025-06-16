@@ -1,6 +1,7 @@
 package com.example.app_foodstore.Fragment;
 
-import static com.example.app_foodstore.APIService.Constant.IMG_URL;
+
+import static com.example.app_foodstore.Constant.ConstantVariable.IMG_URL;
 
 import android.content.Intent;
 import android.os.Bundle;

@@ -1,6 +1,7 @@
 package com.example.app_foodstore.Activity;
 
-import static com.example.app_foodstore.APIService.Constant.IMG_URL;
+
+import static com.example.app_foodstore.Constant.ConstantVariable.IMG_URL;
 
 import android.app.Activity;
 import android.content.Intent;

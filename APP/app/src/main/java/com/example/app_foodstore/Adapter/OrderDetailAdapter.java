@@ -149,7 +149,7 @@ public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.
                             CommentRequestDTO request = new CommentRequestDTO(product.getIdProduct(), comment, currentStar);
                             commentViewModel = new ViewModelProvider((ViewModelStoreOwner) context).get(CommentViewModel.class);
                             // Gửi comment qua ViewModel
-                            commentViewModel.sendComment(UserUtils.getTokenFromPreferences(context), request);
+                            commentViewModel.sendComment(UserUtils.getAccessToken(context), request);
 
                             // Theo dõi kết quả trả về
                             commentViewModel.getCommentResponse().observe((LifecycleOwner) context, new Observer<BaseResponse<Void>>() {

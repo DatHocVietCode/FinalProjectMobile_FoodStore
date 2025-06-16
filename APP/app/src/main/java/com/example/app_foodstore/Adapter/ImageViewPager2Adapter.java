@@ -1,6 +1,6 @@
 package com.example.app_foodstore.Adapter;
 
-import static com.example.app_foodstore.APIService.Constant.IMG_URL;
+import static com.example.app_foodstore.Constant.ConstantVariable.IMG_URL;
 
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
