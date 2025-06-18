@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 
 import com.example.app_foodstore.APIService.Constant;
 import com.example.app_foodstore.Constant.ConstantVariable;
+import com.example.app_foodstore.FoodApp;
 import com.example.app_foodstore.Interceptor.AuthInterceptor;
 import com.example.app_foodstore.Manager.TokenManager;
 
@@ -18,14 +19,14 @@ public class RetrofitClient {
 
     private static Retrofit retrofit = null;
 
-    public static Retrofit getRetrofitInstance(Context context) {
+    public static Retrofit getRetrofitInstance() {
         if (retrofit == null) {
 
             // Tạo SharedPreferences
-            SharedPreferences prefs = context.getSharedPreferences(ConstantVariable.SHARED_PREFS_NAME, Context.MODE_PRIVATE);
+            SharedPreferences prefs = FoodApp.getAppContext().getSharedPreferences(ConstantVariable.SHARED_PREFS_NAME, Context.MODE_PRIVATE);
 
             // Tạo TokenManager
-            TokenManager tokenManager = new TokenManager(prefs, APIClient.getAuthService());
+            TokenManager tokenManager = new TokenManager(prefs);
 
             // Tạo AuthInterceptor
             AuthInterceptor authInterceptor = new AuthInterceptor(tokenManager);

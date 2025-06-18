@@ -5,8 +5,10 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.app_foodstore.APIService.Client.RetrofitClient;
 import com.example.app_foodstore.APIService.Constant;
 import com.example.app_foodstore.APIService.User.APIServiceAuth;
+import com.example.app_foodstore.Manager.TokenManager;
 import com.example.app_foodstore.Model.request.OTPRequestDTO;
 import com.example.app_foodstore.Model.request.UserLoginReq;
 import com.example.app_foodstore.Model.request.UserSignUpRequest;
@@ -26,7 +28,7 @@ public class AuthRepository {
     private final APIServiceAuth authService;
 
     public AuthRepository() {
-        authService = Constant.retrofit.create(APIServiceAuth.class);
+        authService = RetrofitClient.getRetrofitInstance().create(APIServiceAuth.class);
     }
 
     public LiveData<UserLoginRes> login(UserLoginReq req) {
@@ -159,5 +161,12 @@ public class AuthRepository {
 
         return verifyOTPData;
     }
-
+    public String refreshTokenSync(String refreshToken) throws IOException {
+        Response<UserLoginRes> response = authService.refreshToken(refreshToken).execute();
+        if (response.isSuccessful() && response.body() != null) {
+            return response.body().getAccessToken();
+        } else {
+            throw new IOException("Token refresh failed");
+        }
+    }
 }
