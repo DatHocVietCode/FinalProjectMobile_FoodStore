@@ -5,7 +5,7 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.app_foodstore.APIService.APIRespone;
+import com.example.app_foodstore.APIService.APIResponse;
 import com.example.app_foodstore.APIService.APIResponePagination;
 import com.example.app_foodstore.APIService.Constant;
 import com.example.app_foodstore.APIService.Food.APIServiceFood;
@@ -13,7 +13,6 @@ import com.example.app_foodstore.Model.Data;
 import com.example.app_foodstore.Model.FoodModel;
 
 import java.util.List;
-import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -39,17 +38,17 @@ public class FoodRepository {
         MutableLiveData<List<FoodModel>> foodData = new MutableLiveData<>();
         sortByName = TurnEmptyToNull(sortByName);
         sortByPrice = TurnEmptyToNull(sortByPrice);
-        Call<APIRespone<FoodModel>> call = apiService.getNewProducts(keyword, categoryId, sortByName, sortByPrice);
-        call.enqueue(new Callback<APIRespone<FoodModel>>() {
+        Call<APIResponse<FoodModel>> call = apiService.getNewProducts(keyword, categoryId, sortByName, sortByPrice);
+        call.enqueue(new Callback<APIResponse<FoodModel>>() {
             @Override
-            public void onResponse(Call<APIRespone<FoodModel>> call, Response<APIRespone<FoodModel>> response) {
+            public void onResponse(Call<APIResponse<FoodModel>> call, Response<APIResponse<FoodModel>> response) {
                 if (response.body() != null) {
                     foodData.setValue(response.body().getData()); // Lưu dữ liệu vào LiveData
                 }
             }
 
             @Override
-            public void onFailure(Call<APIRespone<FoodModel>> call, Throwable t) {
+            public void onFailure(Call<APIResponse<FoodModel>> call, Throwable t) {
                 Log.e("errorr", "onFailure: " + t.getMessage());
             }
         });
@@ -59,10 +58,10 @@ public class FoodRepository {
         MutableLiveData<List<FoodModel>> foodData = new MutableLiveData<>();
         sortByName = TurnEmptyToNull(sortByName);
         sortByPrice = TurnEmptyToNull(sortByPrice);
-        Call<APIRespone<FoodModel>> call = apiService.getBestSellerProducts(keyword, categoryId, sortByName, sortByPrice);
-        call.enqueue(new Callback<APIRespone<FoodModel>>() {
+        Call<APIResponse<FoodModel>> call = apiService.getBestSellerProducts(keyword, categoryId, sortByName, sortByPrice);
+        call.enqueue(new Callback<APIResponse<FoodModel>>() {
             @Override
-            public void onResponse(Call<APIRespone<FoodModel>> call, Response<APIRespone<FoodModel>> response) {
+            public void onResponse(Call<APIResponse<FoodModel>> call, Response<APIResponse<FoodModel>> response) {
                 if (response.body() != null) {
                     foodData.setValue(response.body().getData()); // Lưu dữ liệu vào LiveData
                     List<FoodModel> foods = response.body().getData();
@@ -71,7 +70,7 @@ public class FoodRepository {
             }
 
             @Override
-            public void onFailure(Call<APIRespone<FoodModel>> call, Throwable t) {
+            public void onFailure(Call<APIResponse<FoodModel>> call, Throwable t) {
                 Log.e("errorr", "onFailure: " + t.getMessage());
             }
         });

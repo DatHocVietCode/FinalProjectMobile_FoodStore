@@ -90,6 +90,7 @@ public class LoginActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences(ConstantVariable.SHARED_PREFS_NAME, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("access_token", res.getAccessToken());
+        editor.putString("refresh_token", res.getRefreshToken());
         editor.putString("username", res.getUserLogin().getUsername());
         editor.putString("fullname", res.getUserLogin().getFullname());
         editor.putBoolean("is_logged_in", true);

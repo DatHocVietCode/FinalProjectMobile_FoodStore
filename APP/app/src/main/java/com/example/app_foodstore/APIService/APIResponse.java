@@ -2,13 +2,13 @@ package com.example.app_foodstore.APIService;
 
 import java.util.List;
 
-public class APIRespone<T> {
+public class APIResponse<T> {
 
     private int status;
     private String message;
     private List<T> data;
 
-    public APIRespone(int status, String message, List<T> data) {
+    public APIResponse(int status, String message, List<T> data) {
         this.status = status;
         this.message = message;
         this.data = data;

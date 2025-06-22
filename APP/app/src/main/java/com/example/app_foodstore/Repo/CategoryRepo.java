@@ -1,12 +1,11 @@
 package com.example.app_foodstore.Repo;
 
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.app_foodstore.APIService.APIRespone;
+import com.example.app_foodstore.APIService.APIResponse;
 import com.example.app_foodstore.APIService.Category.APIServiceCategory;
 import com.example.app_foodstore.APIService.Constant;
 import com.example.app_foodstore.Model.CategoryModel;
@@ -24,10 +23,10 @@ public class CategoryRepo {
     }
     public LiveData<List<CategoryModel>> getCategories() {
         MutableLiveData<List<CategoryModel>> categoryData = new MutableLiveData<>();
-        Call<APIRespone<CategoryModel>> call = apiService.getCategories(null);
-        call.enqueue(new Callback<APIRespone<CategoryModel>>() {
+        Call<APIResponse<CategoryModel>> call = apiService.getCategories(null);
+        call.enqueue(new Callback<APIResponse<CategoryModel>>() {
             @Override
-            public void onResponse(Call<APIRespone<CategoryModel>> call, Response<APIRespone<CategoryModel>> response) {
+            public void onResponse(Call<APIResponse<CategoryModel>> call, Response<APIResponse<CategoryModel>> response) {
                 if (response.body() != null) {
                     categoryData.setValue(response.body().getData()); // Lưu dữ liệu vào LiveData
                     Log.d("Repo", "onResponse: " + response.body().getData());
@@ -37,7 +36,7 @@ public class CategoryRepo {
                 }
             }
             @Override
-            public void onFailure(Call<APIRespone<CategoryModel>> call, Throwable t) {
+            public void onFailure(Call<APIResponse<CategoryModel>> call, Throwable t) {
                 Log.d("Repo", "onResponse: error");
             }
         });
@@ -45,10 +44,10 @@ public class CategoryRepo {
     }
     public LiveData<List<CategoryModel>> getCategoriesById(Long id) {
         MutableLiveData<List<CategoryModel>> categoryData = new MutableLiveData<>();
-        Call<APIRespone<CategoryModel>> call = apiService.getCategories(id);
-        call.enqueue(new Callback<APIRespone<CategoryModel>>() {
+        Call<APIResponse<CategoryModel>> call = apiService.getCategories(id);
+        call.enqueue(new Callback<APIResponse<CategoryModel>>() {
             @Override
-            public void onResponse(Call<APIRespone<CategoryModel>> call, Response<APIRespone<CategoryModel>> response) {
+            public void onResponse(Call<APIResponse<CategoryModel>> call, Response<APIResponse<CategoryModel>> response) {
                 if (response.body() != null) {
                     categoryData.setValue(response.body().getData()); // Lưu dữ liệu vào LiveData
                     Log.d("Repo", "onResponse: " + response.body().getData());
@@ -58,7 +57,7 @@ public class CategoryRepo {
                 }
             }
             @Override
-            public void onFailure(Call<APIRespone<CategoryModel>> call, Throwable t) {
+            public void onFailure(Call<APIResponse<CategoryModel>> call, Throwable t) {
                 Log.d("Repo", "onResponse: error");
             }
         });
