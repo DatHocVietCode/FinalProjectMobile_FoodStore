@@ -5,6 +5,7 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.app_foodstore.APIService.Client.RetrofitClient;
 import com.example.app_foodstore.APIService.Constant;
 import com.example.app_foodstore.APIService.Voucher.APIServiceVoucher;
 import com.example.app_foodstore.Model.VoucherModel;
@@ -21,7 +22,7 @@ public class VoucherRepository {
     private final APIServiceVoucher apiService;
 
     public VoucherRepository() {
-        apiService = Constant.retrofit.create(APIServiceVoucher.class);
+        apiService = RetrofitClient.getRetrofitInstance().create(APIServiceVoucher.class);
     }
 
     public LiveData<List<VoucherModel>> getMyVouchers(String token) {

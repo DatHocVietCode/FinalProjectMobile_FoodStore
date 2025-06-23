@@ -1,5 +1,7 @@
 package com.example.app_foodstore.Interceptor;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import com.example.app_foodstore.APIService.APIResponse;
@@ -42,6 +44,7 @@ public class AuthInterceptor implements Interceptor {
                 synchronized (this) {
                     String refreshToken = tokenManager.getRefreshToken(); // refresh token đã lưu
                     String newAccessToken = refreshTokenSync(refreshToken);
+                    Log.d("Interceptor", "intercept: New AccessToken " + newAccessToken);
                     tokenManager.saveAccessToken(newAccessToken);
                     Request newRequest = originalRequest.newBuilder()
                             .header("Authorization", "Bearer " + newAccessToken)
@@ -58,6 +61,9 @@ public class AuthInterceptor implements Interceptor {
         TokenRefreshService service = TokenRefreshClient.getInstance().create(TokenRefreshService.class);
         APIResponse<AccessTokenResponse> response = service.refreshToken(refreshToken).execute().body();
         if (response != null) {
+            Log.d("Interceptor", "refreshTokenSync: " + response.getMessage());
+            Log.d("Interceptor", "refreshTokenSync: " + response.getData().get(0).getAccessToken());
+            Log.d("Interceptor", "refreshTokenSync: " + response.getData().get(0).getAccessToken());
             return response.getData().get(0).getAccessToken();
         } else {
             throw new IOException("Failed to refresh token");

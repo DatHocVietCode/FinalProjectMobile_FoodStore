@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.app_foodstore.APIService.APIResponse;
 import com.example.app_foodstore.APIService.Category.APIServiceCategory;
+import com.example.app_foodstore.APIService.Client.RetrofitClient;
 import com.example.app_foodstore.APIService.Constant;
 import com.example.app_foodstore.Model.CategoryModel;
 
@@ -19,7 +20,7 @@ import retrofit2.Response;
 public class CategoryRepo {
     private APIServiceCategory apiService;
     public CategoryRepo() {
-        apiService = Constant.retrofit.create(APIServiceCategory.class);
+        apiService = RetrofitClient.getRetrofitInstance().create(APIServiceCategory.class);
     }
     public LiveData<List<CategoryModel>> getCategories() {
         MutableLiveData<List<CategoryModel>> categoryData = new MutableLiveData<>();

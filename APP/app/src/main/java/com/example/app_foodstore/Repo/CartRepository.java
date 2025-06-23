@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.app_foodstore.APIService.Cart.APIServiceCart;
+import com.example.app_foodstore.APIService.Client.RetrofitClient;
 import com.example.app_foodstore.APIService.Constant;
 import com.example.app_foodstore.Model.CartModel;
 import com.example.app_foodstore.Model.request.UpdateCartRequest;
@@ -23,7 +24,7 @@ public class CartRepository {
     private final APIServiceCart apiService;
 
     public CartRepository() {
-        apiService = Constant.retrofit.create(APIServiceCart.class);
+        apiService = RetrofitClient.getRetrofitInstance().create(APIServiceCart.class);
     }
 
     public LiveData<List<CartModel>> getMyCart(String token) {

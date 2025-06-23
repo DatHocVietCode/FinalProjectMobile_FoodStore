@@ -161,12 +161,4 @@ public class AuthRepository {
 
         return verifyOTPData;
     }
-    public String refreshTokenSync(String refreshToken) throws IOException {
-        Response<UserLoginRes> response = authService.refreshToken(refreshToken).execute();
-        if (response.isSuccessful() && response.body() != null) {
-            return response.body().getAccessToken();
-        } else {
-            throw new IOException("Token refresh failed");
-        }
-    }
 }

@@ -5,6 +5,7 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.app_foodstore.APIService.Client.RetrofitClient;
 import com.example.app_foodstore.APIService.Constant;
 import com.example.app_foodstore.APIService.User.APIServiceUser;
 import com.example.app_foodstore.Model.response.BaseResponse;
@@ -19,7 +20,7 @@ public class UserRepository {
     private final APIServiceUser apiService;
 
     public UserRepository() {
-        apiService = Constant.retrofit.create(APIServiceUser.class);
+        apiService = RetrofitClient.getRetrofitInstance().create(APIServiceUser.class);
     }
 
     public LiveData<UserRes> getUserProfile(String token) {

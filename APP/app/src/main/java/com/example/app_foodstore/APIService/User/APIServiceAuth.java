@@ -27,6 +27,5 @@ public interface APIServiceAuth {
     @POST("/auth/verifyOTP")
     Call<BaseResponse<String>> verifyOTP(@Body OTPRequestDTO otpRequestDTO);
 
-    @GET("/auth/refreshAccessToken")
-    Call<UserLoginRes> refreshToken(@Header("Authorization") String refreshToken);
+
 }

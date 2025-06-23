@@ -3,6 +3,7 @@ package com.example.app_foodstore.Repo;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.app_foodstore.APIService.Client.RetrofitClient;
 import com.example.app_foodstore.APIService.Constant;
 import com.example.app_foodstore.APIService.Food.APIServiceFood;
 import com.example.app_foodstore.APIService.Payment.APIServicePayment;
@@ -18,7 +19,7 @@ public class PaymentRepository {
     private final APIServicePayment apiService;
 
     public PaymentRepository() {
-        apiService = Constant.retrofit.create(APIServicePayment.class);
+        apiService = RetrofitClient.getRetrofitInstance().create(APIServicePayment.class);
     }
 
     public LiveData<Boolean> makePayment(String token, PaymentRequest paymentRequest) {

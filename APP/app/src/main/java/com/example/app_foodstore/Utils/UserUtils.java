@@ -7,10 +7,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 
 import com.example.app_foodstore.Activity.LoginActivity;
+import com.example.app_foodstore.Constant.ConstantVariable;
 
 public class UserUtils {
     public static boolean checkUser(Activity activity) {
-        SharedPreferences sharedPreferences = activity.getSharedPreferences("user_prefs", Activity.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = activity.getSharedPreferences(ConstantVariable.SHARED_PREFS_NAME, Activity.MODE_PRIVATE);
         boolean isLoggedIn = sharedPreferences.getBoolean("is_logged_in", false);
         if (!isLoggedIn) {
             return false;
@@ -18,7 +19,7 @@ public class UserUtils {
         return true;
     }
     public static String getAccessToken(Context context) {
-         SharedPreferences sharedPreferences = context.getSharedPreferences("user_prefs", Context.MODE_PRIVATE);
+         SharedPreferences sharedPreferences = context.getSharedPreferences(ConstantVariable.SHARED_PREFS_NAME, Context.MODE_PRIVATE);
          return sharedPreferences.getString("access_token", "");
     }
 

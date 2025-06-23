@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.app_foodstore.APIService.Address.APIServiceAddress;
+import com.example.app_foodstore.APIService.Client.RetrofitClient;
 import com.example.app_foodstore.APIService.Constant;
 import com.example.app_foodstore.Model.AddressModel;
 import com.example.app_foodstore.Model.request.AddressRequest;
@@ -24,7 +25,7 @@ public class AddressRepository {
     private final APIServiceAddress apiService;
 
     public AddressRepository() {
-        apiService = Constant.retrofit.create(APIServiceAddress.class);
+        apiService = RetrofitClient.getRetrofitInstance().create(APIServiceAddress.class);
     }
 
     public LiveData<List<AddressResponse>> getMyAddresses(String token) {

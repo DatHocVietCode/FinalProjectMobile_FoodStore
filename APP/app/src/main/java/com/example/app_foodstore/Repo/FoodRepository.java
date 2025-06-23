@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.app_foodstore.APIService.APIResponse;
 import com.example.app_foodstore.APIService.APIResponePagination;
+import com.example.app_foodstore.APIService.Client.RetrofitClient;
 import com.example.app_foodstore.APIService.Constant;
 import com.example.app_foodstore.APIService.Food.APIServiceFood;
 import com.example.app_foodstore.Model.Data;
@@ -22,7 +23,7 @@ public class FoodRepository {
     private APIServiceFood apiService;
 
     public FoodRepository() {
-        apiService = Constant.retrofit.create(APIServiceFood.class);
+        apiService = RetrofitClient.getRetrofitInstance().create(APIServiceFood.class);
     }
     private String TurnEmptyToNull(String keyword)
     {

@@ -4,6 +4,7 @@ import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.app_foodstore.APIService.Client.RetrofitClient;
 import com.example.app_foodstore.APIService.Comment.APIServiceComment;
 import com.example.app_foodstore.APIService.Constant;
 import com.example.app_foodstore.Model.request.CommentRequestDTO;
@@ -19,7 +20,7 @@ public class CommentRepository {
     private final APIServiceComment apiService;
 
     public CommentRepository() {
-        apiService = Constant.retrofit.create(APIServiceComment.class);
+        apiService = RetrofitClient.getRetrofitInstance().create(APIServiceComment.class);
     }
 
     public void postComment(String token, CommentRequestDTO dto, MutableLiveData<BaseResponse<Void>> liveData) {
