@@ -8,19 +8,16 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.app_foodstore.Adapter.OrderDetailAdapter;
 import com.example.app_foodstore.Model.MyOrderPendingDTO;
-import com.example.app_foodstore.Model.OrderDetailModel;
 import com.example.app_foodstore.Model.OrderModel;
 import com.example.app_foodstore.R;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -29,7 +26,7 @@ public class BreakDownOrderActivity extends AppCompatActivity {
     OrderModel orderModel;
     List<MyOrderPendingDTO> listOrder;
     TextView btnToggleOrderInfo, tvOrderId, tvOrderDate, tvPaymentMethod, tvTotalAmount
-            , tvDeliverty, tvVoucher;
+            , tvDelivery, tvVoucher, tvAddress;
     LinearLayout cardOrderInfo;
     TextView tvTransactionStatus;
     MyOrderPendingDTO order;
@@ -54,10 +51,10 @@ public class BreakDownOrderActivity extends AppCompatActivity {
     }
 
     private void setupOtherInformation() {
-        tvDeliverty = findViewById(R.id.tvDeliveryFee);
+        tvDelivery = findViewById(R.id.tvDeliveryFee);
         tvVoucher = findViewById(R.id.tvVoucher);
 
-        tvDeliverty.setText(order.getDeliveryFee() + " VND");
+        tvDelivery.setText(order.getDeliveryFee() + " VND");
         tvVoucher.setText(order.getVoucher() + "VND");
     }
 
@@ -66,6 +63,7 @@ public class BreakDownOrderActivity extends AppCompatActivity {
         tvOrderDate = findViewById(R.id.breakdownScreen_tvTransactionTime);
         tvPaymentMethod = findViewById(R.id.breakdownScreen_tvPaymentMethod);
         tvTotalAmount = findViewById(R.id.breakdownScreen_tvTotalAmount);
+        tvAddress = findViewById(R.id.breakdownScreen_tvAddress);
 
         tvOrderId.setText("#" + order.getIdOrder());
         String originalDate = order.getCreated();
@@ -82,6 +80,9 @@ public class BreakDownOrderActivity extends AppCompatActivity {
         }
         tvPaymentMethod.setText(order.getPaymentMethod());
         tvTotalAmount.setText(order.getTotalPrice() + "VND");
+
+        tvAddress.setSelected(true);
+        tvAddress.setText(order.getAddress());
     }
 
     private void getArgument() {
@@ -141,59 +142,6 @@ public class BreakDownOrderActivity extends AppCompatActivity {
             }
         });
     }
-
-    /*private void getOrder() {
-        // Lấy từ API
-        orderModel = new OrderModel(
-                true,                    // isCompleted
-                new Date(),              // orderDate (thời gian hiện tại)
-                123456,                  // orderId
-                1,                       // paymentMethod (1 = Credit Card)
-                1,                       // orderStatus (1 = Ongoing)
-                500.75f                  // totalAmount
-        );
-        listOrder = new ArrayList<>();
-        listOrder.add(new OrderDetailModel(1, "Burger", 50000, 1));
-        listOrder.add(new OrderDetailModel(2, "Pizza", 150000,1 ));
-        listOrder.add(new OrderDetailModel(3, "Soda", 10000, 3));
-        listOrder.add(new OrderDetailModel(4, "French Fries", 30000, 2));
-        listOrder.add(new OrderDetailModel(1, "Burger", 50000, 1));
-        listOrder.add(new OrderDetailModel(2, "Pizza", 150000,1 ));
-        listOrder.add(new OrderDetailModel(3, "Soda", 10000, 3));
-        listOrder.add(new OrderDetailModel(4, "French Fries", 30000, 2));
-
-
-    }*/
-     /*private void getOrder() {
-            if (order != null) {
-                int idPaymentMethod;
-                switch (order.getPaymentMethod()) {
-                    case "COMPLETED":
-                        idPaymentMethod = 1;
-                        break;
-                    case "CANCEL":
-                        idPaymentMethod = 2;
-                        break;
-                    default:
-                        idPaymentMethod = 0;
-                        break;
-                }
-                // Lấy thông tin từ đối tượng order
-                listOrder = new ArrayList<>();
-                // Duyệt qua danh sách sản phẩm trong order
-                if (order.getProducts() != null) {
-                    for (var product : order.getProducts()) {
-                        listOrder.add(new OrderDetailModel(
-                                product.getIdProduct(),   // ID của sản phẩm
-                                product.getFoodName(),                      // Tên sản phẩm
-                                product.getPrice(),                         // Giá
-                                product.getQuantity()                       // Số lượng
-                        ));
-                    }
-                }
-            }
-        }*/
-
     private void setupRc() {
         rcOrderDetail = findViewById(R.id.trackOrder_rc_orderDetail);
         OrderDetailAdapter adapter = new OrderDetailAdapter(this, order.getProducts(), false);

@@ -37,14 +37,19 @@ public class OrderScreenActivity extends AppCompatActivity {
         binding = ActivityOrderScreenBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        setupTabLayout();
-        setupViewPager();
-        setupViewModelAndObservers();
+        AnhXa();
+
 
         // Giờ gọi load data sau khi ViewModel đã khởi tạo
         String token = "user_token_here"; // TODO: Thay bằng token thực tế
-        orderViewModel.loadPendingOrders(token);
-        orderViewModel.loadCompleteOrders(token);
+        orderViewModel.loadPendingOrders();
+        orderViewModel.loadCompleteOrders();
+    }
+
+    private void AnhXa() {
+        setupTabLayout();
+        setupViewPager();
+        setupViewModelAndObservers();
     }
 
     private void setupViewPager() {
@@ -115,19 +120,7 @@ public class OrderScreenActivity extends AppCompatActivity {
     }
 
     private void setupViewModelAndObservers() {
-        APIServiceOrder apiServiceOrder = Constant.retrofit.create(APIServiceOrder.class);
-
-        orderViewModel = new ViewModelProvider(this, new ViewModelProvider.Factory() {
-            @NonNull
-            @Override
-            public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-                if (modelClass.isAssignableFrom(OrderViewModel.class)) {
-                    //noinspection unchecked
-                    return (T) new OrderViewModel(apiServiceOrder);
-                }
-                throw new IllegalArgumentException("Unknown ViewModel class");
-            }
-        }).get(OrderViewModel.class);
+        orderViewModel = new ViewModelProvider(this).get(OrderViewModel.class);
 
         // Quan sát dữ liệu
         orderViewModel.getOngoingOrders().observe(this, data -> updateAdapter());
@@ -140,6 +133,7 @@ public class OrderScreenActivity extends AppCompatActivity {
 
         if (ongoingOrders != null && historyOrders != null) {
             adapter.setData(ongoingOrders, historyOrders);
+            adapter.notifyDataSetChanged();
         }
     }
 }

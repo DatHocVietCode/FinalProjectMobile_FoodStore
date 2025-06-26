@@ -402,18 +402,28 @@
                     android:layout_marginTop="36dp">
                     <TextView
                         android:id="@+id/foodDetail_tv_total_price"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         android:text="$32"
                         android:fontFamily="@font/sen"
                         android:textSize="36sp"
-                        android:layout_marginStart="24dp"/>
+                        android:layout_marginStart="24dp"
+                        android:layout_weight="4"
+                        android:ellipsize="marquee"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:marqueeRepeatLimit="marquee_forever"
+                        android:scrollHorizontally="true"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        />
                     <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="24dp">
+                        android:layout_marginEnd="24dp"
+                        android:layout_weight="6">
                         <androidx.cardview.widget.CardView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"

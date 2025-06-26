@@ -13,10 +13,10 @@ import retrofit2.http.Path;
 
 public interface APIServiceOrder {
     @GET("orders/my-orders/pending")
-    Call<BaseResponse<List<MyOrderPendingDTO>>> getPendingOrders(@Header("Authorization") String token);
+    Call<BaseResponse<List<MyOrderPendingDTO>>> getPendingOrders();
 
     @GET("orders/my-orders/history")
-    Call<BaseResponse<List<MyOrderPendingDTO>>> getCompleteOrders(@Header("Authorization") String token);
+    Call<BaseResponse<List<MyOrderPendingDTO>>> getCompleteOrders();
     // PUT - Cancel order
     @PUT("orders/cancel/{orderId}")
     Call<BaseResponse<Void>> cancelOrder(@Header("Authorization") String token, @Path("orderId") Long orderId);

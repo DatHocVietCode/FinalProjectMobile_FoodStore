@@ -1,18 +1,26 @@
 package com.example.app_foodstore.Model;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.List;
 
 public class MyOrderPendingDTO implements Serializable {
     private Long idOrder;
     private Double totalPrice;
     private List<ProductInOrderDTO> products;
-    private String created;
-    private String status;
-    private String paymentMethod;
+    private java.lang.String created;
+    private java.lang.String status;
+    private java.lang.String paymentMethod;
     private Float deliveryFee;
     private Integer voucher;
+    private String address;
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
     public Float getDeliveryFee() {
         return deliveryFee;
@@ -22,15 +30,17 @@ public class MyOrderPendingDTO implements Serializable {
         this.deliveryFee = deliveryFee;
     }
 
-    public String getPaymentMethod() {
+    public java.lang.String getPaymentMethod() {
         return paymentMethod;
     }
 
-    public void setPaymentMethod(String paymentMethod) {
+    public void setPaymentMethod(java.lang.String paymentMethod) {
         this.paymentMethod = paymentMethod;
     }
 
-    public MyOrderPendingDTO(Long idOrder, Double totalPrice, List<ProductInOrderDTO> products, String created, String status, String paymentMethod, Float deliveryFee, Integer voucher) {
+    public MyOrderPendingDTO(Long idOrder, Double totalPrice, List<ProductInOrderDTO> products,
+                             java.lang.String created, java.lang.String status, java.lang.String paymentMethod, Float deliveryFee, Integer voucher,
+                             String address) {
         this.idOrder = idOrder;
         this.totalPrice = totalPrice;
         this.products = products;
@@ -39,6 +49,8 @@ public class MyOrderPendingDTO implements Serializable {
         this.paymentMethod = paymentMethod;
         this.deliveryFee = deliveryFee;
         this.voucher = voucher;
+        this.address = address;
+
     }
 
     public Integer getVoucher() {
@@ -49,19 +61,19 @@ public class MyOrderPendingDTO implements Serializable {
         this.voucher = voucher;
     }
 
-    public String getCreated() {
+    public java.lang.String getCreated() {
         return created;
     }
 
-    public void setCreated(String created) {
+    public void setCreated(java.lang.String created) {
         this.created = created;
     }
 
-    public String getStatus() {
+    public java.lang.String getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(java.lang.String status) {
         this.status = status;
     }
 

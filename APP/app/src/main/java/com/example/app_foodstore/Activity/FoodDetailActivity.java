@@ -157,7 +157,9 @@ public class FoodDetailActivity extends AppCompatActivity {
         tv_count.setText(String.valueOf(count[0]));
 
         float pricePerItem = foodModel.getPrice();
-        tv_price.setText(String.valueOf(pricePerItem * count[0]));
+        tv_price.setText(Math.round(pricePerItem * count[0]) + "VND");
+        tv_price.setSelected(true);
+
 
         btn_add.setOnClickListener(view -> {
             count[0]++;

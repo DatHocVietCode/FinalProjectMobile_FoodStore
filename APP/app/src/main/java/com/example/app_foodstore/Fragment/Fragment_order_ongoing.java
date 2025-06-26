@@ -64,8 +64,8 @@ public class Fragment_order_ongoing extends Fragment {
         binding.fragmentOrderOngoingRc.setAdapter(adapter);
 
         // Lấy token và gọi API load đơn hàng đang xử lý
-        String token = "Bearer " + UserUtils.getAccessToken(requireContext());
-        orderViewModel.loadPendingOrders(token);
+        //String token = "Bearer " + UserUtils.getAccessToken(requireContext());
+        orderViewModel.loadPendingOrders();
 
         // Lắng nghe dữ liệu trả về cập nhật adapter
         orderViewModel.getOngoingOrders().observe(getViewLifecycleOwner(), orders -> {

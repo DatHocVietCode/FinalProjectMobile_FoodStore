@@ -17,8 +17,8 @@ public class OrderViewModel extends ViewModel {
     private final MutableLiveData<List<MyOrderPendingDTO>> ongoingOrders = new MutableLiveData<>();
     private final MutableLiveData<List<MyOrderPendingDTO>> historyOrders = new MutableLiveData<>();
 
-    public OrderViewModel(APIServiceOrder apiServiceOrder) {
-        orderRepository = new OrderRepository(apiServiceOrder);
+    public OrderViewModel() {
+        orderRepository = new OrderRepository();
     }
 
     public LiveData<List<MyOrderPendingDTO>> getOngoingOrders() {
@@ -29,12 +29,12 @@ public class OrderViewModel extends ViewModel {
         return historyOrders;
     }
 
-    public void loadPendingOrders(String token) {
-        orderRepository.fetchPendingOrders(token, ongoingOrders);
+    public void loadPendingOrders() {
+        orderRepository.fetchPendingOrders(ongoingOrders);
     }
 
-    public void loadCompleteOrders(String token) {
-        orderRepository.fetchCompleteOrders(token, historyOrders);
+    public void loadCompleteOrders() {
+        orderRepository.fetchCompleteOrders(historyOrders);
     }
 
     public void cancelOrder(String token, Long orderId) {
@@ -42,7 +42,7 @@ public class OrderViewModel extends ViewModel {
             @Override
             public void onCancelSuccess() {
                 // Reload ongoing orders after cancel success
-                loadPendingOrders(token);
+                loadPendingOrders();
             }
 
             @Override

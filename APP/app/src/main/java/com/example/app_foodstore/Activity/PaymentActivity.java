@@ -62,7 +62,7 @@ public class PaymentActivity extends AppCompatActivity implements PaymentCallBac
     private RadioGroup radioGroupPrice;
     double totalAmount;
     String order,delivery,discount;
-    TextView tvDeliveryFee,tvVoucher,tvOrderPrice;
+    TextView tvDeliveryFee,tvVoucher,tvOrderPrice, tvTotalPrice;
     PaymentRequest paymentRequest;
     String paymentMethod, shippingMethodName;
     Long idVoucher;
@@ -144,8 +144,8 @@ public class PaymentActivity extends AppCompatActivity implements PaymentCallBac
         getArguments();
         initViewModel();
         setupRadioTransport();
-        setupTextView();
         setupVoucher();
+        setupTextView();
         setupViewPager();
         setupRecyclerViewMethod();
         setupbtnPay();
@@ -203,13 +203,38 @@ public class PaymentActivity extends AppCompatActivity implements PaymentCallBac
     private void setupTextView() {
         tvDeliveryFee = findViewById(R.id.payment_ordersummary_DeliveryFee);
         tvVoucher = findViewById(R.id.payment_ordersummary_voucher);
-        tvOrderPrice = findViewById(R.id.payment_ordersummary_order_price);
+        tvOrderPrice = findViewById(R.id.payment_orderPrice);
+        tvTotalPrice = findViewById(R.id.payment_totalPrice);
 
         tvDeliveryFee.setText(delivery);
         tvVoucher.setText(discount);
         tvOrderPrice.setText(order);
-    }
 
+        // Xử lý tính tổng tiền.
+        double totalAmount = getTotalMoney();
+        tvTotalPrice.setText(totalAmount + "VND");
+    }
+    private double getTotalMoney()
+    {
+        // 🔸 Lấy voucher đang chọn từ spinner
+        VoucherModel selectedVoucher = (VoucherModel) spinnerVouchers.getSelectedItem();
+
+        idVoucher = selectedVoucher != null ? selectedVoucher.getId() : null;
+        if(selectedVoucher == null){
+            discount = "0";
+        }
+        else{
+            discount = selectedVoucher.getDiscount().toString();
+        }
+        Log.d("Payment", "setupbtnPay: " + order);
+        double orderValue = Double.parseDouble(order);
+        double discountValue = Double.parseDouble(discount);
+        double deliveryValue = Double.parseDouble(delivery);
+
+        // Tính tổng
+        totalAmount = orderValue - discountValue + deliveryValue;
+        return totalAmount;
+    }
     private void setupbtnPay() {
         btn_pay = findViewById(R.id.payment_btn_payAndConfirm);
         btn_pay.setOnClickListener(v -> {
@@ -230,28 +255,13 @@ public class PaymentActivity extends AppCompatActivity implements PaymentCallBac
             {
                 shippingMethodName = "Express";
             }
+
             /*RadioButton selectedShippingButton = findViewById(selectedShippingId);
             shippingMethodName = selectedShippingButton.getText().toString();
             String[] parts = shippingMethodName.split(" \\("); // Tách lấy tên
             //String shippingMethodName = parts[0]; // Ví dụ: "Standard" hoặc "Express"*/
 
-            // 🔸 Lấy voucher đang chọn từ spinner
-            VoucherModel selectedVoucher = (VoucherModel) spinnerVouchers.getSelectedItem();
-
-            idVoucher = selectedVoucher != null ? selectedVoucher.getId() : null;
-            if(selectedVoucher == null){
-                discount = "0";
-            }
-            else{
-                discount = selectedVoucher.getDiscount().toString();
-            }
-            Log.d("Payment", "setupbtnPay: " + order);
-            double orderValue = Double.parseDouble(order);
-            double discountValue = Double.parseDouble(discount);
-            double deliveryValue = Double.parseDouble(delivery);
-
-            // Tính tổng
-            totalAmount = orderValue - discountValue + deliveryValue;
+            totalAmount = getTotalMoney();
             paymentMethod = null;
             switch (currentMethodPosition) {
                 case 0:
