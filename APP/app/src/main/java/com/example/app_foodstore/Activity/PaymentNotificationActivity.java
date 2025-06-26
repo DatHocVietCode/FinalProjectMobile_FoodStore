@@ -31,7 +31,7 @@ public class PaymentNotificationActivity extends AppCompatActivity {
             startActivity(homeIntent);
 
             // Điều hướng ngay lập tức đến TrackOrderActivity
-            Intent trackOrderIntent = new Intent(PaymentNotificationActivity.this, TrackOrderActivity.class);
+            Intent trackOrderIntent = new Intent(PaymentNotificationActivity.this, HomeScreenActivity.class);
             startActivity(trackOrderIntent);
 
             // Kết thúc PaymentNotificationActivity để không còn nằm trong stack

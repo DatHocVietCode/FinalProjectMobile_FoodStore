@@ -31,7 +31,7 @@
     import java.util.ArrayList;
     import java.util.List;
 
-    public class CartActivity extends AppCompatActivity {
+    public class  CartActivity extends AppCompatActivity {
 
         RecyclerView rc_cart;
         ItemCartAdapter cartAdapter;
@@ -65,29 +65,26 @@
             setContentView(R.layout.activity_cart);
 
             AnhXa();
+        }
+
+        private void AnhXa() {
             setupViewModel();
             setupRcCart();
             loadDefaultAddress();
             loadCartFromApi();
-            findViewById(R.id.cart_tv_editAdress).setOnClickListener(v -> {
-                Intent intent = new Intent(CartActivity.this, AddressActivity.class);
-                addressLauncher.launch(intent);
-            });
-        }
-
-        private void AnhXa() {
-            TextView tvEditAddress = findViewById(R.id.cart_tv_editAdress);
-
-            tvEditAddress.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(CartActivity.this, AddressActivity.class);
-                    startActivity(intent);
-                }
-            });
+            setupTvEditAddress();
             setupBottomCard();
             setupBtn();
             setupPlaceOrder();
+        }
+
+        private void setupTvEditAddress() {
+            TextView tvEditAddress = findViewById(R.id.cart_tv_editAdress);
+
+            tvEditAddress.setOnClickListener(v -> {
+                Intent intent = new Intent(CartActivity.this, AddressActivity.class);
+                addressLauncher.launch(intent);
+            });
         }
 
         private void setupViewModel() {

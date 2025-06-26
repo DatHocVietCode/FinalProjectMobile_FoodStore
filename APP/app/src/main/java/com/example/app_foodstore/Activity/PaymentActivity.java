@@ -55,7 +55,7 @@ public class PaymentActivity extends AppCompatActivity implements PaymentCallBac
     private PaymentMethodAdapter paymentMethodAdapter;
     private Button btn_pay;
     private ImageButton toggleButton;
-    private String token;
+    private String accessToken;
     private PaymentViewModel paymentViewModel;
     private Long idAddress;
     private Boolean reOrder;
@@ -74,7 +74,7 @@ public class PaymentActivity extends AppCompatActivity implements PaymentCallBac
         setContentView(R.layout.activity_payment);
 
         ZaloPaySDK.init(APP_ID, Environment.SANDBOX);
-        token = UserUtils.getAccessToken(this);
+        accessToken = UserUtils.getAccessToken(this);
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
@@ -300,7 +300,7 @@ public class PaymentActivity extends AppCompatActivity implements PaymentCallBac
     private void callPayment()
     {
         if (paymentRequest != null) {
-            paymentViewModel.makePayment(token, paymentRequest).observe(PaymentActivity.this, isSuccess -> {
+            paymentViewModel.makePayment(accessToken, paymentRequest).observe(PaymentActivity.this, isSuccess -> {
                 if (isSuccess) {
                     //Toast.makeText(this, "Thanh toán thành công!", Toast.LENGTH_SHORT).show();
 
@@ -320,7 +320,7 @@ public class PaymentActivity extends AppCompatActivity implements PaymentCallBac
                 }
             });
         } else if (paymentReOrderReq!=null) {
-            paymentViewModel.reOrder(token, paymentReOrderReq).observe(PaymentActivity.this, isSuccess -> {
+            paymentViewModel.reOrder(accessToken, paymentReOrderReq).observe(PaymentActivity.this, isSuccess -> {
                 if (isSuccess) {
                     //Toast.makeText(this, "Thanh toán thành công!", Toast.LENGTH_SHORT).show();
 
@@ -389,7 +389,7 @@ public class PaymentActivity extends AppCompatActivity implements PaymentCallBac
         spinnerVouchers = findViewById(R.id.spinnerVouchers);
         VoucherViewModel voucherViewModel = new ViewModelProvider(this).get(VoucherViewModel.class);
 
-        voucherViewModel.getMyVouchers(token).observe(this, voucherModels -> {
+        voucherViewModel.getMyVouchers(accessToken).observe(this, voucherModels -> {
             if (voucherModels != null && !voucherModels.isEmpty()) {
                 VoucherSpinnerAdapter adapter = new VoucherSpinnerAdapter(this, R.layout.spinner_voucher_item, voucherModels);
                 spinnerVouchers.setAdapter(adapter);
