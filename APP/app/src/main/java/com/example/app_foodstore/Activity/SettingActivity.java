@@ -20,6 +20,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.bumptech.glide.Glide;
 import com.example.app_foodstore.Model.response.UserRes;
 import com.example.app_foodstore.R;
+import com.example.app_foodstore.Utils.UserUtils;
 import com.example.app_foodstore.ViewModel.UserViewModel;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -33,18 +34,15 @@ public class SettingActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
         setContentView(R.layout.activity_setting);
-        loadData();
+
         AnhXa();
     }
     private void loadData(){
-
-        SharedPreferences sharedPreferences = getSharedPreferences("user_prefs", MODE_PRIVATE);
-        boolean isLoggedIn = sharedPreferences.getBoolean("is_logged_in", false);
+        boolean isLoggedIn = UserUtils.checkUser(this);
         if (isLoggedIn) {
             // Gọi ViewModel để lấy dữ liệu người dùng
-            String token = sharedPreferences.getString("access_token", "");
+            String token = UserUtils.getAccessToken(this);
             userViewModel.getUserProfile(token);
 
             // Quan sát dữ liệu thay đổi
@@ -54,14 +52,17 @@ public class SettingActivity extends AppCompatActivity {
                     if (userRes != null) {
                         // Cập nhật UI khi dữ liệu người dùng thay đổi
                         ms_header_avatar = findViewById(R.id.activity_setting_image_profile);
-                        Glide.with(SettingActivity.this)
-                                .load(IMG_URL  + userRes.getProfile_image())
-                                .into(ms_header_avatar);
-                        TextView usernameTextView = findViewById(R.id.activity_setting_username);
-                        usernameTextView.setText(userRes.getFullname());
-
-
-
+                        if (userRes.getProfile_image() != null)
+                        {
+                            Glide.with(SettingActivity.this)
+                                    .load(IMG_URL  + userRes.getProfile_image())
+                                    .into(ms_header_avatar);
+                        }
+                        if (userRes.getFullname() != null)
+                        {
+                            username = findViewById(R.id.activity_setting_username);
+                            username.setText(userRes.getFullname());
+                        }
                     } else {
                         Toast.makeText(SettingActivity.this, "Không lấy được dữ liệu người dùng", Toast.LENGTH_SHORT).show();
                     }
@@ -73,51 +74,21 @@ public class SettingActivity extends AppCompatActivity {
     }
 
     private void AnhXa() {
-        ln_personalInfo = findViewById(R.id.setting_screen_ln_personalInfo);
-        ln_personalInfo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(SettingActivity.this, PersonalInfoActivity.class);
-                startActivity(intent);
-            }
-        });
+        initViewModel();
+        loadData();
+        setUpLnPI();
+        setUpLnCart();
+        setUpLnAddress();
+        setUpLnFavorite();
+        setUpLnNotifications();
+        setUpLnLogout();
+    }
 
-        ln_cart = findViewById(R.id.setting_screen_ln_cart);
-        ln_cart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(SettingActivity.this, CartActivity.class);
-                startActivity(intent);
-            }
-        });
+    private void initViewModel() {
+        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
+    }
 
-        ln_address = findViewById(R.id.setting_screen_ln_Adresses);
-        ln_address.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(SettingActivity.this, AddressActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        ln_favorite = findViewById(R.id.setting_screen_ln_favorite);
-        ln_favorite.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(SettingActivity.this, FavoriteFoodActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        ln_notifications = findViewById(R.id.setting_screen_ln_notifications);
-        ln_notifications.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(SettingActivity.this, NotificationActivity.class);
-                startActivity(intent);
-            }
-        });
-
+    private void setUpLnLogout() {
         ln_logout = findViewById(R.id.setting_screen_ln_logout);
         ln_logout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -134,5 +105,61 @@ public class SettingActivity extends AppCompatActivity {
                 finish(); // Kết thúc Activity hiện tại
             }
         });
+    }
+
+    private void setUpLnNotifications() {
+        ln_notifications = findViewById(R.id.setting_screen_ln_notifications);
+        ln_notifications.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(SettingActivity.this, NotificationActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    private void setUpLnFavorite() {
+        ln_favorite = findViewById(R.id.setting_screen_ln_favorite);
+        ln_favorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(SettingActivity.this, FavoriteFoodActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    private void setUpLnAddress() {
+        ln_address = findViewById(R.id.setting_screen_ln_Adresses);
+        ln_address.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(SettingActivity.this, AddressActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    private void setUpLnCart() {
+        ln_cart = findViewById(R.id.setting_screen_ln_cart);
+        ln_cart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(SettingActivity.this, CartActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    private void setUpLnPI() {
+        ln_personalInfo = findViewById(R.id.setting_screen_ln_personalInfo);
+        ln_personalInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(SettingActivity.this, PersonalInfoActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 }

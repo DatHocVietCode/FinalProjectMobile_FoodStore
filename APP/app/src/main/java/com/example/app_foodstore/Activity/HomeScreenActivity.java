@@ -59,7 +59,6 @@ public class HomeScreenActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
-        SharedPreferences sharedPreferences = getSharedPreferences("user_prefs", MODE_PRIVATE);
 
         if (savedInstanceState == null) {
             bottomNavigationFragment = new Fragment_BottomNavigation();
@@ -167,6 +166,7 @@ public class HomeScreenActivity extends AppCompatActivity {
                         // Cập nhật UI khi dữ liệu người dùng thay đổi
                         Glide.with(HomeScreenActivity.this)
                                 .load(IMG_URL  + userRes.getProfile_image())
+                                .error(R.drawable.baseline_account_circle_24)
                                 .into(ms_header_avatar);
                         TextView usernameTextView = findViewById(R.id.ms_header_tv_username);
                         usernameTextView.setText(userRes.getFullname());

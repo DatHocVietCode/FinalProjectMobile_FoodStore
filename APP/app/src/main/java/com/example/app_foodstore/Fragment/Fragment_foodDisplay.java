@@ -63,8 +63,6 @@ public class Fragment_foodDisplay extends Fragment {
         mediator.observe(getViewLifecycleOwner(), val -> reloadData());
     }
 
-
-
     private void initView(LayoutInflater inflater, ViewGroup container) {
         binding = FragmentRcFoodDisplayBinding.inflate(inflater, container, false);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);

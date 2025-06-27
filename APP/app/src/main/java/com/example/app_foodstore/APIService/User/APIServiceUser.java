@@ -5,6 +5,7 @@ import com.example.app_foodstore.Model.response.BaseResponse;
 import com.example.app_foodstore.Model.response.UserRes;
 
 import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
@@ -25,4 +26,14 @@ public interface APIServiceUser {
             @Part MultipartBody.Part image,
             @Part("description") UserUpdateRequest request
     );
+
+    @Multipart
+    @POST("/users/update-profile")
+    Call<BaseResponse<Void>> updateUser(
+            @Part("name") RequestBody name,
+            @Part("email") RequestBody email,
+            @Part("phone") RequestBody phone,
+            @Part MultipartBody.Part avatar
+    );
+
 }

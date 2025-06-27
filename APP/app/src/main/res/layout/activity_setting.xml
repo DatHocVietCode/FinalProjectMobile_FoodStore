@@ -62,12 +62,14 @@
             app:layout_constraintTop_toBottomOf="@+id/setting_ln_header"
             android:orientation="horizontal"
             android:gravity="center_vertical">
+
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/activity_setting_image_profile"
                 android:layout_width="128dp"
                 android:layout_height="128dp"
-                android:src="@drawable/user_avatar_sample"
-                android:scaleType="centerCrop"/>
+                android:scaleType="centerCrop"
+                android:src="@drawable/baseline_account_circle_24" />
+
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

@@ -1,5 +1,6 @@
 package com.example.app_foodstore.Repo;
 
+import android.net.Uri;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
@@ -10,10 +11,15 @@ import com.example.app_foodstore.APIService.Constant;
 import com.example.app_foodstore.APIService.User.APIServiceUser;
 import com.example.app_foodstore.Model.response.BaseResponse;
 import com.example.app_foodstore.Model.response.UserRes;
+import com.example.app_foodstore.Utils.ImageUtils;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.http.Multipart;
 
 public class UserRepository {
 
@@ -45,5 +51,27 @@ public class UserRepository {
         });
 
         return userData;
+    }
+    public void updateUserProfile(String fullname, String email, String phone, MultipartBody.Part avatarUri) {
+        // Thực hiện gọi API để cập nhật thông tin người dùng ở đây
+        Call<BaseResponse<Void>> call = apiService.updateUser(
+                RequestBody.create(MediaType.parse("text/plain"), fullname),
+                RequestBody.create(MediaType.parse("text/plain"), email),
+                RequestBody.create(MediaType.parse("text/plain"), phone),
+                avatarUri);
+        call.enqueue(new Callback<BaseResponse<Void>>() {
+            @Override
+            public void onResponse(Call<BaseResponse<Void>> call, Response<BaseResponse<Void>> response) {
+                if (response.isSuccessful()) {
+                    Log.d("UserRepo", "Update user profile successful");
+                } else {
+                    Log.e("UserRepo", "Error when updating user profile: " + response.message());
+                }
+            }
+            @Override
+            public void onFailure(Call<BaseResponse<Void>> call, Throwable t) {
+                Log.e("UserRepo", "UserRepoFailure when updating user profile: ", t);
+            }
+        });
     }
 }

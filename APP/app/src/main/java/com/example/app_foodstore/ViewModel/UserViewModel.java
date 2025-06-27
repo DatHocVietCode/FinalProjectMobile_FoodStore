@@ -1,6 +1,7 @@
 package com.example.app_foodstore.ViewModel;
 
 import android.app.Application;
+import android.net.Uri;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -9,6 +10,8 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.app_foodstore.Model.response.UserRes;
 import com.example.app_foodstore.Repo.UserRepository;
+
+import okhttp3.MultipartBody;
 
 public class UserViewModel extends ViewModel {
 
@@ -33,6 +36,10 @@ public class UserViewModel extends ViewModel {
     // Trả về LiveData (chỉ cho phép đọc, không cho phép sửa trực tiếp)
     public LiveData<UserRes> getUserProfileLiveData() {
         return userProfile;
+    }
+
+    public void updateUserProfile(String fullname, String email, String phone, MultipartBody.Part avatarUri) {
+        userRepository.updateUserProfile(fullname, email, phone, avatarUri);
     }
 
     // Factory cho ViewModelProvider để hỗ trợ tham số (nếu cần)

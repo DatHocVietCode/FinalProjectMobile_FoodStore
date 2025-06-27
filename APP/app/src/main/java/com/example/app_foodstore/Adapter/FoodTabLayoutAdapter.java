@@ -43,7 +43,7 @@ public class FoodTabLayoutAdapter extends RecyclerView.Adapter<FoodTabLayoutAdap
     public void onBindViewHolder(@NonNull FoodTabLayoutAdapter.FoodTabLayoutViewHolder holder, int position) {
         FoodModel foodModel = list.get(position);
         holder.tv_foodName.setText(foodModel.getName());
-        holder.tv_price.setText("$" + foodModel.getPrice());
+        holder.tv_price.setText(foodModel.getPrice() + "VND");
         holder.tv_categoryName.setText(foodModel.getCategory_name());
 
         holder.tv_rating.setText(foodModel.getAverage_rating().toString());

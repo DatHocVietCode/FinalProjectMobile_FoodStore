@@ -20,6 +20,7 @@ import com.example.app_foodstore.APIService.User.APIServiceUser;
 import com.example.app_foodstore.Model.response.BaseResponse;
 import com.example.app_foodstore.Model.response.UserRes;
 import com.example.app_foodstore.R;
+import com.example.app_foodstore.Utils.UserUtils;
 import com.example.app_foodstore.ViewModel.UserViewModel;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -34,20 +35,13 @@ public class PersonalInfoActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personal_info);
-        // Khởi tạo UserViewModel thông qua ViewModelProvider
-        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
-        loadData();
+
         AnhXa();
     }
 
     private void loadData() {
-        // Lấy token từ SharedPreferences
-        SharedPreferences prefs = getSharedPreferences("user_prefs", MODE_PRIVATE);
-
-        String token = prefs.getString("access_token", "");
         // Gọi ViewModel để lấy dữ liệu người dùng
-        userViewModel.getUserProfile(token);
-
+        userViewModel.getUserProfile(UserUtils.getAccessToken(this));
         // Quan sát dữ liệu thay đổi
         userViewModel.getUserProfileLiveData().observe(this, new Observer<UserRes>() {
             @Override
@@ -71,21 +65,44 @@ public class PersonalInfoActivity extends AppCompatActivity {
         CircleImageView imageView = findViewById(R.id.personal_image);
         TextView tvName = findViewById(R.id.personal_name);
 
-        // Set dữ liệu vào các TextView
-        tvFullname.setText(userRes.getFullname());
-        tvPhone.setText(userRes.getPhone_number());
-        tvEmail.setText(userRes.getEmail());
-        tvDob.setText(userRes.getDate_of_birth());
-        tvName.setText(userRes.getFullname());
 
-        // Tải ảnh đại diện với Glide
-        Glide.with(PersonalInfoActivity.this)
-                .load(IMG_URL + userRes.getProfile_image()) // Thay "IMG_URL" bằng URL thực tế của ảnh
-                .placeholder(R.drawable.user_avatar_sample)  // Ảnh placeholder khi ảnh chưa tải
-                .error(R.drawable.user_avatar_sample)       // Ảnh hiển thị khi có lỗi tải ảnh
-                .into(imageView);
+        // Set dữ liệu vào các TextView
+        // Set dữ liệu vào các TextView với kiểm tra null/rỗng
+        tvFullname.setText(safeText(userRes.getFullname()));
+        tvPhone.setText(safeText(userRes.getPhone_number()));
+        tvEmail.setText(safeText(userRes.getEmail()));
+        tvDob.setText(safeText(userRes.getDate_of_birth()));
+        tvName.setText(safeText(userRes.getFullname()));
+
+        // Kiểm tra profile_image trước khi tải ảnh
+        String profileImage = userRes.getProfile_image();
+        if (profileImage != null && !profileImage.trim().isEmpty()) {
+            Glide.with(PersonalInfoActivity.this)
+                    .load(IMG_URL + profileImage)
+                    .placeholder(R.drawable.user_avatar_sample)
+                    .error(R.drawable.baseline_account_circle_24)
+                    .into(imageView);
+        } else {
+            // Ảnh mặc định nếu chưa có avatar
+            imageView.setImageResource(R.drawable.baseline_account_circle_24);
+        }
+    }
+    // Helper: nếu chuỗi null hoặc rỗng → trả về "Chưa cập nhật"
+    String safeText(String input) {
+        return (input != null && !input.trim().isEmpty()) ? input : "Unknown";
     }
     private void AnhXa() {
+        initViewModel();
+        loadData();
+        setUpTvEdit();
+    }
+
+    private void initViewModel() {
+        // Khởi tạo UserViewModel thông qua ViewModelProvider
+        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
+    }
+
+    private void setUpTvEdit() {
         tv_edit = findViewById(R.id.PI_tv_edit);
         tv_edit.setOnClickListener(v -> {
             userViewModel.getUserProfileLiveData().observe(this, userRes ->
